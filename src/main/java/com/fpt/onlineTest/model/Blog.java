@@ -2,9 +2,7 @@ package com.fpt.onlineTest.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,12 +14,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Getter
+@Setter
 public class Blog implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer blogId;
+    @Column(columnDefinition = "nvarchar(MAX)")
     private String titleBlog;
+    @Column(columnDefinition = "nvarchar(MAX)")
     private String contentBlog;
+
     private String numberVisitors;
 
 
