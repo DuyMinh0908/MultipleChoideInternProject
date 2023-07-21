@@ -1,9 +1,7 @@
 package com.fpt.onlineTest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,19 +12,27 @@ import java.util.List;
 @Table(name = "Users")
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 @Data
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
-    @Column(columnDefinition = "nvarchar(100) not null")
+    @Column(columnDefinition = "varchar(20) not null")
     private String username;
+    @Column(columnDefinition = "varchar(16)not null")
     private String userPass;
+    @Column(columnDefinition = "nvarchar(50) not null")
     private String fullName;
     private String email;
+    @Column(columnDefinition = "varchar(10)not null")
     private String phone;
+    @Column(columnDefinition = "nvarchar(100) not null")
     private String address;
+    @Column(columnDefinition = "varchar(255)not null")
     private String imageUser;
+    @Column(columnDefinition = "varchar(10)not null")
     private String role;
 
     @JsonIgnore
@@ -40,5 +46,6 @@ public class User implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     List<ResultExam> resultExams;
+
 
 }
