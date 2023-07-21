@@ -81,4 +81,13 @@ public class BlogController {
         blogService.deleteAllBlogsByUserId(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+//    get top blogs have most visitors
+    @GetMapping("/blogs/popular-blogs")
+    public ResponseEntity<List<Blog>> getPopularBlogs(){
+        try {
+            return new ResponseEntity<>(blogService.getTop2Blogs(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

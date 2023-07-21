@@ -66,6 +66,11 @@ public class BlogServiceImpl implements BlogService {
     public void deleteAllBlogsByUserId(Integer userId) {
         blogRepository.deleteAllByUserId(userId);
     }
+//    get top 2 blogs have most visitors
+    public List<Blog> getTop2Blogs(){
+        List<Blog> top2Blogs = blogRepository.findTop2Blogs();
+        return top2Blogs.subList(0, Math.min(5, top2Blogs.size()));
+    }
 
     public Long getUserId(Blog blog) {
         return Long.valueOf(blog.getUser().getUserId());

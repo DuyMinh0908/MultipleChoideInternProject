@@ -29,4 +29,6 @@ public interface BlogService {
 
     //    delete all user blogs by userId
     void deleteAllBlogsByUserId(Integer userId);
+//    get top 2 blog have most visitors
+    List<Blog> getTop2Blogs();
 }
