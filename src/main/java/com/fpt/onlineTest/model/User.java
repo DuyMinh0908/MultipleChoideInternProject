@@ -39,9 +39,11 @@ public class User implements Serializable {
     @JoinColumn(name = "roleId")
     private Role role;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    List<Course> courses;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "courses_registration",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private List<Course> courses;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
@@ -51,5 +53,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     List<ResultExam> resultExams;
 
+    @OneToMany(mappedBy = "user")
+    List<Blog> blogs;
 
 }

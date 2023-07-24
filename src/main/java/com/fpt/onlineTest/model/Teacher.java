@@ -32,19 +32,12 @@ public class Teacher implements Serializable {
     private String address;
     @Column(columnDefinition = "varchar(255)not null")
     private String imageTeacher;
-//    private Integer roleId;
 
     @ManyToOne
     @JoinColumn(name = "roleId")
     private Role role;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "teacher")
-    List<Course> courses;
+    @ManyToMany(mappedBy = "teachers",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Course> courses;
 
-
-//
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "user")
-//    List<ResultExam> resultExams;
 }
