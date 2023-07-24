@@ -18,19 +18,25 @@ public class Teacher implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer teacherId;
-    @Column(columnDefinition = "varchar(20) not null")
+    @NonNull
+    @Column(columnDefinition = "varchar(20)")
     private String username;
-    @Column(columnDefinition = "varchar(16)not null")
+    @NonNull
+    @Column(columnDefinition = "varchar(16")
     private String userPass;
-    @Column(columnDefinition = "nvarchar(50) not null")
+    @NonNull
+    @Column(columnDefinition = "nvarchar(50)")
     private String fullName;
 //
     private String email;
-    @Column(columnDefinition = "varchar(10)not null")
+    @NonNull
+    @Column(columnDefinition = "varchar(10")
     private String phone;
-    @Column(columnDefinition = "nvarchar(100) not null")
+    @NonNull
+    @Column(columnDefinition = "nvarchar(100)")
     private String address;
-    @Column(columnDefinition = "varchar(255)not null")
+    @NonNull
+    @Column(columnDefinition = "varchar(255")
     private String imageTeacher;
 
     @ManyToOne

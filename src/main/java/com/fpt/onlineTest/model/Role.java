@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 @Entity
@@ -17,7 +18,9 @@ public class Role implements Serializable {
     @Id //Đánh dấu là primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roleId;
-    @Column(columnDefinition = "varchar(20) not null")
+
+    @Column(columnDefinition = "varchar(20)")
+    @NotNull
     private String roleName;
 
     @JsonIgnore
