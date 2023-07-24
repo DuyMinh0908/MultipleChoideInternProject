@@ -25,20 +25,19 @@ public class Course implements Serializable {
     private String imageCourse;
     private Boolean status;
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    User user;
-
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "courses")
-//    List<User>users;
-
     @JsonIgnore
     @OneToMany(mappedBy = "courses")
     List<ContentCourse> contentCourses;
 
     @JsonIgnore
     @OneToMany(mappedBy = "courses")
-    List<Questions>questions;
+    List<Questions> questions;
 
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinTable(name = "courses_registration",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
+    private List<Teacher> teachers;
+//
+//
 }
