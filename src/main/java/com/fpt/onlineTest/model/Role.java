@@ -23,7 +23,7 @@ public class Role implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "role")
     private List<Teacher> teachers;
-
+//
     @JsonIgnore
     @OneToMany(mappedBy = "role")
     private List<User> users;

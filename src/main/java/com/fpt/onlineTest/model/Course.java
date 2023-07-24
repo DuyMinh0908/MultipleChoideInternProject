@@ -33,9 +33,11 @@ public class Course implements Serializable {
     @OneToMany(mappedBy = "courses")
     List<Questions> questions;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "courses_registration",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private List<Teacher> teachers;
+//
+//
 }

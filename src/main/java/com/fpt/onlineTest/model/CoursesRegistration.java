@@ -28,4 +28,5 @@ public class CoursesRegistration implements Serializable {
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
+//
 }

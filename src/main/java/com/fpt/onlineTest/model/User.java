@@ -34,7 +34,7 @@ public class User implements Serializable {
     private String imageUser;
 //    @Column(columnDefinition = "varchar(10)not null")
 //    private String role;
-
+//
     @ManyToOne
     @JoinColumn(name = "roleId")
     private Role role;

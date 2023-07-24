@@ -29,7 +29,7 @@ public class Admin implements Serializable {
     @Column(columnDefinition = "nvarchar(50) ")
     @NotNull
     private String fullName;
-
+//
     @Column(columnDefinition = "varchar(100)")
     @NotNull
     private String email;
