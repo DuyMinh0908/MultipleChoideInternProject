@@ -8,7 +8,9 @@ import com.fpt.onlineTest.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -19,8 +21,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course newCourse(Course course) {
-//        Teacher teacher = teacherRepository.findById();
-        return null;
+        return courseRepository.save(course);
     }
 
     @Override
@@ -30,14 +31,20 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course updateCourse(Integer courseId, Course course) {
-        Course updatedCourse = new Course();
-        updatedCourse.setContentCourses(course.getContentCourses());
-        updatedCourse.setCourseName(course.getCourseName());
-        updatedCourse.setNumberStudent(course.getNumberStudent());
-        updatedCourse.setImageCourse(course.getImageCourse());
-        updatedCourse.setStatus(course.getStatus());
-        updatedCourse.setSubject(course.getSubject());
-        return courseRepository.save(updatedCourse);
+        Optional<Course> isExistingCourse = courseRepository.findById(courseId);
+        if (isExistingCourse.isPresent()) {
+            Course existingCourse = isExistingCourse.get();
+            existingCourse.setCourseName(course.getCourseName());
+            existingCourse.setNumberStudent(course.getNumberStudent());
+            existingCourse.setImageCourse(course.getImageCourse());
+            existingCourse.setStatus(course.getStatus());
+            existingCourse.setSubject(course.getSubject());
+            return courseRepository.save(existingCourse);
+        } else {
+            // Handle the case when the course with the provided courseId is not found
+            // For example, you can throw an exception or return null.
+            throw new EntityNotFoundException("Course with courseId " + courseId + " not found");
+        }
     }
 
     @Override
@@ -52,11 +59,17 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getCoursesByStudentId(Integer studentId) {
-        return null;
+        return courseRepository.findCoursesByStudentId(studentId);
     }
 
     @Override
     public List<Course> getPopuLarCourses() {
+        List<Course> topPopularCourses = courseRepository.findTopPopularCourse();
+        return topPopularCourses.subList(0, Math.min(5, topPopularCourses.size()));
+    }
+
+    //  get teacher id
+    Integer getTeacherId() {
         return null;
     }
 }

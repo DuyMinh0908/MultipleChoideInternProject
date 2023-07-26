@@ -9,18 +9,21 @@ import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 
-//    @Query(value = "select c.courseName, c.imageCourse, c.numberStudent, c.status, c.subject,cc.description from Course c left join CoursesRegistration cr on c.courseId = cr.course.courseId left join ContentCourse cc on c.courseId= cc.courses.courseId where cr.teacher.id = :teacherId",nativeQuery = true)
-//    @Query(value = "select courses.course_name, courses.image_course, courses.number_student, courses.status, courses.subject,ccourses.description " +
-//            "from courses " +
-//            "left join courses_registration " +
-//            "on courses.course_id = courses_registration.course_id " +
-//            "left join content_courses " +
-//            "on courses.course_id= content_courses.course_id " +
-//            "where courses_registration.teacher_id = :teacherId",nativeQuery = true)
-    @Query(value = "select courses.course_name, courses.image_course, courses.number_student, courses.status, courses.subject,content_courses.description from courses " +
-            "left join courses_registration on courses.course_id = courses_registration.course_id " +
-            "left join  content_courses on courses.course_id = content_courses.course_id" +
-            " where courses_registration.teacher_id=2", nativeQuery = true)
+//    get courses by teacher id
+    @Query("select new Course (c.courseId, c.courseName, c.imageCourse, c.numberStudent, c.status, c.subject)  " +
+            "from Course c " +
+            "join c.teachers t " +
+            "where t.id = :teacherId")
     List<Course> findCoursesByTeacherId(@Param("teacherId") Integer teacherId);
 
+//get courses by student id
+    @Query("select new Course (c.courseId, c.courseName, c.imageCourse, c.numberStudent, c.status, c.subject)  " +
+            "from Course c " +
+            "join CoursesRegistration cr on c.courseId = cr.course.courseId " +
+            "where cr.student.userId = :userId")
+    List<Course> findCoursesByStudentId(@Param("userId") Integer userId);
+
+//    get popular courses
+    @Query("select c from Course c order by c.numberStudent desc ")
+    List<Course> findTopPopularCourse();
 }

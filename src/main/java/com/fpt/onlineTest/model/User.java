@@ -31,6 +31,16 @@ public class User implements Serializable {
 
     private String email;
 
+    public User(String username, String userPass, String fullName, String email, String phone, String address, String imageUser) {
+        this.username = username;
+        this.userPass = userPass;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.imageUser = imageUser;
+    }
+
     @Column(columnDefinition = "varchar(10)not null")
     private String phone;
 

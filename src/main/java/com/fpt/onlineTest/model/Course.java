@@ -2,12 +2,14 @@ package com.fpt.onlineTest.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import java.util.List;
 @Table(name = "Courses")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Data
 public class Course implements Serializable {
     @Id
@@ -22,23 +25,23 @@ public class Course implements Serializable {
     private Integer courseId;
 
     @Column(columnDefinition = "varchar(MAX)")
-    @NonNull
+    @NotNull
     private String courseName;
 
-    @Column(columnDefinition = "varchar(10)")
-    @NonNull
+    @Column
+    @NotNull
     private Integer numberStudent;
 
     @Column(columnDefinition = "varchar(MAX)")
-    @NonNull
+    @NotNull
     private String imageCourse;
 
-    @Column(columnDefinition = "varchar(100)")
-    @NonNull
+    @Column
+    @NotNull
     private Boolean status;
 
     @Column(columnDefinition = "varchar(20)")
-    @NonNull
+    @NotNull
     private String subject;
 
     @JsonIgnore
@@ -55,4 +58,19 @@ public class Course implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private List<Teacher> teachers;
 
+    public Course(String courseName, String imageCourse, Integer numberStudent, Boolean status, String subject) {
+        this.courseName = courseName;
+        this.numberStudent = numberStudent;
+        this.imageCourse = imageCourse;
+        this.status = status;
+        this.subject = subject;
+    }
+    public Course(Integer id, String courseName, String imageCourse, Integer numberStudent, Boolean status, String subject) {
+        this.courseId = id;
+        this.courseName = courseName;
+        this.numberStudent = numberStudent;
+        this.imageCourse = imageCourse;
+        this.status = status;
+        this.subject = subject;
+    }
 }

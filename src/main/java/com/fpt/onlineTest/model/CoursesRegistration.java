@@ -29,4 +29,9 @@ public class CoursesRegistration implements Serializable {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
+    public CoursesRegistration(User student, Course course, Teacher teacher) {
+        this.student = student;
+        this.course = course;
+        this.teacher = teacher;
+    }
 }

@@ -54,4 +54,13 @@ public class Teacher implements Serializable {
     @ManyToMany(mappedBy = "teachers",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Course> courses;
 
+    public Teacher(String username, String userPass, String fullName, String email, String phone, String address, String imageTeacher) {
+        this.username = username;
+        this.userPass = userPass;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.imageTeacher = imageTeacher;
+    }
 }
