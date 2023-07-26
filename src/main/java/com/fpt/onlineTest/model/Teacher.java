@@ -32,6 +32,7 @@ public class Teacher implements Serializable {
     @NotNull
     private String fullName;
 //
+    @NotNull
     private String email;
 
     @Column(columnDefinition = "varchar(10)")
