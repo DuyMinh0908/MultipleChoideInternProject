@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -19,18 +20,22 @@ public class Questions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionId;
+
+    @Column(columnDefinition = "varchar(MAX)")
+    @NotNull
     private String contentQuestion;
 
-    @ManyToOne
-    @JoinColumn(name = "examId")
-    Exam exam;
+    @Column(columnDefinition = "varchar(100)")
+    @NotNull
+    private String subject;
 
     @JsonIgnore
     @OneToMany(mappedBy = "question")
     List<Answer> answer;
 
-    @ManyToOne
-    @JoinColumn(name = "courseId")
-    Course courses;
-
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "exam_questions",
+            joinColumns = @JoinColumn(name = "question_id"),
+            inverseJoinColumns = @JoinColumn(name = "exam_id"))
+    private List<Exam> exams;
 }
