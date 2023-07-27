@@ -1,25 +1,32 @@
 package com.fpt.onlineTest.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(name = "ContentCourses")
+@Table(name = "Chapters")
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class ContentCourse implements Serializable {
+public class Chapter implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer contentCourseId;
+    private Integer chapterId;
+
+    @Column(columnDefinition = "nvarchar(MAX)")
+    @NotNull
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "courseId")
     Course courses;
+
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
+    List<Lesson> lessons;
 }
