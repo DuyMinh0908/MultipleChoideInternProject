@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,20 +21,30 @@ public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer examId;
+
+    @NotNull
     private Integer numQuestion;
+
+    @NotNull
     private LocalDateTime timeStart;
+
+    @NotNull
     private LocalDateTime timeEnd;
 
+//    @ManyToOne
+//    @JoinColumn(name = "resultExamId")
+//    ResultExam resultExam;
+
     @ManyToOne
-    @JoinColumn(name = "resultExamId")
-    ResultExam resultExam;
+    @JoinColumn(name = "courseId")
+    Course courses;
 
 
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "exam")
-    List<Questions>questions;
-
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "exam_questions",
+            joinColumns = @JoinColumn(name = "exam_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id"))
+    private List<Questions> questions;
 
 
 }

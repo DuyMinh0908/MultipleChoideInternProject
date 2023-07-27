@@ -19,22 +19,37 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
+
     @Column(columnDefinition = "varchar(20) not null")
     private String username;
+
     @Column(columnDefinition = "varchar(16)not null")
     private String userPass;
+
     @Column(columnDefinition = "nvarchar(50) not null")
     private String fullName;
+
     private String email;
+
+    public User(String username, String userPass, String fullName, String email, String phone, String address, String imageUser) {
+        this.username = username;
+        this.userPass = userPass;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.imageUser = imageUser;
+    }
+
     @Column(columnDefinition = "varchar(10)not null")
     private String phone;
+
     @Column(columnDefinition = "nvarchar(100) not null")
     private String address;
+
     @Column(columnDefinition = "varchar(255)not null")
     private String imageUser;
-//    @Column(columnDefinition = "varchar(10)not null")
-//    private String role;
-//
+
     @ManyToOne
     @JoinColumn(name = "roleId")
     private Role role;
@@ -44,10 +59,6 @@ public class User implements Serializable {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    List<Answer> answers;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
