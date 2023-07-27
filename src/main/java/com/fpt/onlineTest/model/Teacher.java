@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,38 +14,53 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
+@Data
 public class Teacher implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer teacherId;
-    @Column(columnDefinition = "varchar(20) not null")
-    private String username;
-    @Column(columnDefinition = "varchar(16)not null")
-    private String userPass;
-    @Column(columnDefinition = "nvarchar(50) not null")
-    private String fullName;
+    private Integer id;
 
+    @Column(columnDefinition = "varchar(20)")
+    @NotNull
+    private String username;
+
+    @Column(columnDefinition = "varchar(16)")
+    @NotNull
+    private String userPass;
+
+    @Column(columnDefinition = "nvarchar(50)")
+    @NotNull
+    private String fullName;
+//
+    @NotNull
     private String email;
-    @Column(columnDefinition = "varchar(10)not null")
+
+    @Column(columnDefinition = "varchar(10)")
+    @NotNull
     private String phone;
-    @Column(columnDefinition = "nvarchar(100) not null")
+
+    @Column(columnDefinition = "nvarchar(100)")
+    @NotNull
     private String address;
-    @Column(columnDefinition = "varchar(255)not null")
+
+    @Column(columnDefinition = "varchar(255)")
+    @NotNull
     private String imageTeacher;
-//    private Integer roleId;
 
     @ManyToOne
     @JoinColumn(name = "roleId")
     private Role role;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "teacher")
-    List<Course> courses;
+    @ManyToMany(mappedBy = "teachers",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Course> courses;
 
-
-//
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "user")
-//    List<ResultExam> resultExams;
+    public Teacher(String username, String userPass, String fullName, String email, String phone, String address, String imageTeacher) {
+        this.username = username;
+        this.userPass = userPass;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.imageTeacher = imageTeacher;
+    }
 }

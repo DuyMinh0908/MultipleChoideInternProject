@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BlogRepository extends JpaRepository<Blog, Integer> {
-//
-//    void deleteAllById(List<Long>  userId);
 
     //    @Query("SELECT b FROM Blog b WHERE b.numberVisitors<='?1' ORDER BY b.numberVisitors DESC")
 //    List<Blog> findTop2Blogs(int numVisitors, Pageable pageable);
