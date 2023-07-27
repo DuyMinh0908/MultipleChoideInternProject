@@ -26,4 +26,6 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 //    get popular courses
     @Query("select c from Course c order by c.numberStudent desc ")
     List<Course> findTopPopularCourse();
+
+//    delete by id
 }
