@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class CoursesRegistration implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
@@ -28,5 +28,10 @@ public class CoursesRegistration implements Serializable {
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
-//
+
+    public CoursesRegistration(User student, Course course, Teacher teacher) {
+        this.student = student;
+        this.course = course;
+        this.teacher = teacher;
+    }
 }

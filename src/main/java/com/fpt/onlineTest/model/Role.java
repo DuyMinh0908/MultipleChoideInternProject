@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @Builder
 public class Role implements Serializable {
-    @Id //Đánh dấu là primary key
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roleId;
 
@@ -26,7 +26,7 @@ public class Role implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "role")
     private List<Teacher> teachers;
-//
+
     @JsonIgnore
     @OneToMany(mappedBy = "role")
     private List<User> users;
