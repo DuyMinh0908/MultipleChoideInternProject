@@ -22,5 +22,4 @@ public class ContentCourse implements Serializable {
     @ManyToOne
     @JoinColumn(name = "courseId")
     Course courses;
-
 }
