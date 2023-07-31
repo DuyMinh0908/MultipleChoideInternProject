@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,11 +21,13 @@ public class ResultExam implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer resultExamId;
+
     private Double point;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "resultExam")
-    List<Exam> exams;
+    @OneToOne
+    @JoinColumn(name = "exam_id")
+    @NotNull
+    private Exam exam;
 
     @ManyToOne
     @JoinColumn(name = "userId")

@@ -15,7 +15,6 @@ export const useCount = defineStore("count", {
   actions: {
     setCount: function () {
       this.count++;
-      console.log(this.count);
     },
   },
 });

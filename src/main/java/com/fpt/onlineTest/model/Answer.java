@@ -19,6 +19,7 @@ public class Answer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer answerId;
+
     private String contentAnswer;
 
     @ManyToOne
@@ -29,10 +30,8 @@ public class Answer implements Serializable {
     @OneToMany(mappedBy = "answer")
     List<ResultQuestion> resultQuestions;
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    User user;
-
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "answer")
+    List<UserAnswers> userAnswers;
 
 }
