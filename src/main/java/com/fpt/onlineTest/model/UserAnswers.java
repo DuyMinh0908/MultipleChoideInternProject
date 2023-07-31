@@ -1,6 +1,5 @@
 package com.fpt.onlineTest.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,18 +8,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ContentCourses")
+@Table(name = "UserAnswers")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ContentCourse implements Serializable {
+public class UserAnswers implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer contentCourseId;
-    private String description;
+    private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "courseId")
-    Course courses;
-
+    @JoinColumn(name = "answerId")
+    Answer answer;
 }
