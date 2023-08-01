@@ -48,6 +48,7 @@ public class Course implements Serializable {
     @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL)
     List<Exam> exams;
 
+
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "courses_registration",
             joinColumns = @JoinColumn(name = "course_id"),

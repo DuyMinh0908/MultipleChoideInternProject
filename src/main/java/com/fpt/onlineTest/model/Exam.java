@@ -40,6 +40,7 @@ public class Exam {
     @JoinColumn(name = "courseId")
     Course courses;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "exam")
     private List<ExamQuestion> examQuestions;
 

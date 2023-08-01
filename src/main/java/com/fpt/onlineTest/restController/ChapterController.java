@@ -27,26 +27,16 @@ public class ChapterController {
         }
     }
 
-    //get course chapter
-    @GetMapping("/course/chapter/{chapterId}")
-    public ResponseEntity<Optional<Chapter>> getChapter(@PathVariable Integer chapterId) {
+    //    get course's chapters
+    @GetMapping("/course/id={courseId}/chapters")
+    public ResponseEntity<List<Chapter>> getCourseAllChapters(@PathVariable Integer courseId) {
         try {
-            return new ResponseEntity<>(chapterService.getCourseChapter(chapterId), HttpStatus.OK);
+            return new ResponseEntity<>(chapterService.getCourseChapters(courseId), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-    //    get course all chapter
-    @GetMapping("/course/chapters")
-    public ResponseEntity<List<Chapter>> getCourseAllChapters() {
-        try {
-            return new ResponseEntity<>(chapterService.getAllCourseChapters(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
+    // delete by chapter id
     @DeleteMapping("/course/chapters/delete-chapter/{id}")
     public ResponseEntity<HttpStatus> deleteChapter(@PathVariable Integer id) {
         try {
@@ -57,6 +47,16 @@ public class ChapterController {
         }
     }
 
+    // update chapter
+    @PutMapping("/course/update/chapter/id={chapterId}/")
+    public ResponseEntity<Chapter> updateChapter(@PathVariable Integer chapterId, Chapter chapter){
+        try {
+            return new ResponseEntity<>(chapterService.updateChapter(chapterId,chapter),HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 //    @DeleteMapping("/course/chapters/delete-chapters/{courseId}")
 //    public ResponseEntity<HttpStatus> deleteAllCourseSChapter(@PathVariable Integer courseId) {
 //        try {

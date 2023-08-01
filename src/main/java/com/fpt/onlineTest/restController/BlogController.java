@@ -32,14 +32,13 @@ public class BlogController {
     public ResponseEntity<List<Blog>> getAllBlogs() {
         try {
             return new ResponseEntity<>(blogService.getAll(), HttpStatus.OK);
-        } catch (Exception e) {
-            new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch (Exception ignored) {
         }
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     //    get blog by id
-    @GetMapping("/blogs/blogId{id}")
+    @GetMapping("/blogs/{id}")
     public ResponseEntity<Optional<Blog>> getBlogById(@PathVariable Integer id) {
         try {
             return new ResponseEntity<>(blogService.getBlogById(id), HttpStatus.OK);
@@ -60,7 +59,7 @@ public class BlogController {
     }
 
     //    update blog
-    @PutMapping("/blogs/user-blog/update/blogId{blogId}")
+    @PutMapping("/blogs/user-blog/update/blogId={blogId}")
     public ResponseEntity<Blog> updateBlog(@PathVariable Integer blogId, Blog newBlog) {
         try {
             return new ResponseEntity<>(blogService.updateBlog(blogId, newBlog), HttpStatus.OK);

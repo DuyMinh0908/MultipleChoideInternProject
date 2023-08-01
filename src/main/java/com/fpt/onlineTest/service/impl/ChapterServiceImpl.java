@@ -28,30 +28,33 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
-    public Optional<Chapter> getCourseChapter(Integer chapterId) {
-        return chapterRepository.findById(chapterId);
-    }
-
-    @Override
-    public List<Chapter> getAllCourseChapters() {
-        return chapterRepository.findAll();
+    public List<Chapter> getCourseChapters(Integer courseId) {
+        return chapterRepository.findCourseSChapter(courseId);
     }
 
     @Override
     public Chapter updateChapter(Integer chapterId, Chapter chapter){
-        Optional<Chapter> isExistingChapter = chapterRepository.findById(chapterId);
-        if(isExistingChapter.isPresent()){
-            Chapter existingChapter = isExistingChapter.get();
-            existingChapter.setDescription(chapter.getDescription());
-        }
-        return null;
+        Chapter existingChapter = chapterRepository.findById(chapterId)
+                .orElseThrow(null);
+
+        existingChapter.setDescription(chapter.getDescription());
+        return chapterRepository.save(existingChapter);
+
+//        Chapter updatedChapter = new Chapter();
+//        updatedChapter.setDescription(chapter.getDescription());
+//        return chapterRepository.save(updatedChapter);
+//
+//        Optional<Chapter> isExistingChapter = chapterRepository.findById(chapterId);
+//        if(isExistingChapter.isPresent()){
+//            Chapter existingChapter = isExistingChapter.get();
+//            existingChapter.setDescription(chapter.getDescription());
+//            return chapterRepository.save(existingChapter);
+//        }
+//        return null;
     }
     @Override
     public void deleteChapterById(Integer chapterId) {
         chapterRepository.deleteById(chapterId);
     }
-//    @Override
-//    public void deleteAllCourseSChapter(Integer courseId) {
-//        chapterRepository.deleteCourseSChapter(courseId);
-//    }
+
 }

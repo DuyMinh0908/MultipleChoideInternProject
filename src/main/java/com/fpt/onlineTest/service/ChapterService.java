@@ -11,11 +11,9 @@ public interface ChapterService {
     Chapter createChapter(Chapter newChapter);
 
     //  -------  read  -------
-//    get 1 course's chapter
-    Optional<Chapter> getCourseChapter(Integer chapterId);
 
-    //    get all course's chapters
-    List<Chapter> getAllCourseChapters();
+    //    get course's chapters
+    List<Chapter> getCourseChapters( Integer courseId);
 
     //  -------  update  -------
     Chapter updateChapter(Integer chapterId, Chapter chapter);
