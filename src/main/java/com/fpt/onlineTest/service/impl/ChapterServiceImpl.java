@@ -34,23 +34,11 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public Chapter updateChapter(Integer chapterId, Chapter chapter){
-        Chapter existingChapter = chapterRepository.findById(chapterId)
-                .orElseThrow(null);
-
-        existingChapter.setDescription(chapter.getDescription());
+        Chapter existingChapter = chapterRepository.findById(chapterId).orElseThrow(()->new RuntimeException("Not found chapter with id: " + chapterId));
+        if(chapter.getDescription()!= null){
+            existingChapter.setDescription(chapter.getDescription());
+        }
         return chapterRepository.save(existingChapter);
-
-//        Chapter updatedChapter = new Chapter();
-//        updatedChapter.setDescription(chapter.getDescription());
-//        return chapterRepository.save(updatedChapter);
-//
-//        Optional<Chapter> isExistingChapter = chapterRepository.findById(chapterId);
-//        if(isExistingChapter.isPresent()){
-//            Chapter existingChapter = isExistingChapter.get();
-//            existingChapter.setDescription(chapter.getDescription());
-//            return chapterRepository.save(existingChapter);
-//        }
-//        return null;
     }
     @Override
     public void deleteChapterById(Integer chapterId) {
