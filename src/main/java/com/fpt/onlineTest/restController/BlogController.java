@@ -60,7 +60,7 @@ public class BlogController {
 
     //    update blog
     @PutMapping("/blogs/user-blog/update/blogId={blogId}")
-    public ResponseEntity<Blog> updateBlog(@PathVariable Integer blogId, Blog newBlog) {
+    public ResponseEntity<Blog> updateBlog(@PathVariable Integer blogId,@RequestBody Blog newBlog) {
         try {
             return new ResponseEntity<>(blogService.updateBlog(blogId, newBlog), HttpStatus.OK);
         } catch (Exception e) {

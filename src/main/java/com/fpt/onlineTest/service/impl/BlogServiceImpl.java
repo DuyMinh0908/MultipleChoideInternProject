@@ -49,10 +49,21 @@ public class BlogServiceImpl implements BlogService {
     //    update blog
     @Override
     public Blog updateBlog(Integer blogId, Blog blog) {
-        Blog updatedBlog = new Blog();
-        updatedBlog.setContentBlog(blog.getContentBlog());
-        updatedBlog.setTitleBlog(blog.getTitleBlog());
-        return blogRepository.save(updatedBlog);
+        Blog existingBlog = blogRepository.findById(blogId)
+                .orElseThrow(() -> new RuntimeException("Not found blog with id: " + blogId));
+        // Cập nhật các thuộc tính của đối tượng Blog từ đối tượng blog được truyền vào
+        if (blog.getTitleBlog() != null) {
+            existingBlog.setTitleBlog(blog.getTitleBlog());
+        }
+
+        if (blog.getContentBlog() != null) {
+            existingBlog.setContentBlog(blog.getContentBlog());
+        }
+
+        if (blog.getNumberVisitors() != null) {
+            existingBlog.setNumberVisitors(blog.getNumberVisitors());
+        }
+        return blogRepository.save(existingBlog);
     }
 
     //    delete blog by blog id

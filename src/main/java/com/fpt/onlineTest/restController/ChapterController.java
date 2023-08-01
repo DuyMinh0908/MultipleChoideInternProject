@@ -48,8 +48,8 @@ public class ChapterController {
     }
 
     // update chapter
-    @PutMapping("/course/update/chapter/id={chapterId}/")
-    public ResponseEntity<Chapter> updateChapter(@PathVariable Integer chapterId, Chapter chapter){
+    @PutMapping("/course/update/chapter/id={chapterId}")
+    public ResponseEntity<Chapter> updateChapter(@PathVariable Integer chapterId,@RequestBody Chapter chapter){
         try {
             return new ResponseEntity<>(chapterService.updateChapter(chapterId,chapter),HttpStatus.OK);
         } catch (Exception e) {
@@ -57,13 +57,5 @@ public class ChapterController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-//    @DeleteMapping("/course/chapters/delete-chapters/{courseId}")
-//    public ResponseEntity<HttpStatus> deleteAllCourseSChapter(@PathVariable Integer courseId) {
-//        try {
-//            chapterService.deleteAllCourseSChapter(courseId);
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
+
 }
