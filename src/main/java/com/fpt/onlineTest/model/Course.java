@@ -42,7 +42,7 @@ public class Course implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL)
-    List<Chapter> contentCours;
+    List<Chapter> chapters;
 
     @JsonIgnore
     @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL)

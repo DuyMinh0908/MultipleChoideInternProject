@@ -3,6 +3,7 @@ package com.fpt.onlineTest.service.impl;
 import com.fpt.onlineTest.model.Chapter;
 import com.fpt.onlineTest.model.Course;
 import com.fpt.onlineTest.reponsitory.ChapterRepository;
+import com.fpt.onlineTest.reponsitory.CourseRepository;
 import com.fpt.onlineTest.service.ChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,16 @@ import java.util.Optional;
 public class ChapterServiceImpl implements ChapterService {
     @Autowired
     private ChapterRepository chapterRepository;
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Override
-    public Chapter createChapter(Chapter newChapter) {
+    public Chapter createChapter( Chapter newChapter) {
         return chapterRepository.save(newChapter);
+    }
+    public boolean isCourseExist(Integer courseId){
+        Optional<Course> course = courseRepository.findById(courseId);
+        return course.isPresent();
     }
 
     @Override
@@ -43,8 +50,8 @@ public class ChapterServiceImpl implements ChapterService {
     public void deleteChapterById(Integer chapterId) {
         chapterRepository.deleteById(chapterId);
     }
-    @Override
-    public void deleteAllCourseSChapter(Integer courseId) {
-        chapterRepository.deleteCourseSChapter(courseId);
-    }
+//    @Override
+//    public void deleteAllCourseSChapter(Integer courseId) {
+//        chapterRepository.deleteCourseSChapter(courseId);
+//    }
 }

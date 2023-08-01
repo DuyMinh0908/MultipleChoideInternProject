@@ -6,16 +6,22 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ChapterService {
-//  -------  create  -------
-   Chapter createChapter(Chapter newChapter);
-//  -------  read  -------
+    //  -------  create  -------
+//   Chapter createChapter( String title,Integer courseId);
+    Chapter createChapter(Chapter newChapter);
+
+    //  -------  read  -------
 //    get 1 course's chapter
     Optional<Chapter> getCourseChapter(Integer chapterId);
-//    get all course's chapters
+
+    //    get all course's chapters
     List<Chapter> getAllCourseChapters();
-//  -------  update  -------
+
+    //  -------  update  -------
     Chapter updateChapter(Integer chapterId, Chapter chapter);
-//  -------  delete  -------
+
+    //  -------  delete  -------
     void deleteChapterById(Integer chapterId);
-    void deleteAllCourseSChapter(Integer courseId);
+
+//    void deleteAllCourseSChapter(Integer courseId);
 }

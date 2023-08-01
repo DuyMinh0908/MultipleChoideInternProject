@@ -23,7 +23,7 @@ public class Chapter implements Serializable {
     @NotNull
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "courseId")
     Course courses;
 
