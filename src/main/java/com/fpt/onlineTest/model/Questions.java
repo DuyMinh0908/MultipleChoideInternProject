@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,21 +22,23 @@ public class Questions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionId;
 
-    @Column(columnDefinition = "varchar(MAX)")
+    @Column(columnDefinition = "nvarchar(MAX)")
     @NotNull
     private String contentQuestion;
 
-    @Column(columnDefinition = "varchar(100)")
+    @Column(columnDefinition = "nvarchar(100)")
     @NotNull
     private String subject;
+
+    @Column(columnDefinition = "varchar(10)")
+    @NotNull
+    private String level;
 
     @JsonIgnore
     @OneToMany(mappedBy = "question")
     List<Answer> answer;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "exam_questions",
-            joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "exam_id"))
-    private List<Exam> exams;
+    @JsonIgnore
+    @OneToMany(mappedBy = "question")
+    private List<ExamQuestion> examQuestions;
 }

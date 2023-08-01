@@ -42,11 +42,12 @@ public class Course implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL)
-    List<Chapter> contentCours;
+    List<Chapter> chapters;
 
     @JsonIgnore
     @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL)
     List<Exam> exams;
+
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "courses_registration",

@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "Blogs")
-@SuppressWarnings("serial")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -27,10 +26,7 @@ public class Blog implements Serializable {
 
     private String numberVisitors;
 
-
    @ManyToOne
    @JoinColumn(name = "userId")
    User user;
-
-
 }
