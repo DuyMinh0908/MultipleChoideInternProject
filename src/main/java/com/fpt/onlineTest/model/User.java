@@ -66,5 +66,4 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user")
     List<Blog> blogs;
-
 }

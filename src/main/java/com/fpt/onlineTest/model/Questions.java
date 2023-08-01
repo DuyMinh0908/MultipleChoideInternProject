@@ -12,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "Questions")
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -25,17 +24,21 @@ public class Questions {
     @NotNull
     private String contentQuestion;
 
+    @Column(columnDefinition = "varchar(10)")
+    @NotNull
+    private String level;
+
     @Column(columnDefinition = "varchar(100)")
     @NotNull
     private String subject;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "question")
-    List<Answer> answer;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "question")
+//    List<Answer> answer;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "exam_questions",
-            joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "exam_id"))
-    private List<Exam> exams;
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(name = "exam_questions",
+//            joinColumns = @JoinColumn(name = "question_id"),
+//            inverseJoinColumns = @JoinColumn(name = "exam_id"))
+//    private List<Exam> exams;
 }
