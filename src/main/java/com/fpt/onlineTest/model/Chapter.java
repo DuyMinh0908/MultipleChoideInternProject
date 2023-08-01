@@ -1,6 +1,7 @@
 package com.fpt.onlineTest.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,10 +24,11 @@ public class Chapter implements Serializable {
     @NotNull
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "courseId")
     Course courses;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
     List<Lesson> lessons;
 }
