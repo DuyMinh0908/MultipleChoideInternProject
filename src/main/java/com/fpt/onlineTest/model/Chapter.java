@@ -26,9 +26,9 @@ public class Chapter implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "courseId")
-    Course courses;
+    private Course courses;
 
     @JsonIgnore
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
-    List<Lesson> lessons;
+    private List<Lesson> lessons;
 }

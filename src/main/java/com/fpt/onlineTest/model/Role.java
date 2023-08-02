@@ -34,4 +34,8 @@ public class Role implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "role")
     private List<Admin> admins;
+
+    public Role(String roleName) {
+        this.roleName = roleName;
+    }
 }

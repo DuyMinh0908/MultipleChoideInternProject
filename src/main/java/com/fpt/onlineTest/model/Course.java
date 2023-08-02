@@ -40,33 +40,27 @@ public class Course implements Serializable {
     @NonNull
     private String subject;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL)
-    List<Chapter> chapters;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL)
-    List<Exam> exams;
+    @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Chapter> chapters;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Exam> exams;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinTable(name = "courses_registration",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
-    private List<Teacher> teachers;
+    @JsonIgnore
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CoursesRegistration> courseRegistrations;
 
-    public Course(String courseName, String imageCourse, Integer numberStudent, Boolean status, String subject) {
+    public Course(Integer courseId, String courseName, String imageCourse, Integer numberStudent, Boolean status, String subject) {
+        this.courseId = courseId;
         this.courseName = courseName;
-        this.numberStudent = numberStudent;
         this.imageCourse = imageCourse;
-        this.status = status;
-        this.subject = subject;
-    }
-    public Course(Integer id, String courseName, String imageCourse, Integer numberStudent, Boolean status, String subject) {
-        this.courseId = id;
-        this.courseName = courseName;
         this.numberStudent = numberStudent;
-        this.imageCourse = imageCourse;
         this.status = status;
         this.subject = subject;
     }

@@ -51,12 +51,15 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCoursesByTeacherId(Integer teacherId) {
         return courseRepository.findCoursesByTeacherId(teacherId);
+//        return null;
     }
 
     @Override
     public List<Course> getCoursesByStudentId(Integer studentId) {
         return courseRepository.findCoursesByStudentId(studentId);
+//        return null;
     }
+
 
     @Override
     public List<Course> getPopuLarCourses() {
