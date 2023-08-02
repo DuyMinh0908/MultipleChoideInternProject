@@ -29,11 +29,11 @@ public class Answer implements Serializable {
     @JoinColumn(name = "questionId")
     Questions question;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "answer")
-//    List<ResultQuestion> resultQuestions;
-//
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "answer")
-//    List<UserAnswers> userAnswers;
+    @JsonIgnore
+    @OneToMany(mappedBy = "answer")
+    List<ResultQuestion> resultQuestions;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "answer")
+    List<UserAnswers> userAnswers;
 }

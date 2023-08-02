@@ -21,5 +21,5 @@ public interface ChapterService {
     //  -------  delete  -------
     void deleteChapterById(Integer chapterId);
 
-//    void deleteAllCourseSChapter(Integer courseId);
+    void deleteCourseSChapter(Integer courseId);
 }
