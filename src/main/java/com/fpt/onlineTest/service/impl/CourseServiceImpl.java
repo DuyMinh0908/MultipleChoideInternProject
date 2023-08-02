@@ -8,7 +8,6 @@ import com.fpt.onlineTest.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,11 +39,8 @@ public class CourseServiceImpl implements CourseService {
             existingCourse.setStatus(course.getStatus());
             existingCourse.setSubject(course.getSubject());
             return courseRepository.save(existingCourse);
-        } else {
-            // Handle the case when the course with the provided courseId is not found
-            // For example, you can throw an exception or return null.
-            throw new EntityNotFoundException("Course with courseId " + courseId + " not found");
         }
+        return null;
     }
 
     @Override

@@ -18,9 +18,9 @@
         </router-link>
 
         <router-link
-          :to="{ name: 'Course' }"
+          :to="{ name: 'Courses.Index' }"
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
-          :class="route.name === 'Course' ? 'bg-slate-200' : ''"
+          :class="route.name === 'Courses.Index' ? 'bg-slate-200' : ''"
         >
           <Icon name="course" class="w-8 h-8 mx-auto" />
           <p>Khóa học</p>
@@ -34,7 +34,7 @@
           <p>Đề thi</p>
         </router-link>
         <router-link
-          :to="{ name: 'Blog' }"
+          :to="{ name: 'Blogs' }"
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
           :class="route.name === 'Blog' ? 'bg-slate-200' : ''"
         >

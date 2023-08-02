@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Course } from "../../model/course";
+import { useRoute } from "vue-router";
 interface Props {
   course: Course;
 }
@@ -14,11 +15,12 @@ const prop = defineProps<Props>();
       <div
         class="group-hover:block hidden absolute bg-gray-500 opacity-50 w-full h-full"
       ></div>
-      <button
-        class="bg-white rounded-xl absolute hidden group-hover:block py-2 px-4 hover:bg-slate-300"
+      <router-link
+        :to="{ name: 'Courses.Detail' }"
+        class="bg-white rounded-xl absolute hidden group-hover:block py-2 px-4 cursor-pointer"
       >
         Xem khóa học
-      </button>
+      </router-link>
     </div>
   </div>
 </template>

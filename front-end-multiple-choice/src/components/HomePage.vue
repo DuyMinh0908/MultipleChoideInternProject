@@ -27,7 +27,7 @@ const courses: Array<Course> = [
   </div>
   <div class="flex flex-col w-5/6 py-10 mx-auto space-y-4">
     <p class="font-semibold text-xl">Khóa học miễn phí</p>
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-3 gap-6">
       <Item v-for="course in courses" :key="course.id" :course="course" />
     </div>
     <div class="flex flex-row-reverse justify-items-end">
@@ -38,7 +38,7 @@ const courses: Array<Course> = [
   </div>
   <div class="flex flex-col w-5/6 pb-10 mx-auto space-y-4">
     <p class="font-semibold text-xl">Blog</p>
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-3 gap-6">
       <Item v-for="course in courses" :key="course.id" :course="course" />
     </div>
     <div class="flex flex-row-reverse justify-items-end">

@@ -2,11 +2,7 @@ package com.fpt.onlineTest.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.models.auth.In;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -41,15 +37,15 @@ public class Course implements Serializable {
     private Boolean status;
 
     @Column(columnDefinition = "varchar(20)")
-    @NotNull
+    @NonNull
     private String subject;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "courses")
-    List<ContentCourse> contentCourses;
+    @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL)
+    List<Chapter> contentCours;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "courses")
+    @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL)
     List<Exam> exams;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)

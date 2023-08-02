@@ -26,7 +26,7 @@ public class CoureController {
     }
 
     // delete course by id
-    @DeleteMapping("/courses/delete-course/courseId:{courseId}")
+    @DeleteMapping("/courses/delete-course/courseId:/{courseId}")
     public void deleteCourseById(@PathVariable Integer courseId) {
         try {
             courseService.deleteCourseById(courseId);
@@ -57,7 +57,7 @@ public class CoureController {
     }
 
     //    get course by teacher id
-    @GetMapping("/courses/teacher-courses/teacherId:{teacherId}")
+    @GetMapping("/courses/teacher-courses/teacherId:/{teacherId}")
     public ResponseEntity<List<Course>> getCourseByTeacherId(@PathVariable Integer teacherId) {
         try {
             return new ResponseEntity<>(courseService.getCoursesByTeacherId(teacherId), HttpStatus.OK);
@@ -67,7 +67,7 @@ public class CoureController {
     }
 
     // get course by student id
-    @GetMapping("/courses/student-courses/studentId:{userId}")
+    @GetMapping("/courses/student-courses/studentId:/{userId}")
     public List<Course> getCoursesByStudentId(@PathVariable Integer userId) {
         return courseService.getCoursesByStudentId(userId);
 
