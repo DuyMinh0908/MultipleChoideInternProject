@@ -36,6 +36,7 @@ public class ChapterController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     // delete by chapter id
     @DeleteMapping("/course/chapters/delete-chapter/{id}")
     public ResponseEntity<HttpStatus> deleteChapter(@PathVariable Integer id) {
