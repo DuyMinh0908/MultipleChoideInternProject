@@ -18,7 +18,7 @@ public class LessonController {
 
 //    create lesson
     @PostMapping("/course/chapter/lesson/add")
-    public ResponseEntity<Lesson> newLesson(Lesson newLesson){
+    public ResponseEntity<Lesson> newLesson(@RequestBody Lesson newLesson){
         try {
             return new ResponseEntity<>(lessonService.createLesson(newLesson), HttpStatus.OK);
         } catch (Exception e) {
