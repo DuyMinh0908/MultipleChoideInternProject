@@ -1,8 +1,8 @@
 export interface Course {
-  course_id: Number;
-  course_name: String;
-  image_course: String;
-  number_student: Number;
+  courseId: Number;
+  courseName: String;
+  imageCourse: String;
+  numberStudent: Number;
   status: Boolean;
   subject: String;
 }

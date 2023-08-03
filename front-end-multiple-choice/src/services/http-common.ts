@@ -8,4 +8,4 @@ export const api: AxiosInstance = axios.create({
     Accept: "application/json",
   },
 });
-api.interceptors.request.use((config) => {});
+// api.interceptors.request.use((config) => {});

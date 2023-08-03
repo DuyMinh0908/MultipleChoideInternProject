@@ -32,9 +32,12 @@ build/
 
 ### VS Code ###
 .vscode/
-
  
 .env
+ 
+ 
+onlineTest.sql
+
  
 *.properties
 application.properties

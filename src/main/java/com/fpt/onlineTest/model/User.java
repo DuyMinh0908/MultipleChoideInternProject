@@ -54,17 +54,15 @@ public class User implements Serializable {
     @JoinColumn(name = "roleId")
     private Role role;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "courses_registration",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CoursesRegistration> courseRegistrations;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    List<ResultExam> resultExams;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ResultExam> resultExams;
 
-    @OneToMany(mappedBy = "user")
-    List<Blog> blogs;
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Blog> blogs;
 }

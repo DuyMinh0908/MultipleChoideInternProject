@@ -48,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: "/detail",
+        path: ":slug",
         name: "Courses.Detail",
         component: () => import("../components/Course/Detail.vue"),
         meta: {

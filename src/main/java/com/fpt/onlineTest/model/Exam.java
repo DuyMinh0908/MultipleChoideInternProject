@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -39,12 +40,10 @@ public class Exam {
     @JoinColumn(name = "courseId")
     Course courses;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "exam")
+    private List<ExamQuestion> examQuestions;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "exam_questions",
-            joinColumns = @JoinColumn(name = "exam_id"),
-            inverseJoinColumns = @JoinColumn(name = "question_id"))
-    private List<Questions> questions;
-
-
+    public Exam(Integer questionId) {
+    }
 }

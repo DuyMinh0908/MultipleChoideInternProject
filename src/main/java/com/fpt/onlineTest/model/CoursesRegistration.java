@@ -1,5 +1,6 @@
 package com.fpt.onlineTest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,20 +19,10 @@ public class CoursesRegistration implements Serializable {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private User student;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
-
-    public CoursesRegistration(User student, Course course, Teacher teacher) {
-        this.student = student;
-        this.course = course;
-        this.teacher = teacher;
-    }
 }

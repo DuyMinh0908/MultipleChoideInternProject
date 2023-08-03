@@ -14,17 +14,16 @@
         </div>
       </p>
       <div class="grid grid-cols-3 gap-6">
-        <Item v-for="course in courses" :key="course.id" :course="course" />
+        <Item v-for="course in popularCourses" :key="course.id" :course="course" />
+        
       </div>
      
     </div>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
-      <p class="font-semibold text-xl relative w-52 h-10 flex flex-col justify-end">Khóa học miễn phí 
-        
+      <p class="font-semibold text-xl relative w-52 h-10 flex flex-col justify-end">Khóa học miễn phí    
       </p>
       <div class="grid grid-cols-3 gap-6">
-        <Item v-for="course in courses" :key="course.id" :course="course" />
-        <Item v-for="course in courses" :key="course.id" :course="course" />
+        <Item v-for="course in allCourses " :key="course.id" :course="course" />
       </div>
      
     </div>
@@ -35,9 +34,36 @@ import Navigation from "../components/Navigation.vue";
 import Item from "../components/Course/Item.vue";
 import SideBar from "../components/SideBar.vue";
 import { Course } from "../../model/course";
-const courses: Array<Course> = [
-  { id: 1, img: "../src/assets/images/nodejs.png" },
-  { id: 1, img: "../src/assets/images/js.png" },
-  { id: 1, img: "../src/assets/images/wsl.png" },
-];
+import { api } from "../services/http-common";
+import {ref, Ref, onBeforeMount} from"vue"
+ 
+ 
+const popularCourses : Ref<Array<Course>> = ref([])
+const allCourses :  Ref<Array<Course>> = ref([])
+const getCoursePopular = async ()=>{
+ try{
+    const data = await api.get('/courses/popular-courses') ;
+    console.log(data.data)
+    popularCourses.value = data.data
+    // console.log(typeof courses.value)
+ }
+ catch(e){
+  console.error(e)
+ }
+}
+const getAllCourses = async ()=>{
+ try{
+    const data = await api.get('/courses') ;
+    console.log(data.data)
+    allCourses.value = data.data
+    
+ }
+ catch(e){
+  console.error(e)
+ }
+}
+onBeforeMount(() => {
+  getCoursePopular()
+  getAllCourses()
+})
 </script>

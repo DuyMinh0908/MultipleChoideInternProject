@@ -1,19 +1,20 @@
 package com.fpt.onlineTest.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "Chapters")
-@Setter
-@Getter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Chapter implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +24,14 @@ public class Chapter implements Serializable {
     @NotNull
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "courseId")
-    Course courses;
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course courses;
 
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
-    List<Lesson> lessons;
+    private List<Lesson> lessons;
+
+    public Chapter(String description) {
+        this.description = description;
+    }
 }

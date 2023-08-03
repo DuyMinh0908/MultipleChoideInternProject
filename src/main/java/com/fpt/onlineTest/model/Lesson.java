@@ -1,18 +1,15 @@
 package com.fpt.onlineTest.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Setter
-@Getter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Lesson")
 public class Lesson {
     @Id
@@ -24,6 +21,10 @@ public class Lesson {
     private String lessonTitle;
 
     @ManyToOne
-    @JoinColumn(name = "chapterId")
+    @JoinColumn(name = "chapter_id")
     private Chapter chapter;
+
+    public Lesson(String lessonTitle) {
+        this.lessonTitle = lessonTitle;
+    }
 }
