@@ -36,6 +36,7 @@ public class ChapterController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     // delete by chapter id
     @DeleteMapping("/course/chapters/delete-chapter/{id}")
     public ResponseEntity<HttpStatus> deleteChapter(@PathVariable Integer id) {
@@ -55,6 +56,18 @@ public class ChapterController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // delete course chapter
+    @DeleteMapping("/course/chapter/delete/course-id={courseId}")
+    public ResponseEntity<HttpStatus> deleteCourseSChapter(@PathVariable Integer courseId){
+        try {
+            chapterService.deleteCourseSChapter(courseId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

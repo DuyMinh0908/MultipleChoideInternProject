@@ -18,24 +18,11 @@ public class CoursesRegistration implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private User student;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
-
-    public CoursesRegistration(User student, Course course, Teacher teacher) {
-        this.student = student;
-        this.course = course;
-        this.teacher = teacher;
-    }
 }

@@ -45,4 +45,9 @@ public class ChapterServiceImpl implements ChapterService {
         chapterRepository.deleteById(chapterId);
     }
 
+    @Override
+    public void deleteCourseSChapter(Integer courseId) {
+        chapterRepository.deleteCourseSChapter(courseId);
+    }
+
 }

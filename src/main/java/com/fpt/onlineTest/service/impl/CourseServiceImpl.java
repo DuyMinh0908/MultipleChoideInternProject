@@ -20,6 +20,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course newCourse(Course course) {
+        Teacher teacher = teacherRepository.findById(course.getTeacher().getId()).orElse(null);
+        if (teacher == null)
+            return null;
+        else
+            course.setTeacher(teacher);
         return courseRepository.save(course);
     }
 
@@ -51,12 +56,15 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCoursesByTeacherId(Integer teacherId) {
         return courseRepository.findCoursesByTeacherId(teacherId);
+//        return null;
     }
 
     @Override
     public List<Course> getCoursesByStudentId(Integer studentId) {
         return courseRepository.findCoursesByStudentId(studentId);
+//        return null;
     }
+
 
     @Override
     public List<Course> getPopuLarCourses() {

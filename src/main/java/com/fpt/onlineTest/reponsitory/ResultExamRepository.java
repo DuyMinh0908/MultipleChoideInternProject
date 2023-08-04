@@ -2,6 +2,7 @@ package com.fpt.onlineTest.reponsitory;
 
 import com.fpt.onlineTest.model.ResultExam;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -22,3 +23,4 @@ public interface ResultExamRepository extends JpaRepository<ResultExam, Integer>
     @Query(value = "SELECT * FROM result_exams ORDER BY point DESC", nativeQuery = true)
     List<ResultExam> findResultExamByPointDESC();
 }
+
