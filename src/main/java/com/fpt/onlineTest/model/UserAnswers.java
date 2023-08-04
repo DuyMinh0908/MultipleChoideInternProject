@@ -1,8 +1,6 @@
 package com.fpt.onlineTest.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +9,8 @@ import java.io.Serializable;
 @Table(name = "UserAnswers")
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 @Data
 public class UserAnswers implements Serializable {
     @Id

@@ -2,9 +2,7 @@ package com.fpt.onlineTest.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,16 +14,19 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 @Data
 public class ResultExam implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer resultExamId;
 
+    @Column(columnDefinition = "varchar(100)")
+    @NotNull
     private Double point;
 
     @OneToOne
-    @JsonIgnore
     @JoinColumn(name = "exam_id")
     @NotNull
     private Exam exam;

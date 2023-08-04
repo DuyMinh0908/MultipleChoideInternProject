@@ -1,26 +1,27 @@
 package com.fpt.onlineTest.model;
 
-
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ResultQuestions")
-
+@Table(name = "BanUser")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Data
-public class ResultQuestion implements Serializable {
+public class BanUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer resultId;
+    private Integer banUserId;
 
     @ManyToOne
-    @JoinColumn(name = "answerId")
-    Answer answer;
+    @JoinColumn(name = "userId")
+    User user;
 
+    @ManyToOne
+    @JoinColumn(name = "examId")
+    Exam exam;
 }
