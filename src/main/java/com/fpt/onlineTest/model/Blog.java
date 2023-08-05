@@ -19,8 +19,10 @@ public class Blog implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer blogId;
+
     @Column(columnDefinition = "nvarchar(MAX)")
     private String titleBlog;
+
     @Column(columnDefinition = "nvarchar(MAX)")
     private String contentBlog;
 
