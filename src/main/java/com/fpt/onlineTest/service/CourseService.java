@@ -1,30 +1,36 @@
 package com.fpt.onlineTest.service;
 
+import com.fpt.onlineTest.dto.CourseDto;
 import com.fpt.onlineTest.model.Course;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CourseService {
-//    create course
+    //    create course
     Course newCourse(Course course);
 
-//    delete course by id
+    //    delete course by id
     void deleteCourseById(Integer courseId);
 
-//    update course
+    //    update course
     Course updateCourse(Integer courseId, Course course);
 
-//    get all course
-    List<Course> getAll();
+    //    get all course
+    Page<Course> getAll(Pageable pageable);
 
-//    get teacher course
-    List<Course> getCoursesByTeacherId(Integer teacherId);
+    //    get teacher course
+    Page<Course> getCoursesByTeacherId(Integer teacherId, Pageable pageable);
 
-//    get student courses
-    List<Course> getCoursesByStudentId(Integer studentId);
+    //    get student courses
+    Page<Course> getCoursesByStudentId(Integer studentId, Pageable pageable);
 
-//    get popular course
+    //    get popular course
     List<Course> getPopuLarCourses();
 
-
+    // get course by id
+    Optional<CourseDto> getCourseDtoById(Integer courseId);
+    Optional<Course> getCourseById(Integer courseId);
 }

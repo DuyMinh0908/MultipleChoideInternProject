@@ -10,12 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface ExamRepository extends JpaRepository<Exam, Integer> {
-
+//get by course id
     @Query("select e from Exam e where e.courses.courseId=:courseId")
     List<Exam> findExamByCourseId(@Param("courseId") Integer courseId);
-
+// delete by course id
     @Transactional
     @Modifying
     @Query("delete from Exam e where e.courses.courseId=:courseId")
     void deleteExamByCourseId(@Param("courseId") Integer courseId);
+//    get exam question amount
+    @Query("select e.numQuestion from Exam e where e.examId=:examId")
+    Integer getExamQuestionAmount(@Param("examId") Integer examId);
+
 }
