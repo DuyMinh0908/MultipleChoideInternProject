@@ -1,6 +1,7 @@
 <template>
   <Navigation />
   <SideBar />
+  <div></div>
   <div class="flex flex-col w-5/6 mx-auto">
     <h3 class="inline font-bold text-2xl">Khóa học</h3>
     <p>
@@ -14,7 +15,7 @@
         </div>
       </p>
       <div class="grid grid-cols-3 gap-6">
-        <Item v-for="course in popularCourses" :key="course.id" :course="course" />
+        <Item v-for="course in popularCourses" :key="course.courseId" :course="course" />
         
       </div>
      
@@ -33,7 +34,7 @@
 import Navigation from "../components/Navigation.vue";
 import Item from "../components/Course/Item.vue";
 import SideBar from "../components/SideBar.vue";
-import { Course } from "../../model/course";
+import { Course } from "../model/course";
 import { api } from "../services/http-common";
 import {ref, Ref, onBeforeMount} from"vue"
  

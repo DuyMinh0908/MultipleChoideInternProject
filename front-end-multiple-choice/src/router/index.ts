@@ -24,8 +24,21 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/blog",
     name: "Blogs",
-
-    component: () => import("../components/Blog.vue"),
+    meta: {
+      title: "Blog",
+    },
+    children: [
+      {
+        path: "",
+        name: "Blogs.Index",
+        component: () => import("../components/Blog.vue"),
+      },
+      {
+        path: ":id",
+        name: "Blogs.Detail",
+        component: () => import("../components/Blog/Detail.vue"),
+      },
+    ],
   },
   {
     path: "/exam",
