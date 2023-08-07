@@ -33,6 +33,9 @@ build/
 ### VS Code ###
 .vscode/
 
+### images ###
+images
+
 <<<<<<< HEAD
 # sql
 onlineTest.sql
