@@ -59,16 +59,8 @@ public class SampleDataLoader implements CommandLineRunner {
 
         });
         userReponsitory.saveAllAndFlush(userList);
-//        Chapter chapter = new Chapter();
-//        chapter.setDescription("Chapter 1");
-//        Lesson lesson = new Lesson();
-//        lesson.setLessonTitle("Bai 1");
-//        chapter.setLessons(Collections.singleton(lesson));
-//        chapterRepository.saveAndFlush(chapter);
-//        lessonRepository.findAll().forEach(p->{
-//            System.out.println(p.getLessonTitle());
-//        });
-//
+
+
         List<Course> courses = IntStream.rangeClosed(1,10)
                 .mapToObj(i-> new Course(
                         faker.book().title(),
@@ -86,14 +78,15 @@ public class SampleDataLoader implements CommandLineRunner {
                     courseRepository.saveAndFlush(course);
                 }
         );
-            Chapter chapter = new Chapter();
-    chapter.setDescription("Day la khoa hoc tam bay");
-    List<Lesson> lessons = IntStream.rangeClosed(1,3)
-                    .mapToObj(i -> new Lesson("Phan cascascasca"))
-                            .collect(Collectors.toList());
-
-    chapter.setLessons(lessons);
-    chapterRepository.saveAndFlush(chapter);
+        courseRepository.saveAllAndFlush(courses);
+//            Chapter chapter = new Chapter();
+//    chapter.setDescription("Day la khoa hoc tam bay");
+//    List<Lesson> lessons = IntStream.rangeClosed(1,3)
+//                    .mapToObj(i -> new Lesson("Phan cascascasca"))
+//                            .collect(Collectors.toList());
+//
+//    chapter.setLessons(lessons);
+//    chapterRepository.saveAndFlush(chapter);
 
 
     }

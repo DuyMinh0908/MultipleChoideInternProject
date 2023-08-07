@@ -18,7 +18,7 @@ const prop = defineProps<Props>();
         <router-link
           :to="{
             name: 'Courses.Detail',
-            params: { slug: prop.course.courseId },
+            params: { id: `${prop.course.courseId}` },
           }"
           class="bg-white rounded-xl absolute hidden group-hover:block py-2 px-4 cursor-pointer"
         >

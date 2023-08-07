@@ -10,7 +10,9 @@
       />
       <p class="font-semibold">{{ blog.user.fullName }}</p>
     </div>
+    <span v-html="blog.contentBlog"></span>
   </div>
+  <div></div>
 </template>
 <script lang="ts" setup>
 import Navigation from "../Navigation.vue";

@@ -7,6 +7,7 @@ import com.fpt.onlineTest.reponsitory.ExamQuestionRepository;
 import com.fpt.onlineTest.reponsitory.ExamRepository;
 import com.fpt.onlineTest.reponsitory.QuestionRepository;
 import com.fpt.onlineTest.service.ExamQuestionService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
@@ -42,25 +43,26 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     }
 
     //    create random exam have random level with {subject} and {nums} questions
-    public List<ExamQuestion> createExamTestWithRandomQuestion(Integer nums, Exam exam, String subject){
+    @Override
+    public List<ExamQuestion> createExamTestWithRandomQuestion(Integer nums, Exam exam, String subject) {
         int totalNums = nums;
 
         int hardNums = (int) (totalNums * 0.2);
         int mediumNums = (int) (totalNums * 0.3);
         int easyNums = totalNums - hardNums - mediumNums;
 
-        List<Integer> hardQidList = questionRepository.getRandomQuestionId(subject,"hard");
-        List<Integer> hardList = hardQidList.subList(0,Math.min(hardNums,hardQidList.size()));
+        List<Integer> hardQidList = questionRepository.getRandomQuestionId(subject, "hard");
+        List<Integer> hardList = hardQidList.subList(0, Math.min(hardNums, hardQidList.size()));
 
-        List<Integer> mediumQidList = questionRepository.getRandomQuestionId(subject,"medium");
-        List<Integer> mediumList = mediumQidList.subList(0,Math.min(mediumNums,mediumQidList.size()));
+        List<Integer> mediumQidList = questionRepository.getRandomQuestionId(subject, "medium");
+        List<Integer> mediumList = mediumQidList.subList(0, Math.min(mediumNums, mediumQidList.size()));
 
-        List<Integer> easyQidList = questionRepository.getRandomQuestionId(subject,"easy");
-        List<Integer> easyList =  easyQidList.subList(0,Math.min(easyNums,easyQidList.size()));
+        List<Integer> easyQidList = questionRepository.getRandomQuestionId(subject, "easy");
+        List<Integer> easyList = easyQidList.subList(0, Math.min(easyNums, easyQidList.size()));
 
         List<ExamQuestion> examQuestionList = new ArrayList<>();
 
-        for (Integer hardQid: hardList) {
+        for (Integer hardQid : hardList) {
             Questions question = new Questions();
             question.setQuestionId(hardQid);
 
@@ -70,7 +72,7 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
             examQuestionList.add(examQuestion);
         }
 
-        for (Integer mediumQid: mediumList){
+        for (Integer mediumQid : mediumList) {
             Questions question = new Questions();
             question.setQuestionId(mediumQid);
 
@@ -81,11 +83,11 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
             examQuestionList.add(examQuestion);
         }
 
-        for (Integer easyQid : easyList){
+        for (Integer easyQid : easyList) {
             Questions question = new Questions();
             question.setQuestionId(easyQid);
 
-            ExamQuestion examQuestion =  new ExamQuestion();
+            ExamQuestion examQuestion = new ExamQuestion();
             examQuestion.setQuestion(question);
             examQuestion.setExam(exam);
 
@@ -96,15 +98,34 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     }
 
     @Override
+    public ExamQuestion addSingleQuestion(ExamQuestion examQuestion) {
+//        return examQuestionRepository.addSingleQuestionToExam(examQuestion.getExam().getExamId(),examQuestion.getQuestion().getQuestionId());
+        return examQuestionRepository.save(examQuestion);
+    }
+
+    @Override
+    public List<ExamQuestion> addSelectedQuestion(List<ExamQuestion> examQuestions) {
+        return null;
+    }
+
+    @Override
+    public List<ExamQuestion> getExamTestQuestions(Integer examId) {
+        return examQuestionRepository.findExamQuestionByExamId(examId);
+    }
+
+    //delete 1 question
+    @Override
     public void deleteQuestionById(Integer questionId) {
         examQuestionRepository.deleteById(questionId);
     }
 
+    // delete all exam question
     @Override
-    public void deleteAllQuestion() {
-        examQuestionRepository.deleteAll();
+    public void deleteExamAllQuestion(Integer examId) {
+        examQuestionRepository.deleteExamAllQuestion(examId);
     }
 
+    // delete selected question
     @Override
     public void deleteListOfQuestion(List<Integer> listId) {
         examQuestionRepository.deleteAllByIdInBatch(listId);

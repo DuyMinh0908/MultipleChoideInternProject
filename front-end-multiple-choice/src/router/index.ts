@@ -22,6 +22,22 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../components/Register.vue"),
   },
   {
+    path: "/dashboard",
+    name: "Dashboard",
+    children: [
+      {
+        path: "",
+        name: "Dashboard.Blog.Index",
+        component: () => import("../components/Dashboard/blog/index.vue"),
+      },
+      {
+        path: ":id/update",
+        name: "Dashboard.Blog.Update",
+        component: () => import("../components/Dashboard/blog/update.vue"),
+      },
+    ],
+  },
+  {
     path: "/blog",
     name: "Blogs",
     meta: {
@@ -37,6 +53,16 @@ const routes: Array<RouteRecordRaw> = [
         path: ":id",
         name: "Blogs.Detail",
         component: () => import("../components/Blog/Detail.vue"),
+      },
+      {
+        path: "/create",
+        name: "Blogs.Create",
+        component: () => import("../components/Blog/Create.vue"),
+      },
+      {
+        path: ":id/Update",
+        name: "Blogs.Update",
+        component: () => import("../components/Blog/Update.vue"),
       },
     ],
   },
@@ -61,7 +87,7 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: ":slug",
+        path: ":id",
         name: "Courses.Detail",
         component: () => import("../components/Course/Detail.vue"),
         meta: {

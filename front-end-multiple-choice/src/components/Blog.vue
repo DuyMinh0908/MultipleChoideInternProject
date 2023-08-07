@@ -2,7 +2,16 @@
   <Navigation />
   <SideBar />
   <div class="flex flex-col w-5/6 mx-auto">
-    <h3 class="inline font-bold text-2xl">Bài viết nổi bật</h3>
+    <div class="flex flex-row justify-between">
+      <h3 class="inline font-bold text-2xl">Bài viết nổi bật</h3>
+      <router-link
+        :to="{ name: 'Blogs.Create' }"
+        class="px-5 py-2 bg-lightblue rounded-xl text-white font-semibold flex flex-row text-center items-center"
+      >
+        <Icon class="w-5 h-5 mr-2 stroke-slate-800" name="plus" />
+        Thêm bài viết
+      </router-link>
+    </div>
     <p>
       Tổng hợp các bài viết chia sẻ về kinh nghiệm tự học lập trình online và
       các kỹ thuật lập trình web.
@@ -19,6 +28,7 @@ import SideBar from "../components/SideBar.vue";
 import { Blog } from "../model/blog";
 import { api } from "../services/http-common";
 import { ref, Ref, onBeforeMount } from "vue";
+import Icon from "../icons/ClientDashboard.vue";
 
 const allBlogs: Ref<Array<Blog>> = ref([]);
 
@@ -26,6 +36,7 @@ const getAllBlogs = async () => {
   try {
     const data = await api.get("/blogs");
     allBlogs.value = data.data;
+    console.log(data);
   } catch (e) {
     console.error(e);
   }

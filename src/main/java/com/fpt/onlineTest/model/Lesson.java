@@ -20,8 +20,8 @@ public class Lesson {
     @NotNull
     private String lessonTitle;
 
-    @ManyToOne
-    @JoinColumn(name = "chapter_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chapterId")
     private Chapter chapter;
 
     public Lesson(String lessonTitle) {

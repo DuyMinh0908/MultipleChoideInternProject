@@ -1,7 +1,6 @@
 <template>
   <Navigation />
   <SideBar />
-  <div></div>
   <div class="flex flex-col w-5/6 mx-auto">
     <h3 class="inline font-bold text-2xl">Khóa học</h3>
     <p>

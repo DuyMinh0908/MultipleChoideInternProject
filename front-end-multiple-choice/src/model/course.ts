@@ -1,3 +1,4 @@
+import { Chapter } from "./chapter";
 export interface Course {
   courseId: Number;
   courseName: String;
@@ -5,4 +6,5 @@ export interface Course {
   numberStudent: Number;
   status: Boolean;
   subject: String;
+  chapters: Array<Chapter>;
 }
