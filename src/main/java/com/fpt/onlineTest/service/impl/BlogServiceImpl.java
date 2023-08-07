@@ -3,7 +3,7 @@ package com.fpt.onlineTest.service.impl;
 import com.fpt.onlineTest.model.Blog;
 import com.fpt.onlineTest.model.User;
 import com.fpt.onlineTest.reponsitory.BlogRepository;
-import com.fpt.onlineTest.reponsitory.UserReponsitory;
+import com.fpt.onlineTest.reponsitory.UserRepository;
 import com.fpt.onlineTest.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,12 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private BlogRepository blogRepository;
     @Autowired
-    private UserReponsitory userReponsitory;
+    private UserRepository userRepository;
 
     //    create new blog
     @Override
     public Blog newBLog(Blog blog) {
-        User user = userReponsitory.findById(blog.getUser().getUserId()).orElse(null);
+        User user = userRepository.findById(blog.getUser().getUserId()).orElse(null);
         if (user == null)
             return null;
         else

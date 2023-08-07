@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-@Data
+
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,23 +23,13 @@ public class User implements Serializable {
     @Column(columnDefinition = "varchar(20) not null")
     private String username;
 
-    @Column(columnDefinition = "varchar(16)not null")
+    @Column(columnDefinition = "varchar(MAX) not null")
     private String userPass;
 
     @Column(columnDefinition = "nvarchar(50) not null")
     private String fullName;
 
     private String email;
-
-    public User(String username, String userPass, String fullName, String email, String phone, String address, String imageUser) {
-        this.username = username;
-        this.userPass = userPass;
-        this.fullName = fullName;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.imageUser = imageUser;
-    }
 
     @Column(columnDefinition = "varchar(10)not null")
     private String phone;
