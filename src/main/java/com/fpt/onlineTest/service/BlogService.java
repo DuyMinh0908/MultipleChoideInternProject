@@ -1,6 +1,11 @@
 package com.fpt.onlineTest.service;
 
+import com.fpt.onlineTest.dto.BlogDto;
+import com.fpt.onlineTest.dto.UserDto;
 import com.fpt.onlineTest.model.Blog;
+import com.fpt.onlineTest.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,17 +15,18 @@ public interface BlogService {
     Blog newBLog(Blog blog);
 
     //    get all blogs
-    List<Blog> getAll();
+//    Page<Blog> getAll(Pageable pageable);
+    Page<BlogDto> getAll(Pageable pageable);
 
     // get blog by id
-    Optional<Blog> getBlogById(Integer blogId);
+    BlogDto getBlogById(Integer blogId);
 
 //    get popular blog
 
 
     //    get all blog by userId
     List<Blog> getAllBlogsByUserId( Integer userId);
-
+    UserDto getBlogDtoByUserId(Integer userId, Pageable pageable, Optional<User> user);
     //    update blog
     Blog updateBlog(Integer id, Blog blog);
 
@@ -30,5 +36,5 @@ public interface BlogService {
     //    delete all user blogs by userId
     void deleteAllBlogsByUserId(Integer userId);
 //    get top 5 blog have most visitors
-    List<Blog> getTop2Blogs();
+    List<BlogDto> getTopBlogs();
 }
