@@ -1,11 +1,15 @@
 package com.fpt.onlineTest.service.impl;
 
+import com.fpt.onlineTest.dto.BlogDto;
+import com.fpt.onlineTest.dto.UserDto;
 import com.fpt.onlineTest.model.Blog;
 import com.fpt.onlineTest.model.User;
 import com.fpt.onlineTest.reponsitory.BlogRepository;
 import com.fpt.onlineTest.reponsitory.UserReponsitory;
 import com.fpt.onlineTest.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,21 +35,53 @@ public class BlogServiceImpl implements BlogService {
 
     //    get all blogs
     @Override
-    public List<Blog> getAll() {
-        return blogRepository.findAll();
+    public Page<BlogDto> getAll(Pageable pageable) {
+        return blogRepository.findAllBlogs(pageable);
     }
 
     //    get blog by id
     @Override
-    public Optional<Blog> getBlogById(Integer blogId) {
-        return blogRepository.findById(blogId);
+    public BlogDto getBlogById(Integer blogId) {
+        return blogRepository.findBlogById(blogId);
     }
 
     //    get all blog by userId
     public List<Blog> getAllBlogsByUserId(Integer userId) {
-        return blogRepository.findAllBlogsByUserId(userId);
+//        return blogRepository.findAllBlogsByUserId(userId);
+        return null;
     }
-
+    public UserDto getBlogDtoByUserId(Integer userId, Pageable pageable, Optional<User> user) {
+        Page<Blog> blogPage = blogRepository.findAllBlogsByUserId(userId,pageable);
+//        Optional<User> user = userReponsitory.findById(userId);
+        user = userReponsitory.findById(userId);
+        UserDto userDto = new UserDto();
+        if (user.isPresent()){
+            userDto.setUserId(user.get().getUserId());
+            userDto.setFullName(user.get().getFullName());
+            userDto.setEmail(user.get().getEmail());
+            userDto.setPhone(user.get().getPhone());
+            userDto.setAddress(user.get().getAddress());
+            userDto.setImageUser(user.get().getImageUser());
+        }
+        userDto.setBlogs(blogPage.map(this::mapToDTO));
+        return userDto;
+    }
+    public BlogDto getAllBlog(Blog blog){
+        BlogDto blogDto = new BlogDto();
+        blogDto.setContentBlog(blog.getContentBlog());
+        blogDto.setBlogId(blog.getBlogId());
+        blogDto.setTitleBlog(blog.getTitleBlog());
+        blogDto.setNumberVisitors(blogDto.getNumberVisitors());
+        return blogDto;
+    }
+    private BlogDto mapToDTO(Blog blog) {
+        BlogDto blogDto = new BlogDto();
+        blogDto.setBlogId(blog.getBlogId());
+        blogDto.setContentBlog(blog.getContentBlog());
+        blogDto.setTitleBlog(blog.getTitleBlog());
+        blogDto.setNumberVisitors(blog.getNumberVisitors());
+        return blogDto;
+    }
     //    update blog
     @Override
     public Blog updateBlog(Integer blogId, Blog blog) {
@@ -78,10 +114,12 @@ public class BlogServiceImpl implements BlogService {
         blogRepository.deleteAllByUserId(userId);
     }
 //    get top 2 blogs have most visitors
-    public List<Blog> getTop2Blogs(){
-        List<Blog> top2Blogs = blogRepository.findTop2Blogs();
-        return top2Blogs.subList(0, Math.min(5, top2Blogs.size()));
+    public List<BlogDto> getTopBlogs(){
+        List<BlogDto> topBlogs = blogRepository.findTopBlogs();
+        return topBlogs.subList(0, Math.min(5, topBlogs.size()));
     }
+
+
 
     public Long getUserId(Blog blog) {
         return Long.valueOf(blog.getUser().getUserId());
