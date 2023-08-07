@@ -20,4 +20,8 @@ public class UserAnswers implements Serializable {
     @ManyToOne
     @JoinColumn(name = "answerId")
     Answer answer;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    User user;
 }

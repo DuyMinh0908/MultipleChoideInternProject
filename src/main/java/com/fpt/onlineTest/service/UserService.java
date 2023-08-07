@@ -1,5 +1,7 @@
 package com.fpt.onlineTest.service;
 
+import com.fpt.onlineTest.dto.CourseDto;
+import com.fpt.onlineTest.dto.UserDto;
 import com.fpt.onlineTest.model.User;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -82,4 +84,7 @@ public interface UserService {
     <S extends User> boolean exists(Example<S> example);
 
     <S extends User, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction);
+
+    // get userDto by id
+    Optional<UserDto> getUserDtoById(Integer userId);
 }

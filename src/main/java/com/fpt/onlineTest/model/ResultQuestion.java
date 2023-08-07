@@ -19,10 +19,8 @@ public class ResultQuestion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer resultId;
 
-
     @ManyToOne
     @JoinColumn(name = "answerId")
     Answer answer;
-
 
 }

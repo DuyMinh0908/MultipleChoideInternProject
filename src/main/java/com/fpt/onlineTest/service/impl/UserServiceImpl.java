@@ -1,5 +1,8 @@
 package com.fpt.onlineTest.service.impl;
 
+import com.fpt.onlineTest.dto.CourseDto;
+import com.fpt.onlineTest.dto.UserDto;
+import com.fpt.onlineTest.model.Course;
 import com.fpt.onlineTest.model.User;
 import com.fpt.onlineTest.reponsitory.RoleRepository;
 import com.fpt.onlineTest.reponsitory.UserRepository;
@@ -191,5 +194,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public <S extends User, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return userRepository.findBy(example, queryFunction);
+    }
+
+    @Override
+    public Optional<UserDto> getUserDtoById(Integer userId) {
+        return userReponsitory.findById(userId).map(this::mapToDTO);
+    }
+    private UserDto mapToDTO(User user) {
+        UserDto userDto= new UserDto();
+        userDto.setUserId(user.getUserId());
+        userDto.setFullName(user.getFullName());
+        userDto.setEmail(userDto.getEmail());
+        userDto.setPhone(userDto.getPhone());
+        userDto.setImageUser(user.getImageUser());
+        return userDto;
     }
 }

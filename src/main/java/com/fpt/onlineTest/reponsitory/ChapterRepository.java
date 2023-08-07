@@ -5,17 +5,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public interface ChapterRepository extends JpaRepository<Chapter, Integer> {
-
-    // create current course chapter
+//get course chapter
+    @Query("select ch from Chapter ch where ch.courses.courseId=:courseId")
+    List<Chapter> findCourseSChapter(@Param("courseId") Integer courseId);
+    //    delete course's chapter
+    @Transactional
     @Modifying
-    @Query(value = "insert into chapters values(:title,:courseId)", nativeQuery = true)
-    Chapter createCourseSChapter(@Param("title") String title, @Param("courseId") Integer courseId);
-
-//    delete course's chapter
     @Query("delete from Chapter ch where ch.courses.courseId=:courseId")
     void deleteCourseSChapter(Integer courseId);
-
-
 }

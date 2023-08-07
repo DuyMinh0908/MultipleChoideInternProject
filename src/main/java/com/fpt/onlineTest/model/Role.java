@@ -37,9 +37,8 @@ public class Role implements Serializable {
     private List<Admin> admins;
 
     public Role(String roleName) {
+
+        this.roleName = roleName;
     }
-
-
-
 
 }

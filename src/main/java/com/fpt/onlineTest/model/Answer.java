@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public class Answer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer answerId;
 
+    @Column(columnDefinition = "varchar(MAX)")
+    @NotNull
     private String contentAnswer;
 
     @ManyToOne
@@ -33,5 +36,4 @@ public class Answer implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "answer")
     List<UserAnswers> userAnswers;
-
 }

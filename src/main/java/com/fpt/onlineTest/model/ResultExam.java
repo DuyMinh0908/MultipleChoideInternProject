@@ -25,6 +25,7 @@ public class ResultExam implements Serializable {
     private Double point;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "exam_id")
     @NotNull
     private Exam exam;
