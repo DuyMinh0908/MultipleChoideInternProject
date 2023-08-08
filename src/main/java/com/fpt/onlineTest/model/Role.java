@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Table(name = "Role")
@@ -36,6 +37,8 @@ public class Role implements Serializable {
     private List<Admin> admins;
 
     public Role(String roleName) {
+
         this.roleName = roleName;
     }
+
 }

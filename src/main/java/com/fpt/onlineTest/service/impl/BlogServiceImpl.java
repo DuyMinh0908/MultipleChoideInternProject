@@ -5,7 +5,7 @@ import com.fpt.onlineTest.dto.UserDto;
 import com.fpt.onlineTest.model.Blog;
 import com.fpt.onlineTest.model.User;
 import com.fpt.onlineTest.reponsitory.BlogRepository;
-import com.fpt.onlineTest.reponsitory.UserReponsitory;
+import com.fpt.onlineTest.reponsitory.UserRepository;
 import com.fpt.onlineTest.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,12 +20,12 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private BlogRepository blogRepository;
     @Autowired
-    private UserReponsitory userReponsitory;
+    private UserRepository userRepository;
 
     //    create new blog
     @Override
     public Blog newBLog(Blog blog) {
-        User user = userReponsitory.findById(blog.getUser().getUserId()).orElse(null);
+        User user = userRepository.findById(blog.getUser().getUserId()).orElse(null);
         if (user == null)
             return null;
         else
@@ -49,7 +49,10 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public UserDto getBlogDtoByUserId(Integer userId, Pageable pageable, Optional<User> user) {
         Page<Blog> blogPage = blogRepository.findAllBlogsByUserId(userId,pageable);
-        user = userReponsitory.findById(userId);
+
+//        Optional<User> user = userReponsitory.findById(userId);
+        user = userRepository.findById(userId);
+
         UserDto userDto = new UserDto();
         if (user.isPresent()){
             userDto.setUserId(user.get().getUserId());

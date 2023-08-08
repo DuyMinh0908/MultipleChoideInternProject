@@ -38,17 +38,10 @@ public class CourseRegistrationServiceImpl implements CourseRegistrationService 
     @Override
     public CoursesRegistrationDto getCourseUsers(Integer courseId, Pageable pageable) {
         List<Integer> crUserIdList = coursesRegistrationRepository.findUserIdsByCourseId(courseId);
-        System.out.println("crUserIdList"+crUserIdList);
         Page<User> userPage = userReponsitory.findCourseSUsers(crUserIdList, pageable);
-        System.out.println("crDto getCourseUsers: " + userPage);
         CoursesRegistrationDto crDto = new CoursesRegistrationDto();
         crDto.setUserDto(userPage.map(this::mapUserToDto));
         return crDto;
-    }
-    public CoursesRegistrationDto getCourseUsers(Integer courseId){
-        List<Integer> crUserIdList = coursesRegistrationRepository.findUserIdsByCourseId(courseId);
-        System.out.println("crUserIdList: "+crUserIdList);
-        return new CoursesRegistrationDto();
     }
     public UserDto mapUserToDto(User user) {
         UserDto userDto = new UserDto();
