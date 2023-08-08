@@ -98,10 +98,8 @@ public class CoureController {
     //    get course by id
     @GetMapping("/courses/{courseId}")
     public ResponseEntity<CourseDto> getCourseById(@PathVariable Integer courseId) {
-        System.out.println("Heelo world"+courseId);
         try {
             Optional<CourseDto> courseDto = courseService.getCourseDtoById(courseId);
-
             return courseDto.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception e) {
