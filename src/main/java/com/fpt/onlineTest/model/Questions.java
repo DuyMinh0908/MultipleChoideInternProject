@@ -2,6 +2,7 @@ package com.fpt.onlineTest.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,16 +27,18 @@ public class Questions {
     @NotNull
     private String contentQuestion;
 
+    @JsonIgnore
     @Column(columnDefinition = "nvarchar(100)")
     @NotNull
     private String subject;
 
+    @JsonIgnore
     @Column(columnDefinition = "varchar(10)")
     @NotNull
     private String level;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "question")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Answer> answer;
 
     @JsonIgnore

@@ -2,6 +2,7 @@ package com.fpt.onlineTest.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,11 +29,13 @@ public class ResultExam implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "exam_id")
+    @JsonIgnoreProperties({"numQuestion", "timeStart", "timeEnd", "courses"})
     @NotNull
     private Exam exam;
 
     @ManyToOne
     @JoinColumn(name = "userId")
+    @JsonIgnoreProperties({"userPass", "fullName", "email", "phone", "address", "imageUser", "role"})
     User user;
 
 }

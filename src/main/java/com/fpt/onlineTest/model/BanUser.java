@@ -1,5 +1,6 @@
 package com.fpt.onlineTest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,9 +20,11 @@ public class BanUser implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "userId")
+    @JsonIgnoreProperties({"role", "userPass"})
     User user;
 
     @ManyToOne
     @JoinColumn(name = "examId")
+    @JsonIgnoreProperties({"numQuestion", "timeStart", "timeEnd"})
     Exam exam;
 }

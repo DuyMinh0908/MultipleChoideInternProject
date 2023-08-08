@@ -1,6 +1,7 @@
 package com.fpt.onlineTest.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -25,6 +26,7 @@ public class Answer implements Serializable {
     @NotNull
     private String contentAnswer;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "questionId")
     Questions question;

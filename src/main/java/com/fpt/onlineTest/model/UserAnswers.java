@@ -1,5 +1,6 @@
 package com.fpt.onlineTest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,5 +24,10 @@ public class UserAnswers implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "userId")
+    @JsonIgnoreProperties({"userPass", "fullName", "email", "phone", "address", "imageUser", "role"})
     User user;
+
+
+    @Column(name = "status", columnDefinition = "varchar(100)")
+    private String status;
 }
