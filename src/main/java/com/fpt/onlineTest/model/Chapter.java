@@ -18,6 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"course"})
 public class Chapter implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,7 @@ public class Chapter implements Serializable {
     @NotNull
     private String description;
 
+    @JsonIgnoreProperties({"courseName","numberStudent","imageCourse","status","subject","teacher"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "courseId")
     private Course courses;

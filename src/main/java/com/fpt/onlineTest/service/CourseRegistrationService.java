@@ -2,11 +2,8 @@ package com.fpt.onlineTest.service;
 
 import com.fpt.onlineTest.dto.CoursesRegistrationDto;
 import com.fpt.onlineTest.model.CoursesRegistration;
-import com.fpt.onlineTest.model.User;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-import java.util.Optional;
 
 public interface CourseRegistrationService {
     // course registration

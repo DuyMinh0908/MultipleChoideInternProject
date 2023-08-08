@@ -20,10 +20,10 @@ public class CoursesRegistration implements Serializable {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",unique = true)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "course_id",unique = true)
+    @JoinColumn(name = "course_id")
     private Course course;
 }

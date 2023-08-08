@@ -2,6 +2,7 @@ package com.fpt.onlineTest.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,11 +29,12 @@ public class Blog implements Serializable {
 
     private String numberVisitors;
 
-   @ManyToOne
-   @JoinColumn(name = "userId")
-   User user;
 
-    public Blog(String titleBlog, String contentBlog, String numberVisitors ) {
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    User user;
+
+    public Blog(String titleBlog, String contentBlog, String numberVisitors) {
         this.titleBlog = titleBlog;
         this.contentBlog = contentBlog;
         this.numberVisitors = numberVisitors;
