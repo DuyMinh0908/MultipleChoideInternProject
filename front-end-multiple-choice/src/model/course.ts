@@ -1,4 +1,10 @@
+import { Chapter } from "./chapter";
 export interface Course {
-  id: Number;
-  img: String;
+  courseId: Number;
+  courseName: String;
+  imageCourse: String;
+  numberStudent: Number;
+  status: Boolean;
+  subject: String;
+  chapters: Array<Chapter>;
 }

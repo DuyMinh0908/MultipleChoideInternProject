@@ -1,6 +1,6 @@
 package com.fpt.onlineTest.reponsitory;
 
-import com.fpt.onlineTest.model.Chapter;
+import com.fpt.onlineTest.dto.CourseDto;
 import com.fpt.onlineTest.model.Course;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,16 +17,17 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
     Page<Course> findCoursesByTeacherId(@Param("teacherId") Integer teacherId, Pageable pageable);
 
     //get courses by user id
-    @Query("select new Course (c.courseId, c.courseName, c.imageCourse, c.numberStudent, c.status, c.subject) " +
-            "from Course c " +
-            "join CoursesRegistration cr on c.courseId = cr.course.courseId " +
-            "where cr.user.userId = :userId")
-    Page<Course> findCoursesByStudentId(@Param("userId") Integer userId, Pageable pageable);
+    @Query("select c from Course c left join CoursesRegistration cr " +
+            "on c.courseId = cr.course.courseId " +
+            "where cr.user.userId =:userId")
+    Page<Course> findCoursesByUserId(@Param("userId") Integer userId, Pageable pageable);
 
     //    get popular courses
     @Query("select c from Course c order by c.numberStudent desc ")
     List<Course> findTopPopularCourse();
-
-    @Query()
-    Course findCourseWithChaptersAndLessonsByCourseId(@Param("courseId") Integer courseId);
+//    get all courses
+    @Query("select new com.fpt.onlineTest.dto.CourseDto(c.courseId,c.courseName,c.numberStudent,c.imageCourse,c.status,c.subject,t.id,t.fullName,t.imageTeacher) " +
+            "from Course c " +
+            "left join c.teacher t")
+    Page<CourseDto> findAllCourses(Pageable pageable);
 }

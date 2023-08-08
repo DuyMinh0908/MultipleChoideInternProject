@@ -1,10 +1,9 @@
 package com.fpt.onlineTest.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,6 +14,8 @@ import java.util.List;
 @Table(name = "Answers")
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 @Data
 public class Answer implements Serializable {
     @Id
@@ -25,6 +26,7 @@ public class Answer implements Serializable {
     @NotNull
     private String contentAnswer;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "questionId")
     Questions question;

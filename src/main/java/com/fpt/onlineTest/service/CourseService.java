@@ -1,7 +1,11 @@
 package com.fpt.onlineTest.service;
 
 import com.fpt.onlineTest.dto.CourseDto;
+import com.fpt.onlineTest.dto.TeacherDto;
+import com.fpt.onlineTest.dto.UserDto;
 import com.fpt.onlineTest.model.Course;
+import com.fpt.onlineTest.model.Teacher;
+import com.fpt.onlineTest.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,13 +23,13 @@ public interface CourseService {
     Course updateCourse(Integer courseId, Course course);
 
     //    get all course
-    Page<Course> getAll(Pageable pageable);
+    Page<CourseDto> getAll(Pageable pageable);
 
     //    get teacher course
-    Page<Course> getCoursesByTeacherId(Integer teacherId, Pageable pageable);
+    TeacherDto getCoursesByTeacherId(Integer teacherId, Pageable pageable, Optional<Teacher> teacher);
 
     //    get student courses
-    Page<Course> getCoursesByStudentId(Integer studentId, Pageable pageable);
+    UserDto getCoursesByUserIdtId(Integer studentId, Pageable pageable, Optional<User> user);
 
     //    get popular course
     List<Course> getPopuLarCourses();

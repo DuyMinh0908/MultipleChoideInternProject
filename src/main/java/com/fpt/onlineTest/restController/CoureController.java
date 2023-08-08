@@ -1,7 +1,11 @@
 package com.fpt.onlineTest.restController;
 
 import com.fpt.onlineTest.dto.CourseDto;
+import com.fpt.onlineTest.dto.TeacherDto;
+import com.fpt.onlineTest.dto.UserDto;
 import com.fpt.onlineTest.model.Course;
+import com.fpt.onlineTest.model.Teacher;
+import com.fpt.onlineTest.model.User;
 import com.fpt.onlineTest.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -60,11 +64,12 @@ public class CoureController {
 
     //    get all course
     @GetMapping("/courses")
-    public ResponseEntity<Page<Course>> getAllCourses(
+    public ResponseEntity<Page<CourseDto>> getAllCourses(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
+            System.out.println(courseService.getAll(pageable));
             return new ResponseEntity<>(courseService.getAll(pageable), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -73,14 +78,17 @@ public class CoureController {
 
     //    get course by teacher id
     @GetMapping("/courses/teacher-courses/{teacherId}")
-    public ResponseEntity<Page<Course>> getCourseByTeacherId(
+    public ResponseEntity<TeacherDto> getCourseByTeacherId(
             @PathVariable Integer teacherId,
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "10") Integer size
+            @RequestParam(defaultValue = "10") Integer size,
+            Optional<Teacher> teacher
     ) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            return new ResponseEntity<>(courseService.getCoursesByTeacherId(teacherId, pageable), HttpStatus.OK);
+            TeacherDto teacherCourseDto = courseService.getCoursesByTeacherId(teacherId, pageable,teacher);
+
+            return new ResponseEntity<>(teacherCourseDto, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -101,18 +109,21 @@ public class CoureController {
 
     // get course by student id
     @GetMapping("/courses/student-courses/{userId}")
-    public ResponseEntity<Page<Course>> getCoursesByStudentId(
+    public ResponseEntity<UserDto> getCoursesByStudentId(
             @PathVariable Integer userId,
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "10") Integer size) {
+            @RequestParam(defaultValue = "5") Integer size,
+            Optional<User> user) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            return new ResponseEntity<>(courseService.getCoursesByStudentId(userId, pageable), HttpStatus.OK);
+            System.out.println("controller user id: "+userId);
+            UserDto userCourseDto = courseService.getCoursesByUserIdtId(userId, pageable, user);
+
+            return new ResponseEntity<>(userCourseDto, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     //    get top popular course

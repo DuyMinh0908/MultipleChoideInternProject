@@ -1,8 +1,7 @@
 package com.fpt.onlineTest.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +10,8 @@ import java.io.Serializable;
 @Table(name = "UserAnswers")
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 @Data
 public class UserAnswers implements Serializable {
     @Id
@@ -23,5 +24,10 @@ public class UserAnswers implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "userId")
+    @JsonIgnoreProperties({"userPass", "fullName", "email", "phone", "address", "imageUser", "role"})
     User user;
+
+
+    @Column(name = "status", columnDefinition = "varchar(100)")
+    private String status;
 }
