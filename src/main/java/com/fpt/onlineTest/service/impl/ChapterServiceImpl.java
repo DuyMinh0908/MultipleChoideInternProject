@@ -19,8 +19,9 @@ public class ChapterServiceImpl implements ChapterService {
     private CourseRepository courseRepository;
 
     @Override
-    public Chapter createChapter( Chapter newChapter) {
-        return chapterRepository.save(newChapter);
+    public List<Chapter> createChapter( List<Chapter> newChapter) {
+        System.out.println(newChapter);
+        return chapterRepository.saveAll(newChapter);
     }
     public boolean isCourseExist(Integer courseId){
         Optional<Course> course = courseRepository.findById(courseId);
