@@ -18,15 +18,4 @@ public class BlogDto {
     private Integer userId;
     private String fullName;
     private String imageUser;
-
-    // Constructors
-//    public BlogDto(Integer blogId, String titleBlog, String contentBlog, String numberVisitors, Integer userId, String fullName, String imageUser) {
-//        this.blogId = blogId;
-//        this.titleBlog = titleBlog;
-//        this.contentBlog = contentBlog;
-//        this.numberVisitors = numberVisitors;
-//        this.userId = userId;
-//        this.fullName = fullName;
-//        this.imageUser = imageUser;
-//    }
 }

@@ -67,8 +67,8 @@ public class BlogController {
             Optional<User> user) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-
             UserDto blogDtoPage = blogService.getBlogDtoByUserId(userId, pageable,user);
+
             return new ResponseEntity<>(blogDtoPage, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
