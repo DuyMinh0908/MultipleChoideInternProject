@@ -8,6 +8,14 @@
       phí, chất lượng, nội dung dễ hiểu.
     </p>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
+      <p class="font-semibold text-xl relative w-52 h-10 flex flex-col justify-end">Khóa của bạn
+      </p>
+      <div class="grid grid-cols-3 gap-6">
+        <Item v-for="course in myCourses " :key="course.id" :course="course" />
+      </div>
+     
+    </div>
+    <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
       <p class="font-semibold text-xl relative w-52 h-10 flex flex-col justify-end">Khóa học nổi bật
         <div class="absolute top-0 right-0  text-sm text-white font-semibold bg-blue-500 px-2 rounded-md">
           Mới
@@ -36,16 +44,15 @@ import SideBar from "../components/SideBar.vue";
 import { Course } from "../model/course";
 import { api } from "../services/http-common";
 import {ref, Ref, onBeforeMount} from"vue"
- 
- 
 const popularCourses : Ref<Array<Course>> = ref([])
 const allCourses :  Ref<Array<Course>> = ref([])
+const myCourses = ref();
+
 const getCoursePopular = async ()=>{
  try{
     const data = await api.get('/courses/popular-courses') ;
     console.log(data.data)
     popularCourses.value = data.data
-    // console.log(typeof courses.value)
  }
  catch(e){
   console.error(e)
@@ -62,8 +69,18 @@ const getAllCourses = async ()=>{
   console.error(e)
  }
 }
+const getMyCourses = async ()=>{
+  try {
+    const {data} = await api.get(`/courses/student-courses/1`);
+    myCourses.value = data.courses.content;
+  }
+  catch(e){
+    console.error(e)
+  }
+}
 onBeforeMount(() => {
   getCoursePopular()
   getAllCourses()
+  getMyCourses()
 })
 </script>

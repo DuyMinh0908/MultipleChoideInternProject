@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { Blog } from "../../../model/blog";
 import Navigation from "../../Navigation.vue";
 import SideBar from "../../SideBar.vue";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { api } from "../../../services/http-common";
 import { ref, Ref, onBeforeMount } from "vue";
+import { useNotificationStore } from "../../../store/notificationStore";
+const notificationStore = useNotificationStore();
 const form = ref({
   blogId: 0,
   titleBlog: "",
@@ -24,6 +26,7 @@ const form = ref({
   },
 });
 const route = useRoute();
+const router = useRouter();
 const getblogById = async () => {
   try {
     const { data } = await api.get(`/blogs/${route.params.id}`);
@@ -39,7 +42,8 @@ const updateBlog = async () => {
       `/blogs/user-blog/update/blogId=${form.value.blogId}`,
       form.value
     );
-    console.log(data);
+    notificationStore.openSuccess("Cập nhật thành công.");
+    await router.push("/blog/index");
   } catch (e) {
     console.error(e);
   }
@@ -57,18 +61,18 @@ onBeforeMount(() => {
       @submit.prevent="updateBlog"
       class="px-10 mt-20 py-10 border flex flex-col justify-center space-y-4 text-center rounded-xl"
     >
-      <p class="uppercase text-2xl font-bold">Cập nhật {{}}</p>
-      <div class="flex flex-col">
-        <label>Tiêu đề khóa học</label>
+      <p class="uppercase text-2xl font-bold">Cập nhật bài viết</p>
+      <div class="flex flex-col items-start">
+        <label class="text-lg font-semibold">Tiêu đề khóa học</label>
         <input
           v-model="form.titleBlog"
-          class="w-40 border border-black"
+          class="w-1/2 h-10 rounded-xl border-2 px-2 border-black"
           type="text"
         />
       </div>
       <ckeditor v-model="form.contentBlog" :editor="ClassicEditor"></ckeditor>
       <button class="text-white bg-lightblue px-5 py-2 w-32 rounded-xl">
-        Tao
+        Sửa
       </button>
     </form>
   </div>

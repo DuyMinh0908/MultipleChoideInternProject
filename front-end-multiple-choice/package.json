@@ -11,8 +11,10 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^39.0.0",
     "@ckeditor/ckeditor5-vue": "^5.1.0",
+    "@left4code/tw-starter": "^3.2.9",
     "axios": "^1.4.0",
     "pinia": "^2.1.4",
+    "toastify-js": "^1.12.0",
     "v-dropdown-menu": "^2.0.3",
     "vue": "^3.3.4",
     "vue-final-modal": "^4.4.5",

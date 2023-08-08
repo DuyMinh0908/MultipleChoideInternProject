@@ -31,17 +31,24 @@ import { ref, Ref, onBeforeMount } from "vue";
 import Icon from "../icons/ClientDashboard.vue";
 
 const allBlogs: Ref<Array<Blog>> = ref([]);
-
+interface SearchForm {
+  page: number;
+  size: number;
+}
+const searchForm: Ref<SearchForm> = ref({
+  page: 1,
+  size: 10,
+});
 const getAllBlogs = async () => {
   try {
-    const data = await api.get("/blogs");
+    const data = await api.get("/blogs?page=0");
     allBlogs.value = data.data.content;
     console.log(allBlogs.value);
   } catch (e) {
     console.error(e);
   }
 };
-onBeforeMount(() => {
-  getAllBlogs();
+onBeforeMount(async () => {
+  await getAllBlogs();
 });
 </script>

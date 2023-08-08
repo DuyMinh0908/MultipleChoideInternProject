@@ -9,10 +9,11 @@
           class="h-8 mr-3"
           alt="Flowbite Logo"
         />
-        <span
+        <router-link
+          :to="{ name: 'Home' }"
           class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
           >Học và thi trực tuyến
-        </span>
+        </router-link>
       </a>
 
       <form class="rounded-xl w-1/4">

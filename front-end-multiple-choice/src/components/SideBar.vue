@@ -34,7 +34,7 @@
           <p>Đề thi</p>
         </router-link>
         <router-link
-          :to="{ name: 'Blogs' }"
+          :to="{ name: 'Blogs.Index' }"
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
           :class="route.name === 'Blog' ? 'bg-slate-400' : ''"
         >
@@ -42,7 +42,7 @@
           <p>Blog</p>
         </router-link>
         <router-link
-          :to="{ name: 'Dashboard' }"
+          :to="{ name: 'Dashboard.Index' }"
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
           :class="route.name === 'Dashboard' ? 'bg-slate-400' : ''"
         >

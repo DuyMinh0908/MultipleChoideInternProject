@@ -1,42 +1,38 @@
 <template>
   <Navigation />
+  <SideBarDasboard />
   <div class="container">
+    <router-link :to="{ name: 'Dashboard.Course.Create' }">
+      them khoa hoc
+    </router-link>
     <table class="w-full text border-collapse border border-slate-400">
       <caption class="caption-top uppercase text-3xl font-bold">
-        Danh sách bài viêt
+        Danh sách khóa học
       </caption>
       <thead class="bg-green-600">
         <tr class="uppercase">
           <th scope="col" class="border border-slate-300 col-span-1">ID</th>
-          <th scope="col" class="border border-slate-300">Tiêu đề</th>
-          <th scope="col" class="border border-slate-300">Nội dung</th>
-          <th scope="col" class="border border-slate-300">Lượt xem</th>
+          <th scope="col" class="border border-slate-300">Tên khóa học</th>
+          <th scope="col" class="border border-slate-300">Giáo viên</th>
+          <th scope="col" class="border border-slate-300">Số học sinh</th>
           <th scope="col" class="border border-slate-300">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr
-          v-for="blog in allBlogs"
-          :key="Number(blog.blogId)"
+          v-for="course in allCouses"
+          :key="Number(course.courseId)"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-justify"
         >
-          <td class="w-20 px-5">
-            <router-link
-              :to="{
-                name: 'Blogs.Detail',
-                params: { id: Number(blog.blogId) },
-              }"
-              >{{ blog.blogId }}
-            </router-link>
-          </td>
+          <td class="w-20 px-5">{{ course.courseId }}</td>
           <td class="w-80">
-            {{ blog.titleBlog }}
+            {{ course.courseName }}
           </td>
           <td class="line-clamp-4 px-5">
-            {{ blog.contentBlog }}
+            {{ course.fullName }}
           </td>
           <td class="w-52 px-5">
-            {{ blog.numberVisitors }}
+            {{ course.numberStudent }}
           </td>
           <td class="w-60">
             <div class="flex flex-row space-x-4 w-full justify-center">
@@ -52,7 +48,7 @@
                 />
               </router-link>
               <Icon
-                @click="deleteBlogItem(blog.blogId)"
+                @click="deleteBlogItem(course.blogId)"
                 name="delete"
                 class="w-6 h-6 fill-red-500 cursor-pointer"
               />
@@ -61,44 +57,24 @@
         </tr>
       </tbody>
     </table>
-    <Pagination
-      @get-list="getList"
-      :last-page="response.last_page"
-      :current-page="response.current_page"
-    />
-    <ModalsContainer />
+    <Pagination />
+    <!-- <ModalsContainer /> -->
   </div>
 </template>
 <script lang="ts" setup>
 import Navigation from "../../Navigation.vue";
-import { Blog } from "../../../model/blog";
+import { Course } from "../../../model/course";
 import { api } from "../../../services/http-common";
-import { ref, Ref, onBeforeMount, onMounted } from "vue";
+import { ref, Ref, onBeforeMount } from "vue";
 import Icon from "../../../icons/ClientDashboard.vue";
 import { ModalsContainer, useModal } from "vue-final-modal";
 import ModalConfirm from "../../modals/ModalConfirm.vue";
+import SideBarDasboard from "../SideBarDashboard.vue";
 import Pagination from "../../Pagination.vue";
-const allBlogs: Ref<Array<Blog>> = ref([]);
-const currentIdBlog: Ref<Number | undefined> = ref(undefined);
+const allCouses: Ref<Array<Course>> = ref([]);
+const currentIdCourse: Ref<Number | undefined> = ref(undefined);
 const deleteConfirmationModal: Ref<boolean> = ref(false);
-import { useNotificationStore } from "../../../store/notificationStore";
-const notificationStore = useNotificationStore();
-interface ResponseData {
-  last_page: number;
-  current_page: number;
-}
-interface SearchForm {
-  page: number;
-  size: number;
-}
-const response: Ref<ResponseData> = ref({
-  last_page: 1,
-  current_page: 0,
-});
-const searchForm: Ref<SearchForm> = ref({
-  page: 0,
-  size: 20,
-});
+
 const { open, close } = useModal({
   component: ModalConfirm,
   attrs: {
@@ -107,18 +83,16 @@ const { open, close } = useModal({
     async onConfirm() {
       try {
         const data = await api.delete(
-          `/blogs/user-blogs/delete/${currentIdBlog.value}`
+          `/blogs/user-blogs/delete/${currentIdCourse.value}`
         );
-
         await getAllBlogs();
-        notificationStore.openSuccess("Delete Blog success.");
-        close();
       } catch (e) {
         console.error(e);
       }
+      close();
     },
     onReject() {
-      currentIdBlog.value = undefined;
+      currentIdCourse.value = undefined;
       deleteConfirmationModal.value = false;
       close();
     },
@@ -128,33 +102,20 @@ const { open, close } = useModal({
   },
 });
 const deleteBlogItem = (id: Number) => {
-  currentIdBlog.value = id;
+  currentIdCourse.value = id;
   open();
 };
 const getAllBlogs = async () => {
   try {
-    const data = await api.get("/blogs");
-    allBlogs.value = data.data.content;
+    const data = await api.get("/courses");
+    allCouses.value = data.data.content;
+    console.log(allCouses.value);
   } catch (e) {
     console.error(e);
   }
 };
-const getList = async (page: number = 0) => {
-  try {
-    searchForm.value.page = page;
-    // @ts-ignore
-    const params = new URLSearchParams(searchForm.value).toString();
-    let data = await api.get(`/blogs?${params}`);
-    allBlogs.value = data.data.content;
-    response.value.current_page = data.data.number;
-    response.value.last_page = data.data.totalPages - 1;
-    console.log(response.value.last_page);
-  } catch (e) {}
-};
+
 onBeforeMount(() => {
   getAllBlogs();
-});
-onMounted(() => {
-  getList();
 });
 </script>

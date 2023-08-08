@@ -18,7 +18,7 @@ const prop = defineProps<Props>();
         </p>
       </div>
       <router-link
-        :to="{ name: 'Blogs.Detail', params: { id: Number(prop.blog.blogId) } }"
+        :to="{ name: 'Blogs.Detail', params: { id: prop.blog.blogId } }"
         class="font-bold text-2xl hover:underline"
       >
         {{ prop.blog.titleBlog }}

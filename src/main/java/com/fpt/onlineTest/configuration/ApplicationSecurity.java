@@ -32,6 +32,8 @@ public class ApplicationSecurity{
 //                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
 //                .antMatchers("/api/v1/teacher/**").hasAuthority("TEACHER")
                 .antMatchers("/api/v1/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/v2/api-docs/**","/swagger-ui.html","/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

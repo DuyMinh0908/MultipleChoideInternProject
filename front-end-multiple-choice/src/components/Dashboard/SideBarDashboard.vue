@@ -1,0 +1,49 @@
+<template>
+  <div class="relative z-50">
+    <div class="fixed bg-white w-40">
+      <ul class="space-y-6 p-4 text-start flex flex-col text-xl font-semibold">
+        <router-link
+          :to="{ name: 'Dashboard' }"
+          class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
+          :class="route.name === 'Dashboard' ? 'bg-slate-400' : ''"
+        >
+          <p>DashBoard</p>
+        </router-link>
+
+        <router-link
+          :to="{ name: 'Dashboard.Course.Index' }"
+          class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
+          :class="route.name === 'Dashboard.Course.Index' ? 'bg-slate-400' : ''"
+        >
+          <p>Khóa học</p>
+        </router-link>
+        <router-link
+          :to="{ name: 'Exam' }"
+          class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
+          :class="route.name === 'Exam' ? 'bg-slate-400' : ''"
+        >
+          <p>Đề thi</p>
+        </router-link>
+        <router-link
+          :to="{ name: 'Dashboard.Blog.Index' }"
+          class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
+          :class="route.name === 'Dashboard.Blog.Index' ? 'bg-slate-400' : ''"
+        >
+          <p>Blog</p>
+        </router-link>
+
+        <li
+          class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
+        >
+          <p>Đăng xuất</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import Icon from "../../icons/ClientDashboard.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+</script>
