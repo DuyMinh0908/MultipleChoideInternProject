@@ -14,6 +14,7 @@ import java.util.List;
 
 @Repository
 public interface UserReponsitory extends JpaRepository< User,Integer> {
-    @Query("select u from User u where u.userId=:userId")
+    @Query("select u from User u where u.userId in :userId")
     Page<User> findCourseSUsers(@Param("userId") List<Integer> userId, Pageable pageable);
+
 }

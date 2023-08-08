@@ -16,6 +16,4 @@ public interface CourseRegistrationService {
     void cancelRegistration(Integer crId);
     // get course user registration
     CoursesRegistrationDto getCourseUsers(Integer courseId, Pageable pageable);
-
-    CoursesRegistrationDto getCourseUsers(Integer courseId);
 }
