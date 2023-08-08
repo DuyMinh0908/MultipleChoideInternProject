@@ -17,6 +17,8 @@ public class UserRestController {
     @Autowired
     UserService userService;
 
+
+
     //--------------Get All-------------------
     @GetMapping("users/getAll")
     public List<User> getAll(){
@@ -25,6 +27,7 @@ public class UserRestController {
     //--------------Create User-------------------
     @PostMapping("users/addUser")
     public ResponseEntity<User> createUser(@RequestBody User user){
+
         User addUser = userService.save(user);
         return ResponseEntity.ok(addUser);
     }
