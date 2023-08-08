@@ -1,6 +1,7 @@
 package com.fpt.onlineTest.service.impl;
 
 import com.fpt.onlineTest.dto.CoursesRegistrationDto;
+import com.fpt.onlineTest.dto.UserDto;
 import com.fpt.onlineTest.model.CoursesRegistration;
 import com.fpt.onlineTest.model.User;
 import com.fpt.onlineTest.reponsitory.CoursesRegistrationRepository;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,9 +34,30 @@ public class CourseRegistrationServiceImpl implements CourseRegistrationService 
         coursesRegistrationRepository.deleteById(crId);
     }
 
+    //
     @Override
-    public CoursesRegistrationDto getCourseUsers(Integer courseId, Pageable pageable, Optional<User> user) {
-        Page<User> userPage = userReponsitory.findCourseSUsers(courseId, pageable);
-        return null;
+    public CoursesRegistrationDto getCourseUsers(Integer courseId, Pageable pageable) {
+        List<Integer> crUserIdList = coursesRegistrationRepository.findUserIdsByCourseId(courseId);
+        System.out.println("crUserIdList"+crUserIdList);
+        Page<User> userPage = userReponsitory.findCourseSUsers(crUserIdList, pageable);
+        System.out.println("crDto getCourseUsers: " + userPage);
+        CoursesRegistrationDto crDto = new CoursesRegistrationDto();
+        crDto.setUserDto(userPage.map(this::mapUserToDto));
+        return crDto;
+    }
+    public CoursesRegistrationDto getCourseUsers(Integer courseId){
+        List<Integer> crUserIdList = coursesRegistrationRepository.findUserIdsByCourseId(courseId);
+        System.out.println("crUserIdList: "+crUserIdList);
+        return new CoursesRegistrationDto();
+    }
+    public UserDto mapUserToDto(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setUserId(user.getUserId());
+        userDto.setFullName(user.getFullName());
+        userDto.setEmail(user.getEmail());
+        userDto.setPhone(user.getPhone());
+        userDto.setAddress(user.getAddress());
+        userDto.setImageUser(user.getImageUser());
+        return userDto;
     }
 }
