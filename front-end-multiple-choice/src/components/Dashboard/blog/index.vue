@@ -81,7 +81,6 @@ const { open, close } = useModal({
           `/blogs/user-blogs/delete/${currentIdBlog.value}`
         );
         await getAllBlogs();
-        console.log(data);
       } catch (e) {
         console.error(e);
       }
@@ -104,8 +103,8 @@ const deleteBlogItem = (id: Number) => {
 const getAllBlogs = async () => {
   try {
     const data = await api.get("/blogs");
-    allBlogs.value = data.data;
-    console.log(data);
+    allBlogs.value = data.data.content;
+    console.log(allBlogs.value);
   } catch (e) {
     console.error(e);
   }

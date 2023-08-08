@@ -8,17 +8,9 @@ const form = ref({
   titleBlog: "",
   contentBlog: "",
   numberVisitors: "",
-  user: {
-    userId: 1,
-    username: "tom.denesik",
-    userPass: "password",
-    fullName: "Vandervort",
-    email: "rayna.gulgowski@yahoo.com",
-    phone: "0867987223",
-    address: "Suite 810 5389 Andre Rapid, Hahnborough, WA 18463-3193",
-    imageUser: "http://lorempixel.com/320/200/nature/",
-    role: null,
-  },
+  userId: 0,
+  fullName: "",
+  imageUser: " ",
 });
 const createBlog = async () => {
   const data = api.post("/blogs/add", form.value);

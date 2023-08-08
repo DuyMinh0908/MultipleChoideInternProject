@@ -14,21 +14,17 @@ const prop = defineProps<Props>();
           src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
         />
         <p class="capitalize font-semibold hover:underline">
-          {{ prop.blog.user.username }}
+          {{ prop.blog.fullName }}
         </p>
       </div>
       <router-link
-        :to="{ name: 'Blogs.Detail', params: { id: prop.blog.blogId } }"
+        :to="{ name: 'Blogs.Detail', params: { id: Number(prop.blog.blogId) } }"
         class="font-bold text-2xl hover:underline"
       >
         {{ prop.blog.titleBlog }}
       </router-link>
       <p class="line-clamp-2 w-4/5">
-        {{ prop.blog.contentBlog }} The longest word in any of the major English
-        language dictionaries is pneumonoultramicroscopicsilicovolcanoconiosis,
-        a word that refers to a lung disease contracted from the inhalation of
-        very fine silica particles, specifically from a volcano; medically, it
-        is the same as silicosis.
+        {{ prop.blog.contentBlog }}
       </p>
     </div>
     <img

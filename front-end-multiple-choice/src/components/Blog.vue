@@ -35,8 +35,8 @@ const allBlogs: Ref<Array<Blog>> = ref([]);
 const getAllBlogs = async () => {
   try {
     const data = await api.get("/blogs");
-    allBlogs.value = data.data;
-    console.log(data);
+    allBlogs.value = data.data.content;
+    console.log(allBlogs.value);
   } catch (e) {
     console.error(e);
   }
