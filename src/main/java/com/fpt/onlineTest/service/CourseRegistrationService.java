@@ -5,6 +5,7 @@ import com.fpt.onlineTest.model.CoursesRegistration;
 import com.fpt.onlineTest.model.User;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CourseRegistrationService {
@@ -14,5 +15,7 @@ public interface CourseRegistrationService {
     //Cancel course registration
     void cancelRegistration(Integer crId);
     // get course user registration
-    CoursesRegistrationDto getCourseUsers(Integer courseId, Pageable pageable, Optional<User> user);
+    CoursesRegistrationDto getCourseUsers(Integer courseId, Pageable pageable);
+
+    CoursesRegistrationDto getCourseUsers(Integer courseId);
 }
