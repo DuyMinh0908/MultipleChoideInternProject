@@ -31,4 +31,10 @@ public class Blog implements Serializable {
    @ManyToOne
    @JoinColumn(name = "userId")
    User user;
+
+    public Blog(String titleBlog, String contentBlog, String numberVisitors ) {
+        this.titleBlog = titleBlog;
+        this.contentBlog = contentBlog;
+        this.numberVisitors = numberVisitors;
+    }
 }

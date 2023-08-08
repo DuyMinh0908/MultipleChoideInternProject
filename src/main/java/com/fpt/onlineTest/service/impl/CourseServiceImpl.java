@@ -1,15 +1,8 @@
 package com.fpt.onlineTest.service.impl;
 
-import com.fpt.onlineTest.dto.ChapterDto;
-import com.fpt.onlineTest.dto.CourseDto;
-import com.fpt.onlineTest.dto.LessonDto;
-import com.fpt.onlineTest.model.Chapter;
-import com.fpt.onlineTest.model.Course;
-import com.fpt.onlineTest.model.Lesson;
-import com.fpt.onlineTest.reponsitory.ChapterRepository;
-import com.fpt.onlineTest.reponsitory.CourseRepository;
-import com.fpt.onlineTest.reponsitory.LessonRepository;
-import com.fpt.onlineTest.reponsitory.TeacherRepository;
+import com.fpt.onlineTest.dto.*;
+import com.fpt.onlineTest.model.*;
+import com.fpt.onlineTest.reponsitory.*;
 import com.fpt.onlineTest.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +21,8 @@ public class CourseServiceImpl implements CourseService {
     private ChapterRepository chapterRepository;
     @Autowired
     private LessonRepository lessonRepository;
+    @Autowired
+    private UserReponsitory userReponsitory;
 
     @Override
     public Course newCourse(Course course) {
@@ -55,19 +50,45 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Page<Course> getAll(Pageable pageable) {
-        return courseRepository.findAll(pageable);
+    public Page<CourseDto> getAll(Pageable pageable) {
+        System.out.println(courseRepository.findAllCourses(pageable));
+        return courseRepository.findAllCourses(pageable);
     }
 
     @Override
-    public Page<Course> getCoursesByTeacherId(Integer teacherId, Pageable pageable) {
-        return courseRepository.findCoursesByTeacherId(teacherId, pageable);
+    public TeacherDto getCoursesByTeacherId(Integer teacherId, Pageable pageable, Optional<Teacher> teacher) {
+        Page<Course> coursePage = courseRepository.findCoursesByTeacherId(teacherId, pageable);
+        teacher = teacherRepository.findById(teacherId);
+        TeacherDto teacherDto = new TeacherDto();
+        if (teacher.isPresent()) {
+            teacherDto.setId(teacher.get().getId());
+            teacherDto.setFullName(teacher.get().getFullName());
+            teacherDto.setEmail(teacher.get().getEmail());
+            teacherDto.setPhone(teacher.get().getPhone());
+            teacherDto.setAddress(teacher.get().getAddress());
+            teacherDto.setImageTeacher(teacher.get().getImageTeacher());
+        }
+        teacherDto.setCourses(coursePage.map(this::mapCourseToDto));
+        return teacherDto;
     }
 
     @Override
-    public Page<Course> getCoursesByStudentId(Integer studentId, Pageable pageable) {
-        return courseRepository.findCoursesByStudentId(studentId, pageable);
-//        return null;
+    public UserDto getCoursesByUserIdtId(Integer userId, Pageable pageable, Optional<User> user) {
+        Page<Course> coursePage = courseRepository.findCoursesByUserId(userId, pageable);
+
+        user = userReponsitory.findById(userId);
+        UserDto userDto = new UserDto();
+        if (user.isPresent()) {
+            userDto.setUserId(user.get().getUserId());
+            userDto.setFullName(user.get().getFullName());
+            userDto.setEmail(user.get().getEmail());
+            userDto.setPhone(user.get().getPhone());
+            userDto.setAddress(user.get().getAddress());
+            userDto.setImageUser(user.get().getImageUser());
+        }
+        userDto.setCourses(coursePage.map(this::mapCourseToDto));
+
+        return userDto;
     }
 
 
@@ -87,6 +108,17 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.findById(courseId);
     }
 
+    public CourseDto mapCourseToDto(Course course) {
+        CourseDto courseDto = new CourseDto();
+        courseDto.setCourseId(course.getCourseId());
+        courseDto.setCourseName(course.getCourseName());
+        courseDto.setNumberStudent(course.getNumberStudent());
+        courseDto.setImageCourse(course.getImageCourse());
+        courseDto.setStatus(course.getStatus());
+        courseDto.setSubject(course.getSubject());
+        return courseDto;
+    }
+
     private CourseDto mapToDTO(Course course) {
         CourseDto courseDTO = new CourseDto();
         // Map fields from Course entity to CourseDTO
@@ -96,6 +128,9 @@ public class CourseServiceImpl implements CourseService {
         courseDTO.setImageCourse(course.getImageCourse());
         courseDTO.setStatus(course.getStatus());
         courseDTO.setSubject(course.getSubject());
+        courseDTO.setTeacherId(course.getTeacher().getId());
+        courseDTO.setFullName(course.getTeacher().getFullName());
+        courseDTO.setImageTeacher(course.getTeacher().getImageTeacher());
 
         List<ChapterDto> chapterDtoList = new ArrayList<>();
         List<Chapter> chapterList = chapterRepository.findCourseSChapter(courseDTO.getCourseId());

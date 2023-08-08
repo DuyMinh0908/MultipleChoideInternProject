@@ -9,8 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^39.0.0",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
+    "axios": "^1.4.0",
     "pinia": "^2.1.4",
+    "v-dropdown-menu": "^2.0.3",
     "vue": "^3.3.4",
+    "vue-final-modal": "^4.4.5",
     "vue-router": "^4.2.4",
     "vue3-carousel": "^0.3.1"
   },

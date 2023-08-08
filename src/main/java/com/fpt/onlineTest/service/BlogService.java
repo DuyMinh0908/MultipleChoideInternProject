@@ -15,18 +15,14 @@ public interface BlogService {
     Blog newBLog(Blog blog);
 
     //    get all blogs
-//    Page<Blog> getAll(Pageable pageable);
     Page<BlogDto> getAll(Pageable pageable);
 
     // get blog by id
     BlogDto getBlogById(Integer blogId);
 
-//    get popular blog
-
-
     //    get all blog by userId
-    List<Blog> getAllBlogsByUserId( Integer userId);
     UserDto getBlogDtoByUserId(Integer userId, Pageable pageable, Optional<User> user);
+
     //    update blog
     Blog updateBlog(Integer id, Blog blog);
 
@@ -35,6 +31,7 @@ public interface BlogService {
 
     //    delete all user blogs by userId
     void deleteAllBlogsByUserId(Integer userId);
-//    get top 5 blog have most visitors
+
+    //    get top 5 blog have most visitors
     List<BlogDto> getTopBlogs();
 }

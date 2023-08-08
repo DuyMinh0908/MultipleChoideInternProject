@@ -46,13 +46,9 @@ public class BlogServiceImpl implements BlogService {
     }
 
     //    get all blog by userId
-    public List<Blog> getAllBlogsByUserId(Integer userId) {
-//        return blogRepository.findAllBlogsByUserId(userId);
-        return null;
-    }
+    @Override
     public UserDto getBlogDtoByUserId(Integer userId, Pageable pageable, Optional<User> user) {
         Page<Blog> blogPage = blogRepository.findAllBlogsByUserId(userId,pageable);
-//        Optional<User> user = userReponsitory.findById(userId);
         user = userReponsitory.findById(userId);
         UserDto userDto = new UserDto();
         if (user.isPresent()){
@@ -66,22 +62,7 @@ public class BlogServiceImpl implements BlogService {
         userDto.setBlogs(blogPage.map(this::mapToDTO));
         return userDto;
     }
-    public BlogDto getAllBlog(Blog blog){
-        BlogDto blogDto = new BlogDto();
-        blogDto.setContentBlog(blog.getContentBlog());
-        blogDto.setBlogId(blog.getBlogId());
-        blogDto.setTitleBlog(blog.getTitleBlog());
-        blogDto.setNumberVisitors(blogDto.getNumberVisitors());
-        return blogDto;
-    }
-    private BlogDto mapToDTO(Blog blog) {
-        BlogDto blogDto = new BlogDto();
-        blogDto.setBlogId(blog.getBlogId());
-        blogDto.setContentBlog(blog.getContentBlog());
-        blogDto.setTitleBlog(blog.getTitleBlog());
-        blogDto.setNumberVisitors(blog.getNumberVisitors());
-        return blogDto;
-    }
+
     //    update blog
     @Override
     public Blog updateBlog(Integer blogId, Blog blog) {
@@ -119,7 +100,14 @@ public class BlogServiceImpl implements BlogService {
         return topBlogs.subList(0, Math.min(5, topBlogs.size()));
     }
 
-
+    private BlogDto mapToDTO(Blog blog) {
+        BlogDto blogDto = new BlogDto();
+        blogDto.setBlogId(blog.getBlogId());
+        blogDto.setContentBlog(blog.getContentBlog());
+        blogDto.setTitleBlog(blog.getTitleBlog());
+        blogDto.setNumberVisitors(blog.getNumberVisitors());
+        return blogDto;
+    }
 
     public Long getUserId(Blog blog) {
         return Long.valueOf(blog.getUser().getUserId());

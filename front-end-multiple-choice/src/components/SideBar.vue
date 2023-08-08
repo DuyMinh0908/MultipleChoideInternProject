@@ -11,16 +11,16 @@
         <router-link
           :to="{ name: 'Home' }"
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
-          :class="route.name === 'Home' ? 'bg-slate-200' : ''"
+          :class="route.name === 'Home' ? 'bg-slate-400' : ''"
         >
           <Icon name="home" class="w-8 h-8 mx-auto" />
           <p>Trang chủ</p>
         </router-link>
 
         <router-link
-          :to="{ name: 'Course' }"
+          :to="{ name: 'Courses.Index' }"
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
-          :class="route.name === 'Course' ? 'bg-slate-200' : ''"
+          :class="route.name === 'Courses.Index' ? 'bg-slate-400' : ''"
         >
           <Icon name="course" class="w-8 h-8 mx-auto" />
           <p>Khóa học</p>
@@ -28,25 +28,27 @@
         <router-link
           :to="{ name: 'Exam' }"
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
-          :class="route.name === 'Exam' ? 'bg-slate-200' : ''"
+          :class="route.name === 'Exam' ? 'bg-slate-400' : ''"
         >
           <Icon name="exam" class="w-8 h-8 mx-auto" />
           <p>Đề thi</p>
         </router-link>
         <router-link
-          :to="{ name: 'Blog' }"
+          :to="{ name: 'Blogs' }"
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
-          :class="route.name === 'Blog' ? 'bg-slate-200' : ''"
+          :class="route.name === 'Blog' ? 'bg-slate-400' : ''"
         >
           <Icon name="blog" class="w-8 h-8 mx-auto" />
           <p>Blog</p>
         </router-link>
-        <li
+        <router-link
+          :to="{ name: 'Dashboard' }"
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
+          :class="route.name === 'Dashboard' ? 'bg-slate-400' : ''"
         >
           <Icon name="management" class="w-8 h-8 mx-auto" />
           <p>Quản lý</p>
-        </li>
+        </router-link>
         <li
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
         >

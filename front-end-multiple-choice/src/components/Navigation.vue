@@ -56,11 +56,12 @@
           </button>
         </div>
       </form>
-      <button
+      <router-link
+        :to="{ name: 'Login' }"
         class="text-white bg-lightblue hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2"
       >
         Đăng nhập
-      </button>
+      </router-link>
     </div>
   </section>
 </template>
