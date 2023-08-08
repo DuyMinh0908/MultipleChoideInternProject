@@ -10,14 +10,14 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "Chapters")
-@Setter
-@Getter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Chapter implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,5 +42,9 @@ public class Chapter implements Serializable {
 
     public void setChapterId(Integer chapterId) {
         this.chapterId = chapterId;
+    }
+
+    public Chapter(String description) {
+        this.description = description;
     }
 }

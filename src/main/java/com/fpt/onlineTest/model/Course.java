@@ -40,7 +40,7 @@ public class Course implements Serializable {
     @NotNull
     private Boolean status;
 
-    @Column(columnDefinition = "varchar(20)")
+    @Column(columnDefinition = "varchar(40)")
     @NonNull
     private String subject;
 
@@ -67,5 +67,14 @@ public class Course implements Serializable {
         this.numberStudent = numberStudent;
         this.status = status;
         this.subject = subject;
+    }
+    public Course(  String courseName, Integer numberStudent, String imageCourse, Boolean status, @NonNull String subject ) {
+
+        this.courseName = courseName;
+        this.numberStudent = numberStudent;
+        this.imageCourse = imageCourse;
+        this.status = status;
+        this.subject = subject;
+
     }
 }
