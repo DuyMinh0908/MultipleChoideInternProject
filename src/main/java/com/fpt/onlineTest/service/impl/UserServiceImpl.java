@@ -32,6 +32,10 @@ public class UserServiceImpl implements UserService {
         return existingUser != null;
     }
 
+
+
+
+
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -198,7 +202,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserDto> getUserDtoById(Integer userId) {
-        return userReponsitory.findById(userId).map(this::mapToDTO);
+        return userRepository.findById(userId).map(this::mapToDTO);
     }
     private UserDto mapToDTO(User user) {
         UserDto userDto= new UserDto();

@@ -53,7 +53,7 @@ public class BlogServiceImpl implements BlogService {
     public UserDto getBlogDtoByUserId(Integer userId, Pageable pageable, Optional<User> user) {
         Page<Blog> blogPage = blogRepository.findAllBlogsByUserId(userId,pageable);
 //        Optional<User> user = userReponsitory.findById(userId);
-        user = userReponsitory.findById(userId);
+        user = userRepository.findById(userId);
         UserDto userDto = new UserDto();
         if (user.isPresent()){
             userDto.setUserId(user.get().getUserId());

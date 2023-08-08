@@ -28,10 +28,10 @@ public class ApplicationSecurity{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/api/v1/users/**").hasAuthority("USER")
-                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/api/v1/teacher/**").hasAuthority("TEACHER")
-                .antMatchers("/api/v1/public/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+//                .antMatchers("/api/v1/users/**").hasAuthority("USER")
+//                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+//                .antMatchers("/api/v1/teacher/**").hasAuthority("TEACHER")
+                .antMatchers("/api/v1/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
