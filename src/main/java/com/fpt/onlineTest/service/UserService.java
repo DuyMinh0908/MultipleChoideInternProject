@@ -14,6 +14,12 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public interface UserService {
+
+
+    boolean isUsernameTaken(String username);
+
+    User findByUsername(String username);
+
     List<User> findAll();
 
     List<User> findAll(Sort sort);
