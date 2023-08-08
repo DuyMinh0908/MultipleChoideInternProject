@@ -4,4 +4,5 @@ import com.fpt.onlineTest.model.CoursesRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CoursesRegistrationRepository extends JpaRepository<CoursesRegistration,Integer> {
+
 }

@@ -12,5 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserReponsitory extends JpaRepository< User,Integer> {
+    @Query("select u from User u ")
+    Page<User> findCourseSUsers(@Param("courseId") Integer courseId, Pageable pageable);
 
 }
