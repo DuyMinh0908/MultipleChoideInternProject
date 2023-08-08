@@ -36,7 +36,7 @@ const getblogById = async () => {
 const updateBlog = async () => {
   try {
     const { data } = await api.put(
-      `​/blogs/user-blog/update/blogId=${form.value.blogId}`,
+      `/blogs/user-blog/update/blogId=${form.value.blogId}`,
       form.value
     );
     console.log(data);
@@ -57,7 +57,7 @@ onBeforeMount(() => {
       @submit.prevent="updateBlog"
       class="px-10 mt-20 py-10 border flex flex-col justify-center space-y-4 text-center rounded-xl"
     >
-      <p class="uppercase text-2xl font-bold">Tạo bài viết</p>
+      <p class="uppercase text-2xl font-bold">Cập nhật {{}}</p>
       <div class="flex flex-col">
         <label>Tiêu đề khóa học</label>
         <input

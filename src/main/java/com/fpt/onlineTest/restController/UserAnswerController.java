@@ -34,12 +34,23 @@ public class UserAnswerController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<UserAnswers> newUserAnswer(@RequestBody UserAnswers newUserAnswers) {
+    public void newUserAnswer(@RequestBody List<UserAnswers> newUserAnswers) {
         try {
-            return new ResponseEntity<>(userAnswerService.createUserAnswer(newUserAnswers), HttpStatus.OK);
-
+            userAnswerService.createUserAnswer(newUserAnswers);
+            new ResponseEntity<>( HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteUserAnswer(@PathVariable Integer id) {
+        try {
+            userAnswerService.deleteUserAnswer(id);
+            new ResponseEntity<>( HttpStatus.OK);
+        } catch (Exception e) {
+            new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
