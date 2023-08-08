@@ -32,6 +32,7 @@ public class UserRestController {
     //--------------Create User-------------------
     @PostMapping("users/addUser")
     public ResponseEntity<User> createUser(@RequestBody User user){
+
         User addUser = userService.save(user);
         return ResponseEntity.ok(addUser);
     }
