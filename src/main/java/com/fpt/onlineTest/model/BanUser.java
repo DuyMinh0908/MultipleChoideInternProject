@@ -7,27 +7,24 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "UserAnswers")
+@Table(name = "BanUser")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Data
-public class UserAnswers implements Serializable {
+public class BanUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "answerId")
-    Answer answer;
+    private Integer banUserId;
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    @JsonIgnoreProperties({"userPass", "fullName", "email", "phone", "address", "imageUser", "role"})
+    @JsonIgnoreProperties({"role", "userPass"})
     User user;
 
-
-    @Column(name = "status", columnDefinition = "varchar(100)")
-    private String status;
+    @ManyToOne
+    @JoinColumn(name = "examId")
+    @JsonIgnoreProperties({"numQuestion", "timeStart", "timeEnd"})
+    Exam exam;
 }

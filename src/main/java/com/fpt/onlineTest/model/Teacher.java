@@ -24,7 +24,7 @@ public class Teacher implements Serializable {
     @NotNull
     private String username;
 
-    @Column(columnDefinition = "varchar(16)")
+    @Column(columnDefinition = "varchar(MAX)")
     @NotNull
     private String userPass;
 

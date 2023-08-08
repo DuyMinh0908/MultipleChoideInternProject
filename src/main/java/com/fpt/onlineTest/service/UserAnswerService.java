@@ -12,5 +12,8 @@ public interface UserAnswerService {
     List<UserAnswers> getUserAnswerByUserId(Integer userId);
 
     //Add new UserAnswer
-    UserAnswers createUserAnswer(UserAnswers userAnswer);
+    void createUserAnswer(List<UserAnswers> userAnswers);
+
+    //Delete userAnswer
+    void deleteUserAnswer(Integer userAnswerId);
 }
