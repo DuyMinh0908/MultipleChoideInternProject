@@ -42,19 +42,27 @@ public class BlogServiceImpl implements BlogService {
     //    get blog by id
     @Override
     public BlogDto getBlogById(Integer blogId) {
+        Optional<Blog> existingBlogOptional = blogRepository.findById(blogId);
+        if (existingBlogOptional.isPresent()) {
+            Blog existingBlog = existingBlogOptional.get();
+            Integer curNumVisitors = Integer.valueOf(existingBlog.getNumberVisitors());
+            curNumVisitors++;
+            existingBlog.setNumberVisitors(String.valueOf(curNumVisitors));
+            blogRepository.save(existingBlog);
+        }
         return blogRepository.findBlogById(blogId);
     }
 
     //    get all blog by userId
     @Override
     public UserDto getBlogDtoByUserId(Integer userId, Pageable pageable, Optional<User> user) {
-        Page<Blog> blogPage = blogRepository.findAllBlogsByUserId(userId,pageable);
+        Page<Blog> blogPage = blogRepository.findAllBlogsByUserId(userId, pageable);
 
 //        Optional<User> user = userReponsitory.findById(userId);
         user = userRepository.findById(userId);
 
         UserDto userDto = new UserDto();
-        if (user.isPresent()){
+        if (user.isPresent()) {
             userDto.setUserId(user.get().getUserId());
             userDto.setFullName(user.get().getFullName());
             userDto.setEmail(user.get().getEmail());
@@ -97,8 +105,9 @@ public class BlogServiceImpl implements BlogService {
     public void deleteAllBlogsByUserId(Integer userId) {
         blogRepository.deleteAllByUserId(userId);
     }
-//    get top 2 blogs have most visitors
-    public List<BlogDto> getTopBlogs(){
+
+    //    get top 2 blogs have most visitors
+    public List<BlogDto> getTopBlogs() {
         List<BlogDto> topBlogs = blogRepository.findTopBlogs();
         return topBlogs.subList(0, Math.min(5, topBlogs.size()));
     }
