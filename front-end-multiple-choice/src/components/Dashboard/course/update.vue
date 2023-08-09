@@ -2,11 +2,11 @@
   <Navigation />
   <div class="flex justify-center">
     <form
-      @submit.prevent="saveCourse"
+      @submit.prevent="updateCourse"
       class="w-3/6 rounded-md border-2 border-zinc-800 h-3/4 my-14 mb-32"
     >
-      <h1 class="flex uppercase justify-center font-medium text-2xl my-10">
-        Thêm khóa học
+      <h1 class="flex justify-center font-medium text-2xl my-10">
+        SỬA KHÓA HỌC
       </h1>
       <div class="grid grid-cols-2 gap-2 md:gap-6 place-items-center mt-4">
         <div>
@@ -104,17 +104,9 @@
             </div>
           </div>
         </div>
-        <div>
-          <p class="font-bold text-zinc-600 px-4">
-            Mô tả<span class="text-red-600 font-bold">*</span>
-          </p>
-          <!-- <input class=" h-60 w-96 border-2 rounded-xl text-start " type="" placeholder="Nhập mã khóa học"> -->
-          <textarea
-            class="w-80 rounded-lg border-2 pl-2"
-            placeholder="Mô tả khóa học"
-            rows="9"
-          ></textarea>
-        </div>
+      </div>
+      <div v-for="chapter in chapters">
+        <input v-model="chapter.description" />
       </div>
       <div class="flex-row gap-10 my-10 flex justify-center h-10">
         <button
@@ -134,13 +126,14 @@
 </template>
 <script lang="ts" setup>
 import Navigation from "../../Navigation.vue";
-import { ref, Ref } from "vue";
+import { ref, Ref, onBeforeMount } from "vue";
 import { api } from "../../../services/http-common";
 import { useNotificationStore } from "../../../store/notificationStore";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 const notificationStore = useNotificationStore();
-
+const chapters = ref([]);
 const router = useRouter();
+const route = useRoute();
 const form = ref({
   courseName: "",
   teacherId: "",
@@ -154,7 +147,7 @@ const onFileSelect = (e: any): void => {
   const file = e.target.files[0];
   currentFile.value = file;
 };
-const saveCourse = async () => {
+const updateCourse = async () => {
   try {
     const formData = new FormData();
     formData.append("courseName", form.value.courseName);
@@ -174,6 +167,19 @@ const saveCourse = async () => {
     notificationStore.openError("Đã xảy ra lỗi");
   }
 };
+const getCourse = async () => {
+  try {
+    const { data } = await api.get(`/courses/${route.params.id}`);
+    form.value = data;
+    chapters.value = data.chapters;
+    console.log(chapters.value);
+  } catch (e) {
+    console.error(e);
+  }
+};
+onBeforeMount(() => {
+  getCourse();
+});
 // const addChapter = () => {
 //   chapters.value.push({
 //     previous: "",
@@ -185,31 +191,31 @@ const saveCourse = async () => {
 // }
 </script>
 <!-- <div id="visa">
-  <h1>Vue Visa Application</h1>
-  <form>
-    <label for="first name">First Name:</label>
-    <input type="text" required />
-    <br />
-    <label for="last name">Last Name:</label>
-    <input type="text" required />
-    <br />
-    <label for="country">Nationality:</label>
-    <input type="text" required />
-    <br />
-    <label for="passport number">Passport Number:</label>
-    <input type="text" required />
-
-    <label for="duration">Duration of stay:</label>
-    <input type="text" required />
-    <br /><br />
-    <button @click="addChapter">Add another previous visa</button>
-    <br />
-    <div class="previous" v-for="(chapter, index) in chapters" :key="index">
-      <span @click="deleteChapter(index + 1)">x</span>
-      <label for="duration">Previous Visa:</label>
+    <h1>Vue Visa Application</h1>
+    <form>
+      <label for="first name">First Name:</label>
       <input type="text" required />
-      <label for="duration">Year of expiration:</label>
+      <br />
+      <label for="last name">Last Name:</label>
       <input type="text" required />
-    </div>
-  </form>
-</div> -->
+      <br />
+      <label for="country">Nationality:</label>
+      <input type="text" required />
+      <br />
+      <label for="passport number">Passport Number:</label>
+      <input type="text" required />
+  
+      <label for="duration">Duration of stay:</label>
+      <input type="text" required />
+      <br /><br />
+      <button @click="addChapter">Add another previous visa</button>
+      <br />
+      <div class="previous" v-for="(chapter, index) in chapters" :key="index">
+        <span @click="deleteChapter(index + 1)">x</span>
+        <label for="duration">Previous Visa:</label>
+        <input type="text" required />
+        <label for="duration">Year of expiration:</label>
+        <input type="text" required />
+      </div>
+    </form>
+  </div> -->

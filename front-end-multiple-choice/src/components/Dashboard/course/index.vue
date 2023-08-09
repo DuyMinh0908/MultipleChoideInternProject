@@ -14,6 +14,7 @@
           <th scope="col" class="border border-slate-300 col-span-1">ID</th>
           <th scope="col" class="border border-slate-300">Tên khóa học</th>
           <th scope="col" class="border border-slate-300">Giáo viên</th>
+          <th scope="col" class="border border-slate-300">Ảnh</th>
           <th scope="col" class="border border-slate-300">Số học sinh</th>
           <th scope="col" class="border border-slate-300">Action</th>
         </tr>
@@ -31,6 +32,9 @@
           <td class="line-clamp-4 px-5">
             {{ course.fullName }}
           </td>
+          <td class="px-5">
+            <img :src="course.imageCourse" class="w-40 mx-auto" />
+          </td>
           <td class="w-52 px-5">
             {{ course.numberStudent }}
           </td>
@@ -38,8 +42,8 @@
             <div class="flex flex-row space-x-4 w-full justify-center">
               <router-link
                 :to="{
-                  name: 'Dashboard.Blog.Update',
-                  params: { id: Number(blog.blogId) },
+                  name: 'Dashboard.Course.Update',
+                  params: { id: Number(course.courseId) },
                 }"
               >
                 <Icon
@@ -48,7 +52,7 @@
                 />
               </router-link>
               <Icon
-                @click="deleteBlogItem(course.blogId)"
+                @click="deleteCourseItem(course.courseId)"
                 name="delete"
                 class="w-6 h-6 fill-red-500 cursor-pointer"
               />
@@ -57,15 +61,19 @@
         </tr>
       </tbody>
     </table>
-    <Pagination />
-    <!-- <ModalsContainer /> -->
+    <Pagination
+      @get-list="getList"
+      :last-page="response.last_page"
+      :current-page="response.current_page"
+    />
+    <ModalsContainer />
   </div>
 </template>
 <script lang="ts" setup>
 import Navigation from "../../Navigation.vue";
 import { Course } from "../../../model/course";
 import { api } from "../../../services/http-common";
-import { ref, Ref, onBeforeMount } from "vue";
+import { ref, Ref, onBeforeMount, onMounted } from "vue";
 import Icon from "../../../icons/ClientDashboard.vue";
 import { ModalsContainer, useModal } from "vue-final-modal";
 import ModalConfirm from "../../modals/ModalConfirm.vue";
@@ -73,8 +81,22 @@ import SideBarDasboard from "../SideBarDashboard.vue";
 import Pagination from "../../Pagination.vue";
 const allCouses: Ref<Array<Course>> = ref([]);
 const currentIdCourse: Ref<Number | undefined> = ref(undefined);
-const deleteConfirmationModal: Ref<boolean> = ref(false);
-
+interface ResponseData {
+  last_page: number;
+  current_page: number;
+}
+interface SearchForm {
+  page: number;
+  size: number;
+}
+const response: Ref<ResponseData> = ref({
+  last_page: 1,
+  current_page: 0,
+});
+const searchForm: Ref<SearchForm> = ref({
+  page: 0,
+  size: 20,
+});
 const { open, close } = useModal({
   component: ModalConfirm,
   attrs: {
@@ -82,10 +104,8 @@ const { open, close } = useModal({
 
     async onConfirm() {
       try {
-        const data = await api.delete(
-          `/blogs/user-blogs/delete/${currentIdCourse.value}`
-        );
-        await getAllBlogs();
+        await api.delete(`/courses/delete-course/${currentIdCourse.value}`);
+        await getAllCourses();
       } catch (e) {
         console.error(e);
       }
@@ -93,7 +113,7 @@ const { open, close } = useModal({
     },
     onReject() {
       currentIdCourse.value = undefined;
-      deleteConfirmationModal.value = false;
+
       close();
     },
   },
@@ -101,11 +121,12 @@ const { open, close } = useModal({
     default: `<p class="text-center font-semibold text-xl">Bạn có chắc chắn muốn xóa</p>`,
   },
 });
-const deleteBlogItem = (id: Number) => {
+
+const deleteCourseItem = async (id: Number) => {
   currentIdCourse.value = id;
   open();
 };
-const getAllBlogs = async () => {
+const getAllCourses = async () => {
   try {
     const data = await api.get("/courses");
     allCouses.value = data.data.content;
@@ -114,8 +135,21 @@ const getAllBlogs = async () => {
     console.error(e);
   }
 };
-
+const getList = async (page: number = 0) => {
+  try {
+    searchForm.value.page = page;
+    // @ts-ignore
+    const params = new URLSearchParams(searchForm.value).toString();
+    let data = await api.get(`/courses?${params}`);
+    allCouses.value = data.data.content;
+    response.value.current_page = data.data.number;
+    response.value.last_page = data.data.totalPages - 1;
+  } catch (e) {}
+};
 onBeforeMount(() => {
-  getAllBlogs();
+  getAllCourses();
+});
+onMounted(() => {
+  getList();
 });
 </script>

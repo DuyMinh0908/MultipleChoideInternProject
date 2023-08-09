@@ -7,6 +7,7 @@ import com.fpt.onlineTest.model.Course;
 import com.fpt.onlineTest.model.Teacher;
 import com.fpt.onlineTest.model.User;
 import com.fpt.onlineTest.service.CourseService;
+import com.fpt.onlineTest.service.ImageUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,11 +32,27 @@ public class CoureController {
     @Autowired
     CourseService courseService;
 
+    @Autowired
+    ImageUploadService imageUploadService;
+
     //    create course
-    @PostMapping("/courses/create-course")
-    public ResponseEntity<Course> createNewCourse(@RequestBody Course newCourse) {
+    @PostMapping(value = "/courses/create-course", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Course> createNewCourse(@RequestParam("imageCourse") MultipartFile file,
+                                                  @RequestParam("courseName") String courseName,
+                                                  @RequestParam("numberStudent") Integer numberStudent,
+                                                  @RequestParam("status") Boolean status,
+                                                  @RequestParam("subject") String subject,
+                                                  @RequestParam("teacherId") Teacher teacherId) {
         try {
-            return new ResponseEntity<>(courseService.newCourse(newCourse), HttpStatus.OK);
+            Course course = new Course();
+            String generatedFileName = "http://127.0.0.1:8080/api/v1/file/upload/" + imageUploadService.storeFile(file);
+            course.setCourseName(courseName);
+            course.setNumberStudent(numberStudent);
+            course.setImageCourse(generatedFileName);
+            course.setStatus(status);
+            course.setSubject(subject);
+            course.setTeacher(teacherId);
+            return new ResponseEntity<>(courseService.newCourse(course), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -103,6 +121,7 @@ public class CoureController {
             return courseDto.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -121,7 +140,6 @@ public class CoureController {
 
             return new ResponseEntity<>(userCourseDto, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

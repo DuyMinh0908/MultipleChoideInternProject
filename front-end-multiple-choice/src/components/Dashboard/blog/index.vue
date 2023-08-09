@@ -148,7 +148,6 @@ const getList = async (page: number = 0) => {
     allBlogs.value = data.data.content;
     response.value.current_page = data.data.number;
     response.value.last_page = data.data.totalPages - 1;
-    console.log(response.value.last_page);
   } catch (e) {}
 };
 onBeforeMount(() => {

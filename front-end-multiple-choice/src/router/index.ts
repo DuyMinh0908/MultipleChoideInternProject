@@ -46,9 +46,14 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../components/Dashboard/course/index.vue"),
       },
       {
-        path: "/course/index",
+        path: "/course/create",
         name: "Dashboard.Course.Create",
         component: () => import("../components/Dashboard/course/create.vue"),
+      },
+      {
+        path: ":id/update",
+        name: "Dashboard.Course.Update",
+        component: () => import("../components/Dashboard/course/update.vue"),
       },
     ],
   },

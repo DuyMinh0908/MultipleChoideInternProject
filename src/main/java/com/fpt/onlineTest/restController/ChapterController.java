@@ -19,10 +19,11 @@ public class ChapterController {
 
     //    create chapter
     @PostMapping("/course/chapters/create")
-    public ResponseEntity<Chapter> createNewChapter(@RequestBody Chapter newChapter) {
+    public ResponseEntity<List<Chapter>> createNewChapter(@RequestBody List<Chapter> newChapter) {
         try {
             return new ResponseEntity<>(chapterService.createChapter(newChapter), HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
