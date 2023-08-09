@@ -26,9 +26,9 @@ public class Answer implements Serializable {
     @NotNull
     private String contentAnswer;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "questionId")
+    @JsonBackReference
     Questions question;
 
     @JsonIgnore

@@ -36,9 +36,10 @@ public class ResultQuestionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ResultQuestion> newResultQuestion(@RequestBody ResultQuestion resultQuestion) {
+    public ResponseEntity<ResultQuestion> newResultQuestion(@RequestBody List<ResultQuestion> resultQuestions) {
         try {
-            return new ResponseEntity<>(resultQuestionService.createResultQuestion(resultQuestion), HttpStatus.OK);
+            resultQuestionService.createResultQuestion(resultQuestions);
+            return new ResponseEntity<>( HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
