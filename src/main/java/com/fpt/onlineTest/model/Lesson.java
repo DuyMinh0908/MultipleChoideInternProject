@@ -25,7 +25,8 @@ public class Lesson implements Serializable {
     @NotNull
     private String lessonTitle;
 
-    @JsonIgnoreProperties({"description","courses"})
+    @JsonIgnore
+    @JsonIgnoreProperties({"description","courses","lessons","chapterId"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chapterId")
     private Chapter chapter;
