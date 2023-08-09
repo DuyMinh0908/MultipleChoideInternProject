@@ -32,10 +32,10 @@ public class CourseRegistrationController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<HttpStatus> courseRegistration(Integer crId) {
+    @DeleteMapping("/course/un-subscribe/{userId}&{courseId}")
+    public ResponseEntity<HttpStatus> courseRegistration(@PathVariable Integer userId,@PathVariable Integer courseId) {
         try {
-            crs.cancelRegistration(crId);
+            crs.cancelRegistration(userId,courseId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
