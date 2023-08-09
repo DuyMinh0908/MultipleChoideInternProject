@@ -1,5 +1,6 @@
 package com.fpt.onlineTest.service.impl;
 
+import com.fpt.onlineTest.model.Answer;
 import com.fpt.onlineTest.model.Questions;
 import com.fpt.onlineTest.reponsitory.QuestionRepository;
 import com.fpt.onlineTest.service.QuestionService;
@@ -22,8 +23,8 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findById(questionId);
     }
     @Override
-    public Questions newQuestion(Questions question) {
-        return questionRepository.save(question);
+    public void newQuestion(List<Questions> questions) {
+        questionRepository.saveAll(questions);
     }
     @Override
     public void deleteQuestion(Integer questionId) {

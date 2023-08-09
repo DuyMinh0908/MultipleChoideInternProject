@@ -25,7 +25,7 @@ public class ResultQuestionServiceImpl implements ResultQuestionService {
     }
 
     @Override
-    public ResultQuestion createResultQuestion(ResultQuestion resultQuestion) {
-        return resultQuestionRepository.save(resultQuestion);
+    public void createResultQuestion(List<ResultQuestion> resultQuestions) {
+        resultQuestionRepository.saveAll(resultQuestions);
     }
 }
