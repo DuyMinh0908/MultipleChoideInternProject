@@ -7,7 +7,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +17,7 @@ import java.util.List;
 @Setter
 @Getter
 @Data
+//@ToString
 public class Questions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,18 +27,16 @@ public class Questions {
     @NotNull
     private String contentQuestion;
 
-    @JsonIgnore
     @Column(columnDefinition = "nvarchar(100)")
     @NotNull
     private String subject;
 
-    @JsonIgnore
     @Column(columnDefinition = "varchar(10)")
     @NotNull
     private String level;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
     List<Answer> answer;
 
     @JsonIgnore
