@@ -31,6 +31,9 @@ public class Answer implements Serializable {
     @JsonBackReference
     Questions question;
 
+    @Column(name = "status", columnDefinition = "varchar(100)")
+    private String status;
+
     @JsonIgnore
     @OneToMany(mappedBy = "answer")
     List<ResultQuestion> resultQuestions;

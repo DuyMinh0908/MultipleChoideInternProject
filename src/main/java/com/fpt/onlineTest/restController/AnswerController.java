@@ -33,6 +33,15 @@ public class AnswerController {
         }
     }
 
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<Answer>> getAnswerByStatus(@PathVariable String status) {
+        try {
+            return new ResponseEntity<>(answerService.getAnswerByStatus(status), HttpStatus.OK);
+        }catch(Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("/delete/{id}")
     public void deleteAnswer(@PathVariable Integer id){
         try {
