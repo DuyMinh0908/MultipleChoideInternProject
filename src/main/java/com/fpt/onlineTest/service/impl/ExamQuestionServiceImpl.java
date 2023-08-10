@@ -107,13 +107,19 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     }
 
     @Override
-    public ExamQuestion addSingleQuestion(ExamQuestion examQuestion) {
-        return examQuestionRepository.save(examQuestion);
-    }
+    public List<ExamQuestion> addMultipleQuestions(List<ExamQuestion> examQuestions) {
+        List<ExamQuestion> addedQuestions = new ArrayList<>();
 
-    @Override
-    public List<ExamQuestion> addSelectedQuestion(List<ExamQuestion> examQuestions) {
-        return examQuestionRepository.saveAll(examQuestions);
+        for (ExamQuestion examQuestion : examQuestions) {
+            ExamQuestion existingExamQuestion = examQuestionRepository.findQuestionExist(
+                    examQuestion.getExam().getExamId(), examQuestion.getQuestion().getQuestionId());
+
+            if (existingExamQuestion == null) {
+                addedQuestions.add(examQuestionRepository.save(examQuestion));
+            }
+        }
+
+        return addedQuestions;
     }
 
     @Override

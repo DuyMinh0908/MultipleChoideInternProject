@@ -34,11 +34,8 @@ public class ExamServiceImpl implements ExamService {
         if(exitingExam.getNumQuestion()!=null)
             exitingExam.setNumQuestion(exam.getNumQuestion());
 
-        if(exitingExam.getTimeStart()!=null)
-            exitingExam.setTimeStart(exam.getTimeStart());
-
-        if(exitingExam.getTimeEnd()!=null)
-            exitingExam.setTimeEnd(exam.getTimeEnd());
+        if(exitingExam.getDuration()!=null)
+            exitingExam.setDuration(exam.getDuration());
 
         return examRepository.save(exitingExam);
     }
