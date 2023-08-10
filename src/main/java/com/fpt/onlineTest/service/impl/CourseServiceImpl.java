@@ -108,6 +108,11 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.findById(courseId);
     }
 
+    @Override
+    public String getSubject(Integer courseId) {
+        return courseRepository.findCourseSubject(courseId);
+    }
+
     public CourseDto mapCourseToDto(Course course) {
         CourseDto courseDto = new CourseDto();
         courseDto.setCourseId(course.getCourseId());

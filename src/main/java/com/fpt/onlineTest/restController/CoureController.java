@@ -104,7 +104,7 @@ public class CoureController {
     ) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            TeacherDto teacherCourseDto = courseService.getCoursesByTeacherId(teacherId, pageable,teacher);
+            TeacherDto teacherCourseDto = courseService.getCoursesByTeacherId(teacherId, pageable, teacher);
 
             return new ResponseEntity<>(teacherCourseDto, HttpStatus.OK);
         } catch (Exception e) {
@@ -135,7 +135,7 @@ public class CoureController {
             Optional<User> user) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            System.out.println("controller user id: "+userId);
+            System.out.println("controller user id: " + userId);
             UserDto userCourseDto = courseService.getCoursesByUserIdtId(userId, pageable, user);
 
             return new ResponseEntity<>(userCourseDto, HttpStatus.OK);
@@ -150,7 +150,7 @@ public class CoureController {
         try {
             return new ResponseEntity<>(courseService.getPopuLarCourses(), HttpStatus.OK);
         } catch (Exception e) {
-
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -173,7 +173,16 @@ public class CoureController {
             }
 
         }
-
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/course/{id}/subject")
+    public ResponseEntity<String> getCourseSubject(@PathVariable Integer id) {
+        try {
+            return new ResponseEntity<>(courseService.getSubject(id), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

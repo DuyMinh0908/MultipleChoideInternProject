@@ -37,4 +37,6 @@ public interface CourseService {
     // get course by id
     Optional<CourseDto> getCourseDtoById(Integer courseId);
     Optional<Course> getCourseById(Integer courseId);
+
+    String getSubject(Integer courseId);
 }

@@ -33,7 +33,7 @@ public class Chapter implements Serializable {
     @JoinColumn(name = "courseId")
     private Course courses;
 
-    @JsonIgnore
+//    @JsonIgnore
     @Fetch(value = FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
     private List<Lesson> lessons;
