@@ -15,11 +15,8 @@ public interface ExamQuestionService {
     //    create random exam have random level with {subject} and {nums} questions
     List<ExamQuestion> createExamTestWithRandomQuestion(Integer nums, Integer examId, String subject);
 
-    // add single question to exam test
-    ExamQuestion addSingleQuestion(ExamQuestion examQuestion);
-
     //    add selected questions to exam test
-    List<ExamQuestion> addSelectedQuestion(List<ExamQuestion> examQuestions);
+    List<ExamQuestion> addMultipleQuestions(List<ExamQuestion> examQuestions);
 
     //    get exam test question
     Page<ExamQuestion> getExamTestQuestions(Integer id, Pageable pageable);

@@ -12,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "Questions")
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -27,12 +26,10 @@ public class Questions {
     @NotNull
     private String contentQuestion;
 
-    @JsonIgnore
     @Column(columnDefinition = "nvarchar(100)")
     @NotNull
     private String subject;
 
-    @JsonIgnore
     @Column(columnDefinition = "varchar(10)")
     @NotNull
     private String level;
