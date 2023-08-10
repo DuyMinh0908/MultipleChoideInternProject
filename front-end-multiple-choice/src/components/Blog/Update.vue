@@ -32,6 +32,7 @@ const createBlog = async () => {
           v-model="form.titleBlog"
           class="w-40 border border-black"
           type="text"
+          required
         />
       </div>
       <ckeditor v-model="form.contentBlog" :editor="ClassicEditor"></ckeditor>

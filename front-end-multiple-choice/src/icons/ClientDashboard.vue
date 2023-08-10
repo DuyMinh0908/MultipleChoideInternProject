@@ -22,13 +22,7 @@ defineProps({
     <title>plus-circle</title>
     <desc>Created with Sketch Beta.</desc>
     <defs></defs>
-    <g
-      id="Page-1"
-      stroke-width="1"
-      fill="none"
-      fill-rule="evenodd"
-      sketch:type="MSPage"
-    >
+    <g id="Page-1" stroke-width="1" sketch:type="MSPage">
       <g
         id="Icon-Set"
         sketch:type="MSLayerGroup"

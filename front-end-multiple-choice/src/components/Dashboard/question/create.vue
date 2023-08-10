@@ -2,119 +2,139 @@
   <Navigation />
   <div class="flex justify-center">
     <form
-      @submit.prevent="saveCourse"
-      class="w-3/6 rounded-md border-2 border-zinc-800 h-3/4 my-14 mb-32"
+      @submit.prevent="saveQuestions()"
+      class="w-3/5 px-20 rounded-md border-2 border-zinc-800 h-fit my-14"
     >
       <h1 class="flex uppercase justify-center font-medium text-2xl my-10">
-        Thêm khóa học
+        Tạo ngân hàng đề
       </h1>
-      <div class="grid grid-cols-2 gap-2 md:gap-6 place-items-center mt-4">
-        <div>
-          <p class="font-bold text-zinc-600 px-2">
-            Tên khóa học<span class="text-red-600 font-bold">*</span>
-          </p>
-          <input
-            class="rounded-md h-8 w-64 pl-2 border-2"
-            name=""
-            v-model="form.courseName"
-            id=""
-            placeholder="Nhập mã khóa học"
-          />
-        </div>
+      <div
+        class="flex flex-col space-y-4 border border-gray-400 shadow-xl rounded-xl p-5"
+        v-for="(formQuestion, index) in formQuestions"
+        :key="formQuestion"
+      >
+        <Icon @click="removeQuestion(index)" name="delete" class="w-5 h-5" />
 
-        <div>
-          <p class="font-bold text-zinc-600 px-2">
-            Tên môn học <span class="text-red-600 font-bold">*</span>
-          </p>
-          <input
-            v-model="form.subject"
-            class="rounded-md h-8 w-64 pl-2 border-2"
-            name=""
-            id=""
-            placeholder="Java"
-          />
-        </div>
-        <div>
-          <p class="font-bold text-zinc-600 px-2">Số lượng học sinh</p>
-          <input
-            v-model="form.numberStudent"
-            class="rounded-md h-8 w-64 pl-2 border-2"
-            name=""
-            id=""
-            placeholder="Nhập mã khóa học"
-          />
-        </div>
-
-        <div class="flex flex-row items-center justify-items-center space-x-2">
-          <p class="font-bold text-zinc-600 px-2">
-            Trạng thái <span class="text-red-600 font-bold">*</span>
-          </p>
-          <div class="flex items-center">
+        <div class="grid grid-cols-2 gap-6 px-5 mt-4">
+          <div class="flex flex-col w-full">
+            <p class="font-bold text-zinc-600 px-2">
+              Nhâp câu hỏi<span class="text-red-600 font-bold">*</span>
+            </p>
             <input
-              id="default-radio-1"
-              type="radio"
-              value="true"
-              v-model="form.status"
-              name="default-radio"
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              class="h-12 rounded-xl pl-2 border-2"
+              v-model="formQuestion.contentQuestion"
+              placeholder="Nhập mã khóa học"
             />
-            <label
-              for="default-radio-1"
-              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >Hoạt động
-            </label>
           </div>
-          <div class="flex items-center">
-            <input
-              checked
-              id="default-radio-2"
-              type="radio"
-              value="false"
-              name="default-radio"
-              v-model="form.status"
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-            <label
-              for="default-radio-2"
-              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >Đang đóng</label
-            >
-          </div>
-        </div>
-        <div>
-          <p class="font-bold text-zinc-600 px-2">Image</p>
           <div
-            class="h-56 w-60 rounded-md border-2 bg-white flex justify-center items-center"
+            class="flex flex-row items-center justify-items-center space-x-2"
           >
-            <div class="w-14 h-fit py-2 bg-zinc-400 flex flex-col items-center">
-              <label for="file-input">
-                <img
-                  class="rounded-full w-5 h-5"
-                  src="src/assets/img/iccong.svg"
-                  alt=""
-                />
-              </label>
+            <p class="font-bold text-zinc-600 px-2">
+              Level <span class="text-red-600 font-bold">*</span>
+            </p>
+            <div class="flex items-center">
               <input
-                class="hidden"
-                id="file-input"
-                type="file"
-                @change="onFileSelect"
+                id="default-radio-1"
+                type="radio"
+                value="easy"
+                v-model="formQuestion.level"
+                name="default-radio"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
-              <p class="font-bold text-xs">Import</p>
+              <label
+                for="default-radio-1"
+                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Dễ
+              </label>
+            </div>
+            <div class="flex items-center">
+              <input
+                checked
+                id="default-radio-2"
+                type="radio"
+                value="medium"
+                v-model="formQuestion.level"
+                name="default-radio"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="default-radio-2"
+                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Vừa</label
+              >
+            </div>
+            <div class="flex items-center">
+              <input
+                checked
+                id="default-radio-2"
+                type="radio"
+                value="hard"
+                v-model="formQuestion.level"
+                name="default-radio"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="default-radio-2"
+                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Khó</label
+              >
             </div>
           </div>
+          <div class="flex flex-col">
+            <p class="font-bold text-zinc-600 px-2">
+              Đáp án 1 <span class="text-red-600 font-bold">*</span>
+            </p>
+            <input
+              class="h-12 rounded-xl w-full pl-2 border-2"
+              name=""
+              id=""
+              v-model="formQuestion.answer[0].contentAnswer"
+              placeholder="Nhập mã khóa học"
+            />
+          </div>
+          <div class="flex flex-col">
+            <p class="font-bold text-zinc-600 px-2">
+              Đáp án 2 <span class="text-red-600 font-bold">*</span>
+            </p>
+            <input
+              class="h-12 rounded-xl w-full pl-2 border-2"
+              name=""
+              v-model="formQuestion.answer[1].contentAnswer"
+              id=""
+              placeholder="Nhập mã khóa học"
+            />
+          </div>
+          <div class="flex flex-col">
+            <p class="font-bold text-zinc-600 px-2">
+              Đáp án 3 <span class="text-red-600 font-bold">*</span>
+            </p>
+            <input
+              class="h-12 rounded-xl w-full pl-2 border-2"
+              name=""
+              id=""
+              placeholder="Nhập mã khóa học"
+              v-model="formQuestion.answer[2].contentAnswer"
+            />
+          </div>
+          <div class="flex flex-col">
+            <p class="font-bold text-zinc-600 px-2">
+              Đáp án 4 <span class="text-red-600 font-bold">*</span>
+            </p>
+            <input
+              class="h-12 rounded-xl w-full pl-2 border-2"
+              name=""
+              id=""
+              v-model="formQuestion.answer[3].contentAnswer"
+              placeholder="Nhập mã khóa học"
+            />
+          </div>
         </div>
-        <div>
-          <p class="font-bold text-zinc-600 px-4">
-            Mô tả<span class="text-red-600 font-bold">*</span>
-          </p>
-          <!-- <input class=" h-60 w-96 border-2 rounded-xl text-start " type="" placeholder="Nhập mã khóa học"> -->
-          <textarea
-            class="w-80 rounded-lg border-2 pl-2"
-            placeholder="Mô tả khóa học"
-            rows="9"
-          ></textarea>
-        </div>
+      </div>
+      <div
+        @click="addQuestion"
+        class="rounded-xl px-3 mt-4 py-2 text-white bg-lightblue hover:bg-blue-600 w-40"
+      >
+        Thêm câu hỏi
       </div>
       <div class="flex-row gap-10 my-10 flex justify-center h-10">
         <button
@@ -131,99 +151,73 @@
       </div>
     </form>
   </div>
-  <button @click="createQuestion()">
-    dasdansjkdnasdkjasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  </button>
 </template>
 <script lang="ts" setup>
 import Navigation from "../../Navigation.vue";
 import { ref, Ref } from "vue";
 import { api } from "../../../services/http-common";
 import { useNotificationStore } from "../../../store/notificationStore";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import Icon from "../../../icons/ClientDashboard.vue";
 const notificationStore = useNotificationStore();
-
+const route = useRoute();
 const router = useRouter();
-const form = ref([
+const subject: Ref<String> = ref("");
+subject.value = String(route.params.subject);
+
+const formQuestions = ref([
   {
     contentQuestion: "",
-    level: "java",
-    subject: "medium",
+    level: "",
+    subject: subject.value,
     answer: [
       {
-        contentAnswer: "dasdasdas",
+        contentAnswer: "",
       },
       {
-        contentAnswer: "dasdasdas",
+        contentAnswer: "",
       },
       {
-        contentAnswer: "dasdasdas",
+        contentAnswer: "",
       },
       {
-        contentAnswer: "dasdasdas",
-      },
-    ],
-  },
-  {
-    contentQuestion: "",
-    level: "java",
-    subject: "medium",
-    answer: [
-      {
-        contentAnswer: "dasdasdas",
-      },
-      {
-        contentAnswer: "dasdasdas",
-      },
-      {
-        contentAnswer: "dasdasdas",
-      },
-      {
-        contentAnswer: "dasdasdas",
+        contentAnswer: "",
       },
     ],
   },
 ]);
-const createQuestion = async () => {
-  await api.post("/questions/create", form.value);
-  console.log(form.value);
+
+const removeQuestion = (index: Number) => {
+  formQuestions.value.splice(Number(index), 1);
 };
-// const addChapter = () => {
-//   chapters.value.push({
-//     previous: "",
-//     expiration: "",
-//   });
-// };
-// function deleteChapter(counter) {
-//   chapters.value.splice(counter, 1);
-// }
+const addQuestion = () => {
+  formQuestions.value.push({
+    contentQuestion: "",
+    level: "",
+    subject: subject.value,
+    answer: [
+      {
+        contentAnswer: "",
+      },
+      {
+        contentAnswer: "",
+      },
+      {
+        contentAnswer: "",
+      },
+      {
+        contentAnswer: "",
+      },
+    ],
+  });
+};
+const saveQuestions = async () => {
+  try {
+    await api.post("/questions/create", formQuestions.value);
+    notificationStore.openSuccess("Tạo câu hỏi thành công");
+    await router.push(`/dashboard/subject/${subject.value}`);
+  } catch (e) {
+    console.error("Tạo câu hỏi thất bại");
+  }
+};
 </script>
-<!-- <div id="visa">
-    <h1>Vue Visa Application</h1>
-    <form>
-      <label for="first name">First Name:</label>
-      <input type="text" required />
-      <br />
-      <label for="last name">Last Name:</label>
-      <input type="text" required />
-      <br />
-      <label for="country">Nationality:</label>
-      <input type="text" required />
-      <br />
-      <label for="passport number">Passport Number:</label>
-      <input type="text" required />
-  
-      <label for="duration">Duration of stay:</label>
-      <input type="text" required />
-      <br /><br />
-      <button @click="addChapter">Add another previous visa</button>
-      <br />
-      <div class="previous" v-for="(chapter, index) in chapters" :key="index">
-        <span @click="deleteChapter(index + 1)">x</span>
-        <label for="duration">Previous Visa:</label>
-        <input type="text" required />
-        <label for="duration">Year of expiration:</label>
-        <input type="text" required />
-      </div>
-    </form>
-  </div> -->

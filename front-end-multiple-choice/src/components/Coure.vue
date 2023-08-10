@@ -62,7 +62,7 @@ const getAllCourses = async ()=>{
  try{
     const data = await api.get('/courses') ;
     console.log(data.data)
-    allCourses.value = data.data
+    allCourses.value = data.data.content
     
  }
  catch(e){

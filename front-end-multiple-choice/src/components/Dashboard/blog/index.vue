@@ -1,11 +1,11 @@
 <template>
   <Navigation />
-  <div class="container">
+  <div class="container flex flex-col">
     <table class="w-full text border-collapse border border-slate-400">
       <caption class="caption-top uppercase text-3xl font-bold">
         Danh sách bài viêt
       </caption>
-      <thead class="bg-green-600">
+      <thead class="bg-lightblue h-12">
         <tr class="uppercase">
           <th scope="col" class="border border-slate-300 col-span-1">ID</th>
           <th scope="col" class="border border-slate-300">Tiêu đề</th>
@@ -97,7 +97,7 @@ const response: Ref<ResponseData> = ref({
 });
 const searchForm: Ref<SearchForm> = ref({
   page: 0,
-  size: 20,
+  size: 5,
 });
 const { open, close } = useModal({
   component: ModalConfirm,
@@ -134,6 +134,7 @@ const deleteBlogItem = (id: Number) => {
 const getAllBlogs = async () => {
   try {
     const data = await api.get("/blogs");
+    console.log(data);
     allBlogs.value = data.data.content;
   } catch (e) {
     console.error(e);

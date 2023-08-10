@@ -1,21 +1,28 @@
 <template>
   <Navigation />
   <SideBarDasboard />
-  <div class="container">
-    <router-link :to="{ name: 'Dashboard.Course.Create' }">
-      them khoa hoc
+  <div class="w-4/6 ml-96">
+    <router-link
+      class="bg-lightblue px-3 py-2 rounded-xl flex-row flex items-center w-fit"
+      :to="{ name: 'Dashboard.Course.Create' }"
+    >
+      Thêm khóa học
+      <Icon name="plus" class="ml-2 w-5 h-5" />
     </router-link>
-    <table class="w-full text border-collapse border border-slate-400">
+    <table
+      class="w-full text border-collapse border border-slate-400 rounded-xl overflow-hidden"
+    >
       <caption class="caption-top uppercase text-3xl font-bold">
         Danh sách khóa học
       </caption>
-      <thead class="bg-green-600">
-        <tr class="uppercase">
+      <thead class="bg-lightblue rounded-xl overflow-hidden">
+        <tr class="uppercase h-14">
           <th scope="col" class="border border-slate-300 col-span-1">ID</th>
           <th scope="col" class="border border-slate-300">Tên khóa học</th>
           <th scope="col" class="border border-slate-300">Giáo viên</th>
           <th scope="col" class="border border-slate-300">Ảnh</th>
           <th scope="col" class="border border-slate-300">Số học sinh</th>
+          <th scope="col" class="border border-slate-300">Ngân hàng đề</th>
           <th scope="col" class="border border-slate-300">Action</th>
         </tr>
       </thead>
@@ -33,12 +40,32 @@
             {{ course.fullName }}
           </td>
           <td class="px-5">
-            <img :src="course.imageCourse" class="w-40 mx-auto" />
+            <img :src="String(course.imageCourse)" class="w-40 mx-auto" />
           </td>
-          <td class="w-52 px-5">
+          <td class="w-20 px-5">
             {{ course.numberStudent }}
           </td>
-          <td class="w-60">
+          <td class="px-5 flex flex-row space-x-2">
+            <router-link
+              :to="{
+                name: 'Dashboard.Question.Create',
+                params: { subject: String(course.subject) },
+              }"
+              class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-2 rounded-xl bg-lightblue"
+            >
+              Thêm
+            </router-link>
+            <router-link
+              :to="{
+                name: 'Dashboard.Question.Index',
+                params: { subject: String(course.subject) },
+              }"
+              class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl bg-lightblue"
+            >
+              DSCH
+            </router-link>
+          </td>
+          <td class="w-28">
             <div class="flex flex-row space-x-4 w-full justify-center">
               <router-link
                 :to="{
@@ -74,13 +101,17 @@ import Navigation from "../../Navigation.vue";
 import { Course } from "../../../model/course";
 import { api } from "../../../services/http-common";
 import { ref, Ref, onBeforeMount, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import Icon from "../../../icons/ClientDashboard.vue";
 import { ModalsContainer, useModal } from "vue-final-modal";
 import ModalConfirm from "../../modals/ModalConfirm.vue";
 import SideBarDasboard from "../SideBarDashboard.vue";
 import Pagination from "../../Pagination.vue";
 const allCouses: Ref<Array<Course>> = ref([]);
+import { useNotificationStore } from "../../../store/notificationStore";
+const notificationStore = useNotificationStore();
 const currentIdCourse: Ref<Number | undefined> = ref(undefined);
+const route = useRoute();
 interface ResponseData {
   last_page: number;
   current_page: number;
@@ -95,7 +126,7 @@ const response: Ref<ResponseData> = ref({
 });
 const searchForm: Ref<SearchForm> = ref({
   page: 0,
-  size: 20,
+  size: 4,
 });
 const { open, close } = useModal({
   component: ModalConfirm,
@@ -106,7 +137,9 @@ const { open, close } = useModal({
       try {
         await api.delete(`/courses/delete-course/${currentIdCourse.value}`);
         await getAllCourses();
+        notificationStore.openSuccess("Xóa thành công");
       } catch (e) {
+        notificationStore.openError("Xóa không thành công");
         console.error(e);
       }
       close();

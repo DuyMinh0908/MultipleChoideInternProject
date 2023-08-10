@@ -3,6 +3,7 @@
   <div class="flex justify-center">
     <form
       @submit.prevent="saveCourse"
+      @keydown="validate.$clearExternalResults()"
       class="w-3/6 rounded-md border-2 border-zinc-800 h-3/4 my-14 mb-32"
     >
       <h1 class="flex uppercase justify-center font-medium text-2xl my-10">
@@ -16,10 +17,20 @@
           <input
             class="rounded-md h-8 w-64 pl-2 border-2"
             name=""
-            v-model="form.courseName"
+            v-model="form.courseName.trim"
             id=""
+            type="text"
             placeholder="Nhập mã khóa học"
           />
+          <template v-if="validate.courseName.$error">
+            <div
+              v-for="(error, index) in validate.courseName.$errors"
+              :key="index"
+              class="text-danger mt-2 italic text-sm"
+            >
+              {{ validationMessage(error.$message, "Tên khóa học") }}
+            </div>
+          </template>
         </div>
 
         <div>
@@ -27,10 +38,12 @@
             Tên môn học <span class="text-red-600 font-bold">*</span>
           </p>
           <input
-            v-model="form.subject"
+            v-model="form.subject.trim"
             class="rounded-md h-8 w-64 pl-2 border-2"
             name=""
             id=""
+            type="text"
+            required
             placeholder="Java"
           />
         </div>
@@ -39,9 +52,11 @@
           <input
             v-model="form.numberStudent"
             class="rounded-md h-8 w-64 pl-2 border-2"
-            name=""
-            id=""
-            placeholder="Nhập mã khóa học"
+            type="number"
+            min="1"
+            max="1000"
+            required
+            placeholder="Số lượng học sinh"
           />
         </div>
 
@@ -104,17 +119,6 @@
             </div>
           </div>
         </div>
-        <div>
-          <p class="font-bold text-zinc-600 px-4">
-            Mô tả<span class="text-red-600 font-bold">*</span>
-          </p>
-          <!-- <input class=" h-60 w-96 border-2 rounded-xl text-start " type="" placeholder="Nhập mã khóa học"> -->
-          <textarea
-            class="w-80 rounded-lg border-2 pl-2"
-            placeholder="Mô tả khóa học"
-            rows="9"
-          ></textarea>
-        </div>
       </div>
       <div class="flex-row gap-10 my-10 flex justify-center h-10">
         <button
@@ -137,8 +141,15 @@ import Navigation from "../../Navigation.vue";
 import { ref, Ref } from "vue";
 import { api } from "../../../services/http-common";
 import { useNotificationStore } from "../../../store/notificationStore";
+import { useVuelidate } from "@vuelidate/core";
 import { useRouter } from "vue-router";
+import { required, alpha, minLength, maxLength } from "@vuelidate/validators";
 const notificationStore = useNotificationStore();
+const $externalResults = ref({});
+const rules = {
+  courseName: { required, minLength: minLength(3) },
+  subject: { required, minLength: minLength(3) },
+};
 
 const router = useRouter();
 const form = ref({
@@ -148,6 +159,14 @@ const form = ref({
   subject: "",
   status: "",
 });
+const validate = useVuelidate(rules, form, { $externalResults });
+
+const validationMessage = (error: any, text: string) => {
+  if (error) {
+    return error.replace("Value", text);
+  }
+  return error;
+};
 const currentFile = ref();
 
 const onFileSelect = (e: any): void => {
@@ -155,6 +174,12 @@ const onFileSelect = (e: any): void => {
   currentFile.value = file;
 };
 const saveCourse = async () => {
+  validate.value.$clearExternalResults();
+  validate.value.$touch();
+  if (validate.value.$invalid) {
+    notificationStore.openError("Please check your validation fields.");
+    return;
+  }
   try {
     const formData = new FormData();
     formData.append("courseName", form.value.courseName);
@@ -174,42 +199,4 @@ const saveCourse = async () => {
     notificationStore.openError("Đã xảy ra lỗi");
   }
 };
-// const addChapter = () => {
-//   chapters.value.push({
-//     previous: "",
-//     expiration: "",
-//   });
-// };
-// function deleteChapter(counter) {
-//   chapters.value.splice(counter, 1);
-// }
 </script>
-<!-- <div id="visa">
-  <h1>Vue Visa Application</h1>
-  <form>
-    <label for="first name">First Name:</label>
-    <input type="text" required />
-    <br />
-    <label for="last name">Last Name:</label>
-    <input type="text" required />
-    <br />
-    <label for="country">Nationality:</label>
-    <input type="text" required />
-    <br />
-    <label for="passport number">Passport Number:</label>
-    <input type="text" required />
-
-    <label for="duration">Duration of stay:</label>
-    <input type="text" required />
-    <br /><br />
-    <button @click="addChapter">Add another previous visa</button>
-    <br />
-    <div class="previous" v-for="(chapter, index) in chapters" :key="index">
-      <span @click="deleteChapter(index + 1)">x</span>
-      <label for="duration">Previous Visa:</label>
-      <input type="text" required />
-      <label for="duration">Year of expiration:</label>
-      <input type="text" required />
-    </div>
-  </form>
-</div> -->
