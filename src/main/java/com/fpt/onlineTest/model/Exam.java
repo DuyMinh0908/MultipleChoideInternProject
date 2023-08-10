@@ -2,6 +2,7 @@ package com.fpt.onlineTest.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,7 @@ public class Exam {
 //    @JoinColumn(name = "resultExamId")
 //    ResultExam resultExam;
 
+    @JsonIgnoreProperties({"courseName","numberStudent","imageCourse","status","subject","teacher"})
     @ManyToOne
     @JoinColumn(name = "courseId")
     Course courses;

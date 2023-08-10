@@ -9,6 +9,8 @@ import com.fpt.onlineTest.reponsitory.QuestionRepository;
 import com.fpt.onlineTest.service.ExamQuestionService;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     private QuestionRepository questionRepository;
     @Autowired
     private ExamQuestionRepository examQuestionRepository;
+    @Autowired
+    private ExamRepository examRepository;
 
     // create exam have {nums} questions, {subject} and {level}
     @Override
@@ -44,7 +48,7 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
 
     //    create random exam have random level with {subject} and {nums} questions
     @Override
-    public List<ExamQuestion> createExamTestWithRandomQuestion(Integer nums, Exam exam, String subject) {
+    public List<ExamQuestion> createExamTestWithRandomQuestion(Integer nums, Integer examId, String subject) {
         int totalNums = nums;
 
         int hardNums = (int) (totalNums * 0.2);
@@ -61,18 +65,22 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
         List<Integer> easyList = easyQidList.subList(0, Math.min(easyNums, easyQidList.size()));
 
         List<ExamQuestion> examQuestionList = new ArrayList<>();
-
         for (Integer hardQid : hardList) {
+            Exam exam = new Exam();
+            exam.setExamId(examId);
             Questions question = new Questions();
             question.setQuestionId(hardQid);
 
             ExamQuestion examQuestion = new ExamQuestion();
             examQuestion.setExam(exam);
             examQuestion.setQuestion(question);
+
             examQuestionList.add(examQuestion);
         }
 
         for (Integer mediumQid : mediumList) {
+            Exam exam = new Exam();
+            exam.setExamId(examId);
             Questions question = new Questions();
             question.setQuestionId(mediumQid);
 
@@ -84,6 +92,8 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
         }
 
         for (Integer easyQid : easyList) {
+            Exam exam = new Exam();
+            exam.setExamId(examId);
             Questions question = new Questions();
             question.setQuestionId(easyQid);
 
@@ -93,24 +103,22 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
 
             examQuestionList.add(examQuestion);
         }
-
         return examQuestionRepository.saveAll(examQuestionList);
     }
 
     @Override
     public ExamQuestion addSingleQuestion(ExamQuestion examQuestion) {
-//        return examQuestionRepository.addSingleQuestionToExam(examQuestion.getExam().getExamId(),examQuestion.getQuestion().getQuestionId());
         return examQuestionRepository.save(examQuestion);
     }
 
     @Override
     public List<ExamQuestion> addSelectedQuestion(List<ExamQuestion> examQuestions) {
-        return null;
+        return examQuestionRepository.saveAll(examQuestions);
     }
 
     @Override
-    public List<ExamQuestion> getExamTestQuestions(Integer examId) {
-        return examQuestionRepository.findExamQuestionByExamId(examId);
+    public Page<ExamQuestion> getExamTestQuestions(Integer examId, Pageable pageable) {
+        return examQuestionRepository.findExamQuestionByExamId(examId, pageable);
     }
 
     //delete 1 question
