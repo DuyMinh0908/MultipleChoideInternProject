@@ -87,7 +87,6 @@ public class CoureController {
             @RequestParam(defaultValue = "10") Integer size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            System.out.println(courseService.getAll(pageable));
             return new ResponseEntity<>(courseService.getAll(pageable), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
