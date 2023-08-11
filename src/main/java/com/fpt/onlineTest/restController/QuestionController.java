@@ -1,6 +1,7 @@
 package com.fpt.onlineTest.restController;
 
 import com.fpt.onlineTest.model.Questions;
+import com.fpt.onlineTest.model.ResponseObject;
 import com.fpt.onlineTest.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/v1/questions")
 public class QuestionController {
     @Autowired
@@ -35,12 +37,13 @@ public class QuestionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Questions> createQuestion(@RequestBody Questions newQuestion) {
+    public ResponseEntity<ResponseObject> createQuestion(@RequestBody List<Questions> newQuestions) {
         try {
-            return new ResponseEntity<>(questionService.newQuestion(newQuestion), HttpStatus.OK);
-
+            questionService.newQuestion(newQuestions);
+            return new ResponseEntity<>(new ResponseObject("success", "successfully", ""), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+            return new ResponseEntity<>(new ResponseObject("failed", e.getMessage(), ""), HttpStatus.NOT_FOUND);
         }
     }
 

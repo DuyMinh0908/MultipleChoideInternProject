@@ -12,5 +12,5 @@ public interface ResultQuestionService {
     List<ResultQuestion> getResultByAnswerId(Integer answerId);
 
     //Create result question
-    ResultQuestion createResultQuestion(ResultQuestion resultQuestion);
+    void createResultQuestion(List<ResultQuestion> resultQuestions);
 }
