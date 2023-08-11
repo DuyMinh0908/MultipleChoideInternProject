@@ -9,6 +9,9 @@ import CKEditor from "@ckeditor/ckeditor5-vue";
 import { createVfm } from "vue-final-modal";
 import globalComponents from "./global-components";
 import "vue-final-modal/style.css";
+import VueTimepicker from "vue3-timepicker";
+
+import "vue3-timepicker/dist/VueTimepicker.css";
 const vfm = createVfm();
 const app = createApp(App)
   .use(DropdownMenu)

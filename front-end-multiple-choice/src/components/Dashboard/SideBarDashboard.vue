@@ -1,7 +1,7 @@
 <template>
   <div class="relative z-50">
     <div
-      class="fixed bg-gray-100 w-1/6 border-r rounded-r-xl h-screen border-gray-400 shadow-xl"
+      class="fixed w-1/6 border-r rounded-r-xl h-screen border-gray-400 shadow-xl"
     >
       <ul class="space-y-6 p-4 text-start flex flex-col text-xl font-semibold">
         <router-link

@@ -50,19 +50,23 @@
     <div class="flex flex-col w-1/3 items-center space-y-4">
       <img :src="course.imageCourse" class="w-5/6 rounded-xl" />
       <h2 class="text-3xl text-lightblue">Miễn phí</h2>
+      <template v-if="!isRegstered">
+        <button
+          @click="registerCourse()"
+          class="uppercase rounded-xl bg-lightblue px-6 py-2 hover:bg-blue-500"
+        >
+          Đăng ký học
+        </button>
+      </template>
+      <template v-else>
+        <button
+          @click="unSubCourse()"
+          class="uppercase rounded-xl bg-lightblue px-6 py-2 hover:bg-blue-500"
+        >
+          Hủy đăng kí
+        </button>
+      </template>
 
-      <button
-        v-if="!isRegstered"
-        @click="registerCourse()"
-        class="uppercase rounded-xl bg-lightblue px-6 py-2 hover:bg-blue-500"
-      >
-        Đăng ký học
-      </button>
-      <button
-        class="uppercase rounded-xl bg-lightblue px-6 py-2 hover:bg-blue-500"
-      >
-        Đã đăng kí
-      </button>
       <div class="flex flex-col space-y-2">
         <span
           class="flex flex-row first-letter: justify-items-center text-center"
@@ -88,7 +92,7 @@ import Navigation from "../Navigation.vue";
 import SideBar from "../SideBar.vue";
 import { useRoute } from "vue-router";
 import { Course } from "../../model/course";
-import { ref, Ref, onBeforeMount } from "vue";
+import { ref, Ref, onBeforeMount, onMounted } from "vue";
 import { api } from "../../services/http-common";
 import Icon from "../../icons/ClientDashboard.vue";
 import { User } from "../../model/user";
@@ -150,6 +154,19 @@ const registerCourse = async () => {
       `/course/subscribe`,
       courseRegistration.value
     );
+
+    await getUserInCourse();
+  } catch (e) {
+    console.error(e);
+  }
+};
+const unSubCourse = async () => {
+  try {
+    await api.delete(
+      `course/un-subscribe/${courseRegistration.value.user.userId}&${course.value.courseId}`
+    );
+    isRegstered.value = false;
+    await getUserInCourse();
   } catch (e) {
     console.error(e);
   }
@@ -167,6 +184,10 @@ const getUserInCourse = async () => {
     }
   });
 };
+onMounted(() => {
+  getDetailCourse();
+  getUserInCourse();
+});
 onBeforeMount(async () => {
   await getDetailCourse();
   await getUserInCourse();

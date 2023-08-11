@@ -6,10 +6,14 @@ import com.fpt.onlineTest.reponsitory.ExamQuestionRepository;
 import com.fpt.onlineTest.reponsitory.ExamRepository;
 import com.fpt.onlineTest.service.ExamQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,36 +43,52 @@ public class ExamQuestionController {
     }
 
     @PostMapping("/exam/create-test/num={nums}/subject={subject}/exam-id={examId}")
-    public ResponseEntity<List<ExamQuestion>> createExamWithRandomQuestions(@PathVariable Integer nums, @PathVariable Integer examId, @PathVariable String subject, @RequestBody Exam exam) {
+    public ResponseEntity<List<ExamQuestion>> createExamWithRandomQuestions(@PathVariable Integer nums, @PathVariable Integer examId, @PathVariable String subject) {
         try {
-            exam.setExamId(examId);
+//            exam.setExamId(examId);
             Integer qAmount = examRepository.getExamQuestionAmount(examId);
-            if (Objects.equals(nums, qAmount))
-                return new ResponseEntity<>(examQuestionService.createExamTestWithRandomQuestion(nums, exam, subject), HttpStatus.ACCEPTED);
-            else
+            if (Objects.equals(nums, qAmount)) {
+                return new ResponseEntity<>(examQuestionService.createExamTestWithRandomQuestion(nums, examId, subject), HttpStatus.ACCEPTED);
+            } else {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping("/exam/question/add")
-    public ResponseEntity<ExamQuestion> addSingleQuestionToExam(@RequestBody ExamQuestion examQuestion) {
-        ExamQuestion exitingExamQuestion = examQuestionRepository.findQuestionExist(examQuestion.getExam().getExamId(), examQuestion.getQuestion().getQuestionId());
-        try {
-            if (exitingExamQuestion == null)
-                return new ResponseEntity<>(examQuestionService.addSingleQuestion(examQuestion), HttpStatus.ACCEPTED);
-            else
-                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    @PostMapping("/exam/question/add-multiple")
+    public ResponseEntity<List<ExamQuestion>> addMultipleQuestionsToExam(@RequestBody List<ExamQuestion> examQuestions) {
+        List<ExamQuestion> addedQuestions = new ArrayList<>();
+
+        for (ExamQuestion examQuestion : examQuestions) {
+            ExamQuestion existingExamQuestion = examQuestionRepository.findQuestionExist(
+                    examQuestion.getExam().getExamId(), examQuestion.getQuestion().getQuestionId());
+
+            if (existingExamQuestion == null) {
+                addedQuestions.add(examQuestion);
+            }
         }
+
+        if (addedQuestions.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        List<ExamQuestion> savedQuestions = examQuestionService.addMultipleQuestions(addedQuestions);
+
+        return new ResponseEntity<>(savedQuestions, HttpStatus.ACCEPTED);
     }
+
 
     @GetMapping("/exam/questions/exam-id={id}")
-    public ResponseEntity<List<ExamQuestion>> getExamTestQuestions(@PathVariable Integer id) {
+    public ResponseEntity<Page<ExamQuestion>> getExamTestQuestions(
+            @PathVariable Integer id,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size) {
         try {
-            return new ResponseEntity<>(examQuestionService.getExamTestQuestions(id), HttpStatus.OK);
+            Pageable pageable = PageRequest.of(page, size);
+            return new ResponseEntity<>(examQuestionService.getExamTestQuestions(id, pageable), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

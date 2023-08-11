@@ -45,7 +45,7 @@
           <td class="w-20 px-5">
             {{ course.numberStudent }}
           </td>
-          <td class="px-5 flex flex-row space-x-2">
+          <td class="px-5 grid grid-cols-2 gap-2">
             <router-link
               :to="{
                 name: 'Dashboard.Question.Create',
@@ -53,7 +53,7 @@
               }"
               class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-2 rounded-xl bg-lightblue"
             >
-              Thêm
+              Thêm CH
             </router-link>
             <router-link
               :to="{
@@ -63,6 +63,15 @@
               class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl bg-lightblue"
             >
               DSCH
+            </router-link>
+            <router-link
+              :to="{
+                name: 'Dashboard.Exam.Create',
+                params: { idcourse: String(course.courseId) },
+              }"
+              class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-2 rounded-xl bg-lightblue"
+            >
+              Tạo đề thi
             </router-link>
           </td>
           <td class="w-28">

@@ -4,6 +4,15 @@ interface Props {
   blog: Blog;
 }
 const prop = defineProps<Props>();
+function removeTags(str) {
+  if (str === null || str === "") return false;
+  else str = str.toString();
+
+  // Regular expression to identify HTML tags in
+  // the input string. Replacing the identified
+  // HTML tag with a null string.
+  return str.replace(/(<([^>]+)>)/gi, "");
+}
 </script>
 <template>
   <div class="flex flex-row bg-white rounded-xl border p-5 shadow-lg w-3/4">
@@ -24,7 +33,7 @@ const prop = defineProps<Props>();
         {{ prop.blog.titleBlog }}
       </router-link>
       <p class="line-clamp-2 w-4/5">
-        {{ prop.blog.contentBlog }}
+        {{ removeTags(prop.blog.contentBlog) }}
       </p>
     </div>
     <img

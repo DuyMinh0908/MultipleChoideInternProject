@@ -65,6 +65,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "Dashboard.Question.Index",
         component: () => import("../components/Dashboard/question/index.vue"),
       },
+      {
+        path: ":idcourse/exam/create",
+        name: "Dashboard.Exam.Create",
+        component: () => import("../components/Dashboard/exam/create.vue"),
+      },
     ],
   },
   {

@@ -34,6 +34,7 @@ public class ChapterController {
         try {
             return new ResponseEntity<>(chapterService.getCourseChapters(courseId), HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

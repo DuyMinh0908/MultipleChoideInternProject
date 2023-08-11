@@ -26,6 +26,11 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public List<Answer> getAnswerByStatus(String status) {
+        return answerRepository.findAnswerByStatus(status);
+    }
+
+    @Override
     public Answer newAnswer(Answer answer) {
         return answerRepository.save(answer);
     }

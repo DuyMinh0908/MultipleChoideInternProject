@@ -12,6 +12,9 @@ public interface AnswerService {
     //Get answer by id
     Optional<Answer> getAnswerById(Integer answerId);
 
+    //Get answer by status
+    List<Answer> getAnswerByStatus(String status);
+
     //Create answer
     Answer newAnswer(Answer answer);
 

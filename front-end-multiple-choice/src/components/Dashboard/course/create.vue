@@ -3,7 +3,7 @@
   <div class="flex justify-center">
     <form
       @submit.prevent="saveCourse"
-      @keydown="validate.$clearExternalResults()"
+      @keydown="validateFormCourse()"
       class="w-3/6 rounded-md border-2 border-zinc-800 h-3/4 my-14 mb-32"
     >
       <h1 class="flex uppercase justify-center font-medium text-2xl my-10">
@@ -17,7 +17,7 @@
           <input
             class="rounded-md h-8 w-64 pl-2 border-2"
             name=""
-            v-model="form.courseName.trim"
+            v-model="form.courseName"
             id=""
             type="text"
             placeholder="Nhập mã khóa học"
@@ -26,7 +26,7 @@
             <div
               v-for="(error, index) in validate.courseName.$errors"
               :key="index"
-              class="text-danger mt-2 italic text-sm"
+              class="text-red-500 mt-2 italic text-sm"
             >
               {{ validationMessage(error.$message, "Tên khóa học") }}
             </div>
@@ -38,7 +38,7 @@
             Tên môn học <span class="text-red-600 font-bold">*</span>
           </p>
           <input
-            v-model="form.subject.trim"
+            v-model="form.subject"
             class="rounded-md h-8 w-64 pl-2 border-2"
             name=""
             id=""
@@ -46,6 +46,15 @@
             required
             placeholder="Java"
           />
+          <template v-if="validate.subject.$error">
+            <div
+              v-for="(error, index) in validate.subject.$errors"
+              :key="index"
+              class="text-red-500 mt-2 italic text-sm"
+            >
+              {{ validationMessage(error.$message, "Tên môn học") }}
+            </div>
+          </template>
         </div>
         <div>
           <p class="font-bold text-zinc-600 px-2">Số lượng học sinh</p>
@@ -58,6 +67,15 @@
             required
             placeholder="Số lượng học sinh"
           />
+          <template v-if="validate.subject.$error">
+            <div
+              v-for="(error, index) in validate.numberStudent.$errors"
+              :key="index"
+              class="text-red-500 mt-2 italic text-sm"
+            >
+              {{ validationMessage(error.$message, "Số lượng học sinh") }}
+            </div>
+          </template>
         </div>
 
         <div class="flex flex-row items-center justify-items-center space-x-2">
@@ -114,6 +132,7 @@
                 id="file-input"
                 type="file"
                 @change="onFileSelect"
+                accept="image/png, image/jpeg, image/jpg"
               />
               <p class="font-bold text-xs">Import</p>
             </div>
@@ -141,14 +160,22 @@ import Navigation from "../../Navigation.vue";
 import { ref, Ref } from "vue";
 import { api } from "../../../services/http-common";
 import { useNotificationStore } from "../../../store/notificationStore";
-import { useVuelidate } from "@vuelidate/core";
 import { useRouter } from "vue-router";
-import { required, alpha, minLength, maxLength } from "@vuelidate/validators";
+import { useVuelidate } from "@vuelidate/core";
+import {
+  required,
+  minLength,
+  maxLength,
+  numeric,
+  minValue,
+  maxValue,
+} from "@vuelidate/validators";
 const notificationStore = useNotificationStore();
 const $externalResults = ref({});
 const rules = {
-  courseName: { required, minLength: minLength(3) },
-  subject: { required, minLength: minLength(3) },
+  courseName: { required, minLength: minLength(10), maxLength: maxLength(256) },
+  subject: { required, minLength: minLength(6), maxLength: maxLength(256) },
+  numberStudent: { numeric, minValue: minValue(1), maxValue: maxValue(1000) },
 };
 
 const router = useRouter();
@@ -173,13 +200,15 @@ const onFileSelect = (e: any): void => {
   const file = e.target.files[0];
   currentFile.value = file;
 };
-const saveCourse = async () => {
+const validateFormCourse = () => {
   validate.value.$clearExternalResults();
   validate.value.$touch();
   if (validate.value.$invalid) {
     notificationStore.openError("Please check your validation fields.");
     return;
   }
+};
+const saveCourse = async () => {
   try {
     const formData = new FormData();
     formData.append("courseName", form.value.courseName);

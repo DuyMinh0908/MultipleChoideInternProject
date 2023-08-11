@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"course"})
+//@JsonIgnoreProperties({"course"})
 public class Chapter implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
