@@ -26,7 +26,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
     @Query("select c from Course c order by c.numberStudent desc ")
     List<Course> findTopPopularCourse();
 //    get all courses
-    @Query("select new com.fpt.onlineTest.dto.CourseDto(c.courseId,c.courseName,c.numberStudent,c.imageCourse,c.status,c.subject,t.id,t.user.fullName,t.user.imageUser) " +
+    @Query("select new com.fpt.onlineTest.dto.CourseDto(c.courseId,c.courseName,c.numberStudent,c.imageCourse,c.status,c.subject,t.id,t.fullName,t.imageTeacher) " +
             "from Course c " +
             "left join c.teacher t")
     Page<CourseDto> findAllCourses(Pageable pageable);

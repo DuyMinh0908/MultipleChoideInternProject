@@ -3,9 +3,11 @@ package com.fpt.onlineTest.service.impl;
 import com.fpt.onlineTest.dto.CourseDto;
 import com.fpt.onlineTest.dto.UserDto;
 import com.fpt.onlineTest.model.Course;
+import com.fpt.onlineTest.model.ResultExam;
 import com.fpt.onlineTest.model.User;
 import com.fpt.onlineTest.reponsitory.RoleRepository;
 import com.fpt.onlineTest.reponsitory.UserRepository;
+import com.fpt.onlineTest.response.CustomResponse;
 import com.fpt.onlineTest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -28,12 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUsernameTaken(String username) {
-        User existingUser= userRepository.findByUsername(username);
+        User existingUser = userRepository.findByUsername(username);
         return existingUser != null;
     }
-
-
-
 
 
     @Override
@@ -200,12 +199,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.findBy(example, queryFunction);
     }
 
+    //----------------------------- hoviet -------------------------------//
     @Override
     public Optional<UserDto> getUserDtoById(Integer userId) {
         return userRepository.findById(userId).map(this::mapToDTO);
     }
+
+    public Page<ResultExam> getUserFinishedExam(Integer userId, Pageable pageable) {
+        return userRepository.findFinishedExamOfUser(userId, pageable);
+    }
+
+
     private UserDto mapToDTO(User user) {
-        UserDto userDto= new UserDto();
+        UserDto userDto = new UserDto();
         userDto.setUserId(user.getUserId());
         userDto.setFullName(user.getFullName());
         userDto.setEmail(userDto.getEmail());
