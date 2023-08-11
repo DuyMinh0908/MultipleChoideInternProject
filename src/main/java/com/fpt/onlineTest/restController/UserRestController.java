@@ -3,7 +3,7 @@ package com.fpt.onlineTest.restController;
 
 import com.fpt.onlineTest.model.Teacher;
 import com.fpt.onlineTest.model.User;
-import com.fpt.onlineTest.service.TeacherService;
+//import com.fpt.onlineTest.service.TeacherService;
 import com.fpt.onlineTest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +20,9 @@ import java.util.Optional;
 public class UserRestController {
     @Autowired
     UserService userService;
-
-    @Autowired
-    TeacherService teacherService;
+//
+//    @Autowired
+//    TeacherService teacherService;
 
     //--------------Get All-------------------
     @GetMapping("users/getAll")

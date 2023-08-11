@@ -20,32 +20,9 @@ public class Teacher implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(columnDefinition = "varchar(20)")
-    @NotNull
-    private String username;
-
-    @Column(columnDefinition = "varchar(MAX)")
-    @NotNull
-    private String userPass;
-
-    @Column(columnDefinition = "nvarchar(50)")
-    @NotNull
-    private String fullName;
-//
-    @NotNull
-    private String email;
-
-    @Column(columnDefinition = "varchar(10)")
-    @NotNull
-    private String phone;
-
-    @Column(columnDefinition = "nvarchar(100)")
-    @NotNull
-    private String address;
-
-    @Column(columnDefinition = "varchar(255)")
-    @NotNull
-    private String imageTeacher;
+    @OneToOne
+    @JoinColumn(name = "userId")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "roleId")
