@@ -35,7 +35,7 @@ public class ResultExam implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    @JsonIgnoreProperties({"userPass", "fullName", "email", "phone", "address", "imageUser", "role"})
+    @JsonIgnoreProperties({"userPass", "username", "email", "phone", "address", "imageUser", "role"})
     User user;
 
 }
