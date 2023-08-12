@@ -70,6 +70,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "Dashboard.Exam.Create",
         component: () => import("../components/Dashboard/exam/create.vue"),
       },
+      {
+        path: "exam/detail",
+        name: "Dashboard.Exam.Detail",
+        component: () => import("../  yycomponents/Dashboard/exam/detail.vue"),
+      },
     ],
   },
   {

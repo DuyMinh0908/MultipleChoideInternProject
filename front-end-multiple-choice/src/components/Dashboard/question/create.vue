@@ -22,10 +22,11 @@
             <p class="font-bold text-zinc-600 px-2">
               Nhâp câu hỏi<span class="text-red-600 font-bold">*</span>
             </p>
-            <input
-              class="h-12 rounded-xl pl-2 border-2"
+            <textarea
+              class="rounded-xl pl-2 border-2"
               v-model="formQuestion.contentQuestion"
               placeholder="Nhập câu hỏi"
+              rows="4"
             />
 
             <template
@@ -53,7 +54,7 @@
                 type="radio"
                 value="easy"
                 v-model="formQuestion.level"
-                name="level-radio"
+                :name="`level-radio-${index}`"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
               <label
@@ -68,7 +69,7 @@
                 type="radio"
                 value="medium"
                 v-model="formQuestion.level"
-                name="level-radio"
+                :name="`level-radio-${index}`"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
               <label
@@ -82,7 +83,7 @@
                 type="radio"
                 value="hard"
                 v-model="formQuestion.level"
-                name="level-radio"
+                :name="`level-radio-${index}`"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
               <label
@@ -355,6 +356,9 @@ const rules = {
       required,
       minLength: minLength(5),
       maxLength: maxLength(256),
+    },
+    level: {
+      required,
     },
     answer: {
       $each: helpers.forEach({
