@@ -2,20 +2,24 @@
   <Navigation />
   <div class="flex justify-center">
     <form
-      @submit.prevent="saveCourse"
+      @submit.prevent="saveCourse()"
       @keydown="validateFormCourse()"
-      class="w-3/6 rounded-md border-2 border-zinc-800 h-3/4 my-14 mb-32"
+      class="w-1/2 shadow-xl rounded-xl border h-fit my-10"
     >
       <h1 class="flex uppercase justify-center font-medium text-2xl my-10">
         Thêm khóa học
       </h1>
-      <div class="grid grid-cols-2 gap-2 md:gap-6 place-items-center mt-4">
-        <div>
-          <p class="font-bold text-zinc-600 px-2">
+      <div
+        class="grid grid-cols-2 gap-2 md:gap-6 place-items-center mt-4 px-10"
+      >
+        <div class="w-full">
+          <label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
             Tên khóa học<span class="text-red-600 font-bold">*</span>
-          </p>
+          </label>
           <input
-            class="rounded-md h-8 w-64 pl-2 border-2"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name=""
             v-model="form.courseName"
             id=""
@@ -33,13 +37,15 @@
           </template>
         </div>
 
-        <div>
-          <p class="font-bold text-zinc-600 px-2">
-            Tên môn học <span class="text-red-600 font-bold">*</span>
-          </p>
+        <div class="w-full">
+          <label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Tên môn học<span class="text-red-600 font-bold">*</span>
+          </label>
           <input
             v-model="form.subject"
-            class="rounded-md h-8 w-64 pl-2 border-2"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name=""
             id=""
             type="text"
@@ -56,11 +62,15 @@
             </div>
           </template>
         </div>
-        <div>
-          <p class="font-bold text-zinc-600 px-2">Số lượng học sinh</p>
+        <div class="w-full">
+          <label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Số lượng học sinh<span class="text-red-600 font-bold">*</span>
+          </label>
           <input
             v-model="form.numberStudent"
-            class="rounded-md h-8 w-64 pl-2 border-2"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="number"
             min="1"
             max="1000"
@@ -78,11 +88,13 @@
           </template>
         </div>
 
-        <div class="flex flex-row items-center justify-items-center space-x-2">
-          <p class="font-bold text-zinc-600 px-2">
+        <div class="flex flex-col items-start space-x-2 w-full">
+          <label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
             Trạng thái <span class="text-red-600 font-bold">*</span>
-          </p>
-          <div class="flex items-center">
+          </label>
+          <div class="flex flex-row items-center">
             <input
               id="default-radio-1"
               type="radio"
@@ -217,12 +229,13 @@ const saveCourse = async () => {
     formData.append("subject", form.value.subject);
     formData.append("status", form.value.status),
       formData.append("imageCourse", currentFile.value, currentFile.value.name);
-    await api.post("/courses/create-course", formData, {
+    const { data } = await api.post("/courses/create-course", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
     notificationStore.openSuccess("Tạo khóa học thành công.");
+
     await router.push("/course/index");
   } catch (e) {
     notificationStore.openError("Đã xảy ra lỗi");

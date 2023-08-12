@@ -15,15 +15,25 @@
       <caption class="caption-top uppercase text-3xl font-bold">
         Danh sách khóa học
       </caption>
-      <thead class="bg-lightblue rounded-xl overflow-hidden">
-        <tr class="uppercase h-14">
-          <th scope="col" class="border border-slate-300 col-span-1">ID</th>
-          <th scope="col" class="border border-slate-300">Tên khóa học</th>
-          <th scope="col" class="border border-slate-300">Giáo viên</th>
-          <th scope="col" class="border border-slate-300">Ảnh</th>
-          <th scope="col" class="border border-slate-300">Số học sinh</th>
-          <th scope="col" class="border border-slate-300">Ngân hàng đề</th>
-          <th scope="col" class="border border-slate-300">Action</th>
+      <thead class="bg-gray-50 rounded-xl overflow-hidden">
+        <tr class="uppercase">
+          <th scope="col" class="border border-slate-300 col-span-1 px-6 py-4">
+            ID
+          </th>
+          <th scope="col" class="border border-slate-300 px-6 py-4">
+            Tên khóa học
+          </th>
+          <th scope="col" class="border border-slate-300 px-6 py-4">
+            Giáo viên
+          </th>
+          <th scope="col" class="border border-slate-300 px-6 py-4">Ảnh</th>
+          <th scope="col" class="border border-slate-300 px-6 py-4">
+            Số học sinh
+          </th>
+          <th scope="col" class="border border-slate-300 px-6 py-4">
+            Ngân hàng đề
+          </th>
+          <th scope="col" class="border border-slate-300 px-6 py-4">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -32,20 +42,20 @@
           :key="Number(course.courseId)"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-justify"
         >
-          <td class="w-20 px-5">{{ course.courseId }}</td>
-          <td class="w-80">
+          <td class="w-20 px-6 py-4">{{ course.courseId }}</td>
+          <td class="px-6 py-4">
             {{ course.courseName }}
           </td>
-          <td class="line-clamp-4 px-5">
+          <td class="line-clamp-4 px-6 py-4">
             {{ course.fullName }}
           </td>
-          <td class="px-5">
+          <td class="px-6 py-4">
             <img :src="String(course.imageCourse)" class="w-40 mx-auto" />
           </td>
-          <td class="w-20 px-5">
+          <td class="px-6 py-4">
             {{ course.numberStudent }}
           </td>
-          <td class="px-5 grid grid-cols-2 gap-2">
+          <td class="px-6 py-4 grid grid-cols-2 gap-2">
             <router-link
               :to="{
                 name: 'Dashboard.Question.Create',
@@ -74,7 +84,7 @@
               Tạo đề thi
             </router-link>
           </td>
-          <td class="w-28">
+          <td class="px-6 py-4">
             <div class="flex flex-row space-x-4 w-full justify-center">
               <router-link
                 :to="{

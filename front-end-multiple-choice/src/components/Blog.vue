@@ -43,7 +43,7 @@ interface SearchForm {
 }
 const searchForm: Ref<SearchForm> = ref({
   page: 1,
-  size: 10,
+  size: 4,
 });
 interface ResponseData {
   last_page: number;

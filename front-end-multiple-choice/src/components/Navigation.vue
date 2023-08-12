@@ -1,7 +1,7 @@
 <template>
   <section>
     <div
-      class="flex flex-wrap items-center justify-between py-4 px-10 border-b-gray-400 border-b w-full"
+      class="flex flex-wrap z-50 items-center justify-between py-4 px-10 border-b-gray-400 border-b w-full"
     >
       <a href="#" class="flex items-center">
         <img

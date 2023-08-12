@@ -117,6 +117,8 @@ const form = ref({
       username: "",
     },
   },
+  time_start: "01:00:00",
+  time_end: "02:00:00",
   duration: "",
   examId: 0,
   numQuestion: 0,
@@ -142,6 +144,7 @@ const validateFormCourse = () => {
 const getCourseById = async () => {
   const { data } = await api.get(`/courses/${route.params.idcourse}`);
   course.value = data;
+  form.value.courses = course.value;
 };
 const saveExam = async () => {
   try {

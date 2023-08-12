@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="toastifyRef w-50"
+    ref="toastifyRef"
     v-toastify-directive="{ props, emit }"
     class="toastify-content hidden"
   >

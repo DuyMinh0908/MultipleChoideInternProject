@@ -1,19 +1,26 @@
 <template>
-  <Notification refKey="successNotification" class="flex flex-row w-60">
+  <Notification
+    refKey="successNotification"
+    class="flex flex-row px-8 py-3 w-80 rounded-lg shadow-xl bg-gray-100 right-0 fixed top-0 space-x-4 items-center"
+  >
     <Icon
       name="check"
       v-if="notificationStore.type === 'success'"
-      class="text-green-600"
+      class="w-5 h-5 bg-green-400 rounded-full fill-green-600 p-1"
     />
-    <Icon name="uncheck" v-else class="text-red-600" />
-    <div class="ml-4 mr-4">
+    <Icon
+      name="uncheck"
+      v-else
+      class="w-5 h-5 bg-red-400 rounded-full p-1 fill-red-600"
+    />
+    <div class="space-y-4 w-full flex flex-col">
       <div
         v-if="notificationStore.type === 'success'"
         class="font-medium text-green-600"
       >
         Success!
       </div>
-      <div v-else class="font-medium text-danger">Error!</div>
+      <div v-else class="font-medium text-red-600">Error!</div>
       <div
         v-if="notificationStore.show && notificationStore.message"
         class="text-slate-500 mt-1"
@@ -34,13 +41,14 @@ const successNotification = ref();
 const route = useRoute();
 
 provide("bind[successNotification]", (el: any) => {
+  console.log(el);
   successNotification.value = el;
 });
 
 watch(
   notificationStore,
   (state) => {
-    if (state.show && state.message !== "You missed a request chat request.") {
+    if (state.show && state.message !== "Có lỗi rồi.") {
       successNotification.value.showToast();
       setTimeout(() => {
         successNotification.value.hideToast();

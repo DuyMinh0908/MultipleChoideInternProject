@@ -6,7 +6,7 @@ interface Props {
 const prop = defineProps<Props>();
 </script>
 <template>
-  <div class="flex flex-col space-y-2">
+  <div class="flex flex-col space-y-2 rounded-xl shadow-xl">
     <div class="group">
       <div
         class="bg-cover overflow-hidden bg-center bg-no-repeat h-60 rounded-xl relative flex items-center justify-center"
