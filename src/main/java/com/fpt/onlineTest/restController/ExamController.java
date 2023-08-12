@@ -3,6 +3,9 @@ package com.fpt.onlineTest.restController;
 import com.fpt.onlineTest.model.Exam;
 import com.fpt.onlineTest.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -71,6 +74,29 @@ public class ExamController {
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("user/{id}/exam")
+    public ResponseEntity<Object> getFinishedExamOfUser(
+            @PathVariable Integer id,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "5") Integer size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Exam> resultExamPage = examService.getExamByUserId(id, pageable);
+
+            if (resultExamPage.isEmpty()) {
+                // Trả về thông báo nếu không có kết quả
+                return new ResponseEntity<>("No exams found for the user.", HttpStatus.NOT_FOUND);
+            } else {
+                // Trả về danh sách kết quả
+                return new ResponseEntity<>(resultExamPage, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Xử lý ngoại lệ và trả về thông báo lỗi
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

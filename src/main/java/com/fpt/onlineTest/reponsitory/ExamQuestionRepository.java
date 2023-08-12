@@ -14,7 +14,14 @@ import java.util.List;
 
 public interface ExamQuestionRepository extends JpaRepository<ExamQuestion,Integer> {
 //    @Query("select eq,qa from ExamQuestion eq join Answer qa on eq.question.questionId = qa.question.questionId where eq.exam.examId=:id")
-    @Query("select eq from ExamQuestion eq where eq.exam.examId=:id")
+//    @Query("select q from Questions q " +
+//            "join ExamQuestion eq on eq.question.questionId = q.questionId " +
+////            "join Answer a on a.question.questionId = q.questionId " +
+//            "where eq.exam.examId=:id")
+@Query("SELECT eq FROM ExamQuestion eq " +
+        "JOIN eq.question q " +
+        "JOIN q.answer a " +
+        "WHERE eq.exam.examId = :id")
     Page<ExamQuestion> findExamQuestionByExamId(@Param("id") Integer id, Pageable pageable);
 
     @Transactional
