@@ -1,11 +1,15 @@
 package com.fpt.onlineTest.restController;
 
 
+import com.fpt.onlineTest.model.ResultExam;
 import com.fpt.onlineTest.model.Teacher;
 import com.fpt.onlineTest.model.User;
-import com.fpt.onlineTest.service.TeacherService;
+//import com.fpt.onlineTest.service.TeacherService;
 import com.fpt.onlineTest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,9 +24,9 @@ import java.util.Optional;
 public class UserRestController {
     @Autowired
     UserService userService;
-
-    @Autowired
-    TeacherService teacherService;
+//
+//    @Autowired
+//    TeacherService teacherService;
 
     //--------------Get All-------------------
     @GetMapping("users/getAll")
@@ -32,6 +36,7 @@ public class UserRestController {
     //--------------Create User-------------------
     @PostMapping("users/addUser")
     public ResponseEntity<User> createUser(@RequestBody User user){
+
         User addUser = userService.save(user);
         return ResponseEntity.ok(addUser);
     }
@@ -51,34 +56,30 @@ public class UserRestController {
         }
         return  ResponseEntity.notFound().build();
     }
-//
-//    @PutMapping("/users/updateUserToTeacher/{userId}")
-//    public ResponseEntity<String> updateUserToTeacher(@PathVariable("userId") Integer userId) {
-//        Optional<User> existingUserOptional = userService.findById(userId);
-//
-//        if (!existingUserOptional.isPresent()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-//        }
-//
-//        User existingUser = existingUserOptional.get();
-//
-//        Role role = existingUser.getRole();
-//
-//        if (!role.getUsers().contains("USER")) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not a regular user");
-//        }
-//
-//        role.getUsers().remove("USER");
-//        role.getUsers().add("TEACHER");
-//
-//        Teacher teacher = new Teacher(existingUser); // Tạo một đối tượng Teacher từ thông tin của người dùng
-//
-//        userService.save(existingUser);
-//        teacherService.save(teacher);
-//
-//        return ResponseEntity.ok("User role updated to teacher");
-//    }
 
+//    ------------ hoviet -------------------//
+@GetMapping("user/{id}/exam/history")
+public ResponseEntity<Object> getFinishedExamOfUser(
+        @PathVariable Integer id,
+        @RequestParam(defaultValue = "0") Integer page,
+        @RequestParam(defaultValue = "5") Integer size) {
+    try {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ResultExam> resultExamPage = userService.getUserFinishedExam(id, pageable);
+
+        if (resultExamPage.isEmpty()) {
+            // Trả về thông báo nếu không có kết quả
+            return new ResponseEntity<>("No finished exams found for the user.", HttpStatus.NOT_FOUND);
+        } else {
+            // Trả về danh sách kết quả
+            return new ResponseEntity<>(resultExamPage, HttpStatus.OK);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Xử lý ngoại lệ và trả về thông báo lỗi
+        return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
 
 }
 

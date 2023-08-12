@@ -26,26 +26,6 @@ public class Admin implements Serializable {
     @NotNull
     private String userPass;
 
-    @Column(columnDefinition = "nvarchar(50) ")
-    @NotNull
-    private String fullName;
-//
-    @Column(columnDefinition = "varchar(100)")
-    @NotNull
-    private String email;
-
-    @Column(columnDefinition = "varchar(10)")
-    @NotNull
-    private String phone;
-
-    @Column(columnDefinition = "nvarchar(100) ")
-    @NotNull
-    private String address;
-
-    @Column(columnDefinition = "varchar(255)")
-    @NotNull
-    private String imageAdmin;
-
     @ManyToOne
     @JoinColumn(name = "roleId")
     private Role role;

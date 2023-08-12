@@ -7,6 +7,7 @@ import com.fpt.onlineTest.model.User;
 import com.fpt.onlineTest.service.CourseRegistrationService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +32,10 @@ public class CourseRegistrationController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<HttpStatus> courseRegistration(Integer crId) {
+    @DeleteMapping("/course/un-subscribe/{userId}&{courseId}")
+    public ResponseEntity<HttpStatus> courseRegistration(@PathVariable Integer userId,@PathVariable Integer courseId) {
         try {
-            crs.cancelRegistration(crId);
+            crs.cancelRegistration(userId,courseId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,17 +44,16 @@ public class CourseRegistrationController {
     }
 
     @GetMapping("/course/{courseId}/users")
-    public ResponseEntity<CoursesRegistrationDto> courseUsers(@PathVariable Integer courseId, Pageable pageable) {
+    public ResponseEntity<CoursesRegistrationDto> courseUsers(
+            @PathVariable Integer courseId,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size) {
         try {
-            return new ResponseEntity<>(crs.getCourseUsers(courseId,pageable),HttpStatus.OK);
+            Pageable pageable = PageRequest.of(page,size);
+            return new ResponseEntity<>(crs.getCourseUsers(courseId, pageable), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/{courseId}")
-    public ResponseEntity<HttpStatus> afda(@PathVariable Integer courseId) {
-        crs.getCourseUsers(courseId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    }
+}

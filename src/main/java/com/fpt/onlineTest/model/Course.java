@@ -49,7 +49,7 @@ public class Course implements Serializable {
     private Teacher teacher;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Chapter> chapters;
 
     @JsonIgnore

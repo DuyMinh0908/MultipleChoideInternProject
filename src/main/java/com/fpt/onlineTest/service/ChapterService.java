@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface ChapterService {
     //  -------  create  -------
 //   Chapter createChapter( String title,Integer courseId);
-    Chapter createChapter(Chapter newChapter);
+    List<Chapter> createChapter(List<Chapter> newChapter);
 
     //  -------  read  -------
 

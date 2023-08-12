@@ -2,7 +2,9 @@ package com.fpt.onlineTest.service;
 
 import com.fpt.onlineTest.dto.CourseDto;
 import com.fpt.onlineTest.dto.UserDto;
+import com.fpt.onlineTest.model.ResultExam;
 import com.fpt.onlineTest.model.User;
+import com.fpt.onlineTest.response.CustomResponse;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -87,4 +89,7 @@ public interface UserService {
 
     // get userDto by id
     Optional<UserDto> getUserDtoById(Integer userId);
+
+//    get finished exam of user
+    Page<ResultExam> getUserFinishedExam(Integer userId,Pageable pageable);
 }

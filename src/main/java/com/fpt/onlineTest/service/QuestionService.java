@@ -14,7 +14,7 @@ public interface QuestionService {
     Optional<Questions> getQuestionById(Integer questionId);
 
     //Create question
-    Questions newQuestion(Questions question);
+    void newQuestion(List<Questions> questions);
 
     //Delete question
     void deleteQuestion(Integer questionId);

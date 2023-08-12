@@ -62,11 +62,6 @@ public class CourseServiceImpl implements CourseService {
         TeacherDto teacherDto = new TeacherDto();
         if (teacher.isPresent()) {
             teacherDto.setId(teacher.get().getId());
-            teacherDto.setFullName(teacher.get().getFullName());
-            teacherDto.setEmail(teacher.get().getEmail());
-            teacherDto.setPhone(teacher.get().getPhone());
-            teacherDto.setAddress(teacher.get().getAddress());
-            teacherDto.setImageTeacher(teacher.get().getImageTeacher());
         }
         teacherDto.setCourses(coursePage.map(this::mapCourseToDto));
         return teacherDto;
@@ -108,6 +103,11 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.findById(courseId);
     }
 
+    @Override
+    public String getSubject(Integer courseId) {
+        return courseRepository.findCourseSubject(courseId);
+    }
+
     public CourseDto mapCourseToDto(Course course) {
         CourseDto courseDto = new CourseDto();
         courseDto.setCourseId(course.getCourseId());
@@ -129,8 +129,6 @@ public class CourseServiceImpl implements CourseService {
         courseDTO.setStatus(course.getStatus());
         courseDTO.setSubject(course.getSubject());
         courseDTO.setTeacherId(course.getTeacher().getId());
-        courseDTO.setFullName(course.getTeacher().getFullName());
-        courseDTO.setImageTeacher(course.getTeacher().getImageTeacher());
 
         List<ChapterDto> chapterDtoList = new ArrayList<>();
         List<Chapter> chapterList = chapterRepository.findCourseSChapter(courseDTO.getCourseId());
