@@ -12,7 +12,7 @@ public interface UserAnswerService {
     List<UserAnswers> getUserAnswerByUserId(Integer userId);
 
     //Add new UserAnswer
-    void createUserAnswer(List<UserAnswers> userAnswers);
+    UserAnswers createUserAnswer(List<UserAnswers> userAnswers);
 
     //Delete userAnswer
     void deleteUserAnswer(Integer userAnswerId);
