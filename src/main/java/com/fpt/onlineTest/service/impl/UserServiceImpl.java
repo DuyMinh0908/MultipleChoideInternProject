@@ -5,6 +5,7 @@ import com.fpt.onlineTest.dto.UserDto;
 import com.fpt.onlineTest.model.Course;
 import com.fpt.onlineTest.model.ResultExam;
 import com.fpt.onlineTest.model.User;
+import com.fpt.onlineTest.reponsitory.ExamRepository;
 import com.fpt.onlineTest.reponsitory.RoleRepository;
 import com.fpt.onlineTest.reponsitory.UserRepository;
 import com.fpt.onlineTest.response.CustomResponse;
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private ExamRepository examRepository;
 
     @Override
     public boolean isUsernameTaken(String username) {
@@ -206,7 +209,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public Page<ResultExam> getUserFinishedExam(Integer userId, Pageable pageable) {
-        return userRepository.findFinishedExamOfUser(userId, pageable);
+//        return examRepository.findFinishedExamOfUser(userId);
+        return null;
     }
 
 
