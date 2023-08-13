@@ -1,15 +1,15 @@
 package com.fpt.onlineTest.restController;
 
 import com.fpt.onlineTest.dto.UserConnectDto;
-import com.fpt.onlineTest.model.Admin;
-import com.fpt.onlineTest.model.ResponseObject;
-import com.fpt.onlineTest.model.Teacher;
-import com.fpt.onlineTest.model.User;
+import com.fpt.onlineTest.model.*;
+import com.fpt.onlineTest.service.ImageUploadService;
 import com.fpt.onlineTest.service.UserConnectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +21,9 @@ public class UserConnectController {
 
     @Autowired
     UserConnectService userConnectService;
+
+    @Autowired
+    ImageUploadService imageUploadService;
 
     @PostMapping("login")
     public ResponseEntity<ResponseObject> login(@RequestParam("username") String username,
@@ -91,12 +94,31 @@ public class UserConnectController {
         }
     }
 
-    @PostMapping("/user/create")
-    public ResponseEntity<ResponseObject> createUser(@RequestBody User newUser) {
-        try{
-            User user = userConnectService.createUser(newUser);
+    @PostMapping(value = "/user/create", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<ResponseObject> createUser(@RequestParam("imageUser") MultipartFile file,
+                                                  @RequestParam("address") String address,
+                                                  @RequestParam("email") String email,
+                                                  @RequestParam("fullName") String fullName,
+                                                  @RequestParam("phone") String phone,
+                                                  @RequestParam("userPass") String userPass,
+                                                  @RequestParam("userName") String userName,
+                                                  @RequestParam("roleId") Role roleId) {
+        try {
+            User user = new User();
+            //"http://127.0.0.1:8080/api/v1/file/upload/"
+            String generatedFileName = imageUploadService.storeFile(file);
+            user.setAddress(address);
+            user.setEmail(email);
+            user.setImageUser(generatedFileName);
+            user.setFullName(fullName);
+            user.setPhone(phone);
+            user.setUserPass(userPass);
+            user.setUsername(userName);
+            user.setRole(roleId);
+            userConnectService.createUser(user);
             return new ResponseEntity<>(new ResponseObject("success", "Create user successfully!!", user), HttpStatus.OK);
-        }catch (Exception e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(new ResponseObject("failed", "Create user failed!!", ""), HttpStatus.NOT_FOUND);
         }
     }
@@ -161,6 +183,34 @@ public class UserConnectController {
             Teacher teacher = userConnectService.createTeacher(newTeacher);
             return new ResponseEntity<>(new ResponseObject("success", "Create user successfully!!", teacher), HttpStatus.OK);
         }catch (Exception e) {
+            return new ResponseEntity<>(new ResponseObject("failed", "Create user failed!!", ""), HttpStatus.NOT_FOUND);
+        }
+    }
+    @PostMapping(value = "/teacher/create", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<ResponseObject> createTeacher(@RequestParam("imageTeacher") MultipartFile file,
+                                                          @RequestParam("address") String address,
+                                                          @RequestParam("email") String email,
+                                                          @RequestParam("fullName") String fullName,
+                                                          @RequestParam("phone") String phone,
+                                                          @RequestParam("userPass") String userPass,
+                                                          @RequestParam("userName") String userName,
+                                                          @RequestParam("roleId") Role roleId) {
+        try {
+            Teacher teacher = new Teacher();
+            //"http://127.0.0.1:8080/api/v1/file/upload/"
+            String generatedFileName = imageUploadService.storeFile(file);
+            teacher.setAddress(address);
+            teacher.setEmail(email);
+            teacher.setImageTeacher(generatedFileName);
+            teacher.setFullName(fullName);
+            teacher.setPhone(phone);
+            teacher.setUserPass(userPass);
+            teacher.setUsername(userName);
+            teacher.setRole(roleId);
+            userConnectService.createTeacher(teacher);
+            return new ResponseEntity<>(new ResponseObject("success", "Create user successfully!!", teacher), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(new ResponseObject("failed", "Create user failed!!", ""), HttpStatus.NOT_FOUND);
         }
     }
