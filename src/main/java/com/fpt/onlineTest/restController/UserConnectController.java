@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -21,17 +22,6 @@ public class UserConnectController {
     @Autowired
     UserConnectService userConnectService;
 
-    @GetMapping("/user/list")
-    public ResponseEntity<ResponseObject> getAllUser() {
-        try{
-            List<User> users = userConnectService.getAllUser();
-            return new ResponseEntity<>(new ResponseObject("success", "Get successfully!!", users), HttpStatus.OK);
-        }catch(Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(new ResponseObject("failed", "Error!!", ""), HttpStatus.NOT_FOUND);
-        }
-    }
-
     @PostMapping("login")
     public ResponseEntity<ResponseObject> login(@RequestParam("username") String username,
                                                 @RequestParam("password") String password) {
@@ -40,7 +30,6 @@ public class UserConnectController {
             Teacher teacher = userConnectService.loginTeacher(username.trim(), password.trim());
             Admin admin = userConnectService.loginAdmin(username.trim(), password.trim());
             UserConnectDto userConnectDto = new UserConnectDto();
-
             if(user == null) {
                 if(teacher == null) {
                     userConnectDto.setId(admin.getAdminId());
@@ -74,11 +63,137 @@ public class UserConnectController {
                 userConnectDto.setPassword(user.getUserPass());
                 userConnectDto.setRole(user.getRole().getRoleId());
             }
-
             return new ResponseEntity<>(new ResponseObject("success", "Login successfully!!", userConnectDto), HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(new ResponseObject("failed", "Username or password is incorrect!!", ""), HttpStatus.NOT_FOUND);
         }
     }
 
+    //User
+    @GetMapping("/user/list")
+    public ResponseEntity<ResponseObject> getAllUser() {
+        try{
+            List<User> users = userConnectService.getAllUser();
+            return new ResponseEntity<>(new ResponseObject("success", "Get all user successfully!!", users), HttpStatus.OK);
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(new ResponseObject("failed", "Error!!", ""), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<ResponseObject> getUserById(@PathVariable Integer id) {
+        try{
+            Optional<User> user = userConnectService.getUserById(id);
+            return new ResponseEntity<>(new ResponseObject("success", "Get user by id successfully!!", user), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(new ResponseObject("failed", "Id not found!!", ""), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/user/create")
+    public ResponseEntity<ResponseObject> createUser(@RequestBody User newUser) {
+        try{
+            User user = userConnectService.createUser(newUser);
+            return new ResponseEntity<>(new ResponseObject("success", "Create user successfully!!", user), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(new ResponseObject("failed", "Create user failed!!", ""), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/user/check-username")
+    public ResponseEntity<ResponseObject> checkUserName(@RequestParam("username") String username){
+        try{
+            User user = userConnectService.checkUsername(username);
+            boolean isChecked;
+            if(user == null){
+                isChecked = true;
+            }else {
+                isChecked = false;
+            }
+            return new ResponseEntity<>(new ResponseObject("success", "Check user successfully!!", isChecked), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(new ResponseObject("failed", e.getMessage(), ""), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/user/check-email")
+    public ResponseEntity<ResponseObject> checkEmail(@RequestParam("email") String email){
+        try{
+            User user = userConnectService.checkEmail(email);
+            boolean isChecked;
+            if(user == null){
+                isChecked = true;
+            }else {
+                isChecked = false;
+            }
+            return new ResponseEntity<>(new ResponseObject("success", "Check user successfully!!", isChecked), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(new ResponseObject("failed", e.getMessage(), ""), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //Teacher
+    @GetMapping("/teacher/list")
+    public ResponseEntity<ResponseObject> getAllTeacher() {
+        try{
+            List<Teacher> teachers = userConnectService.getAllTeacher();
+            return new ResponseEntity<>(new ResponseObject("success", "Get all user successfully!!", teachers), HttpStatus.OK);
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(new ResponseObject("failed", "Error!!", ""), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/teacher/{id}")
+    public ResponseEntity<ResponseObject> getTeacherById(@PathVariable Integer id) {
+        try{
+            Optional<Teacher> teacher = userConnectService.getTeacherById(id);
+            return new ResponseEntity<>(new ResponseObject("success", "Get teacher by id successfully!!", teacher), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(new ResponseObject("failed", "Id not found!!", ""), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/teacher/create")
+    public ResponseEntity<ResponseObject> createTeacher(@RequestBody Teacher newTeacher) {
+        try{
+            Teacher teacher = userConnectService.createTeacher(newTeacher);
+            return new ResponseEntity<>(new ResponseObject("success", "Create user successfully!!", teacher), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(new ResponseObject("failed", "Create user failed!!", ""), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/teacher/check-username")
+    public ResponseEntity<ResponseObject> checkUserNameForTeacher(@RequestParam("username") String username){
+        try{
+            Teacher teacher = userConnectService.checkUserNameForTeacher(username);
+            boolean isChecked;
+            if(teacher == null){
+                isChecked = true;
+            }else {
+                isChecked = false;
+            }
+            return new ResponseEntity<>(new ResponseObject("success", "Check username successfully!!", isChecked), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(new ResponseObject("failed", e.getMessage(), ""), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/teacher/check-email")
+    public ResponseEntity<ResponseObject> checkEmailForTeacher(@RequestParam("email") String email){
+        try{
+            Teacher teacher = userConnectService.checkEmailForTeacher(email);
+            boolean isChecked;
+            if(teacher == null){
+                isChecked = true;
+            }else {
+                isChecked = false;
+            }
+            return new ResponseEntity<>(new ResponseObject("success", "Check username successfully!!", isChecked), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(new ResponseObject("failed", e.getMessage(), ""), HttpStatus.NOT_FOUND);
+        }
+    }
 }
