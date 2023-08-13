@@ -8,6 +8,7 @@ import com.fpt.onlineTest.reponsitory.UserRepository;
 import com.fpt.onlineTest.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -67,24 +68,38 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Page<Exam> getExamByUserId(Integer userId, Pageable pageable) {
-//        Page<Exam> userExamList = new ArrayList<>();
-//        Page<Exam> finishedExamOfUserList = examRepository.findFinishedExamOfUser(userId,pageable);
-//        Page<Exam> bandedExamOfUserList = new ArrayList<>();
-//        // add finished exam to user exam list
-//        for (Exam finishedExamOfUser: finishedExamOfUserList) {
-//                userExamList.add(finishedExamOfUser);
-//        }
-//
-//        // add banded exam to user exam list
-//        for (Exam bandedExamOfUser: bandedExamOfUserList) {
-//                userExamList.add(bandedExamOfUser);
-//        }
+    public Page<Exam> getIncomingExamByUserId(Integer userId, Pageable pageable) {
+        Page<Exam> incomingExamOfUserList = examRepository.findIncomingExamOfUser(userId, pageable);
+        Page<Exam> finishedExamOfUserList = examRepository.findFinishedExamOfUser(userId,pageable);
+        Page<Exam> bandedExamOfUserList = examRepository.findBandedExamOfUser(userId, pageable);
 
-        // incoming exam
+        List<Exam> userExamList = new ArrayList<>();
+        List<Exam> incomingUserExamList = new ArrayList<>();
+        // add finished exam to user exam list
+        for (Exam finishedExamOfUser: finishedExamOfUserList) {
+                userExamList.add(finishedExamOfUser);
+        }
+        // add banded exam to user exam list
+        for (Exam bandedExamOfUser: bandedExamOfUserList) {
+                userExamList.add(bandedExamOfUser);
+        }
+        // add incoming to user exam list
+        for (Exam incomingExamOfUser: incomingExamOfUserList) {
+            if (!userExamList.contains(incomingExamOfUser)){
+                incomingUserExamList.add(incomingExamOfUser);
+            }
+        }
+
+        return new PageImpl<>(incomingUserExamList, pageable, userExamList.size());
+    }
+
+    @Override
+    public Page<Exam> getFinishedExamByUserId(Integer userId, Pageable pageable){
         return examRepository.findFinishedExamOfUser(userId,pageable);
+    }
 
-
-//        return null;
+    @Override
+    public Page<Exam> getBandedExamByUserId(Integer userId, Pageable pageable){
+        return examRepository.findBandedExamOfUser(userId,pageable);
     }
 }

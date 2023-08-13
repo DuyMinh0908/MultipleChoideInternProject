@@ -21,5 +21,7 @@ public interface ExamService {
 //    delete course's exam
     void deleteExamByCourseId(Integer courseId);
 //    get finished exam + incoming exam + baned exam by user id
-    Page<Exam> getExamByUserId(Integer userId, Pageable pageable);
+    Page<Exam> getIncomingExamByUserId(Integer userId, Pageable pageable);
+    Page<Exam> getFinishedExamByUserId(Integer userId, Pageable pageable);
+    Page<Exam> getBandedExamByUserId(Integer userId, Pageable pageable);
 }
