@@ -2,6 +2,7 @@ package com.fpt.onlineTest.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -35,7 +36,7 @@ public class Questions {
     private String level;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnoreProperties({"question", "resultQuestions", "status"})
     List<Answer> answer;
 
     @JsonIgnore

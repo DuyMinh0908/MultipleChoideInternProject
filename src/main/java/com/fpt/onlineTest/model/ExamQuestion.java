@@ -21,7 +21,7 @@ public class ExamQuestion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonIgnoreProperties({"contentQuestion","subject","level","answer"})
+    @JsonIgnoreProperties({"subject","level"})
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Questions question;

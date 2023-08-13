@@ -58,6 +58,7 @@ const getAllBlogs = async () => {
     const data = await api.get("/blogs");
 
     allBlogs.value = data.data.content;
+    console.log(allBlogs.value);
   } catch (e) {
     console.error(e);
   }

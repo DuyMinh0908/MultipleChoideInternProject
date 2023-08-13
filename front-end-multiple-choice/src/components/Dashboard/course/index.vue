@@ -83,6 +83,14 @@
             >
               Tạo đề thi
             </router-link>
+            <router-link
+              :to="{
+                name: 'Dashboard.Exam.List',
+              }"
+              class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-2 rounded-xl bg-lightblue"
+            >
+              Danh sách đề thi
+            </router-link>
           </td>
           <td class="px-6 py-4">
             <div class="flex flex-row space-x-4 w-full justify-center">
@@ -130,7 +138,7 @@ const allCouses: Ref<Array<Course>> = ref([]);
 import { useNotificationStore } from "../../../store/notificationStore";
 const notificationStore = useNotificationStore();
 const currentIdCourse: Ref<Number | undefined> = ref(undefined);
-const route = useRoute();
+
 interface ResponseData {
   last_page: number;
   current_page: number;

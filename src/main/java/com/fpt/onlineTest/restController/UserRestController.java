@@ -30,12 +30,13 @@ public class UserRestController {
 
     //--------------Get All-------------------
     @GetMapping("users/getAll")
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userService.findAll();
     }
+
     //--------------Create User-------------------
     @PostMapping("users/addUser")
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<User> createUser(@RequestBody User user) {
 
         User addUser = userService.save(user);
         return ResponseEntity.ok(addUser);
@@ -43,43 +44,21 @@ public class UserRestController {
     //--------------Update User-------------------
 
     @PutMapping("users/updateUser/{userId}")
-    public User update(@PathVariable("userId") Integer userId, @RequestBody User user){
+    public User update(@PathVariable("userId") Integer userId, @RequestBody User user) {
         return userService.saveAndFlush(user);
     }
 
     //--------------Delete User-------------------
     @DeleteMapping("users/deleteUser/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("userId")Integer userId ){
+    public ResponseEntity<Void> deleteUser(@PathVariable("userId") Integer userId) {
         boolean delete = userService.deleteById(userId);
-        if(delete){
+        if (delete) {
             return ResponseEntity.noContent().build();
         }
-        return  ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build();
     }
 
-//    ------------ hoviet -------------------//
-@GetMapping("user/{id}/exam/history")
-public ResponseEntity<Object> getFinishedExamOfUser(
-        @PathVariable Integer id,
-        @RequestParam(defaultValue = "0") Integer page,
-        @RequestParam(defaultValue = "5") Integer size) {
-    try {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<ResultExam> resultExamPage = userService.getUserFinishedExam(id, pageable);
-
-        if (resultExamPage.isEmpty()) {
-            // Trả về thông báo nếu không có kết quả
-            return new ResponseEntity<>("No finished exams found for the user.", HttpStatus.NOT_FOUND);
-        } else {
-            // Trả về danh sách kết quả
-            return new ResponseEntity<>(resultExamPage, HttpStatus.OK);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        // Xử lý ngoại lệ và trả về thông báo lỗi
-        return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-}
-
+    //    ------------ hoviet -------------------//
+//
 }
 
