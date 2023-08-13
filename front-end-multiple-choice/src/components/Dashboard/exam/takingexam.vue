@@ -2,47 +2,84 @@
   <div class="fixed top-20 right-0 w-fit px-5 h-20 bg-slate-300">
     <p class="text-red-600">Thoi gian con lai:{{ timeCountDown }}</p>
   </div>
-  <div
-    v-for="(question, index) in allQuestions"
-    :key="question.question.questionId"
-    class="rounded-xl border py-5 border-gray-200 mb-4 w-2/3 flex flex-col mx-auto"
-  >
-    <div class="grid grid-cols-2 gap-6 px-5 mt-4 w-full">
-      <div class="flex flex-col w-full col-span-2 text-xl font-semibold">
-        <p class="font-bold text-zinc-600 px-2">Câu hỏi {{ index + 1 }}:</p>
-        <p class="text-red ml-4">
-          {{ question.question.contentQuestion }}
-        </p>
-      </div>
+  <form @submit.prevent="submitExam()">
+    <div
+      v-for="(question, index) in allQuestions"
+      :key="question.question.questionId"
+      class="rounded-xl border py-5 border-gray-200 mb-4 w-2/3 flex flex-col mx-auto"
+    >
+      <div class="grid grid-cols-2 gap-6 px-5 mt-4 w-full">
+        <div class="flex flex-col w-full col-span-2 text-xl font-semibold">
+          <p class="font-bold text-zinc-600 px-2">Câu hỏi {{ index + 1 }}:</p>
+          <p class="text-red ml-4">
+            {{ question.question.contentQuestion }}
+          </p>
+        </div>
 
-      <div class="flex flex-col w-full">
-        <p class="font-bold text-zinc-600 px-2">Đáp án A</p>
-        <div class="flex flex-row">
-          <input
-            type="radio"
-            :value="question.question.answer[0].answerId"
-            :name="`aswer-radio-${index}`"
-            v-model="userAswer[index].answer.answerId"
-            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-          />
-          <p>{{ question.question.answer[0].contentAnswer }}</p>
+        <div class="flex flex-col w-full">
+          <p class="font-bold text-zinc-600 px-2">Đáp án A</p>
+          <div
+            class="flex flex-row items-center space-x-2 text-lg font-semibold"
+          >
+            <input
+              type="radio"
+              :value="question.question.answer[0].answerId"
+              :name="`aswer-radio-${index}`"
+              v-model="userAswer[index].answer.answerId"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <p>{{ question.question.answer[0].contentAnswer }}</p>
+          </div>
+        </div>
+        <div class="flex flex-col w-full">
+          <p class="font-bold text-zinc-600 px-2">Đáp án B</p>
+          <div
+            class="flex flex-row items-center space-x-2 text-lg font-semibold"
+          >
+            <input
+              type="radio"
+              :value="question.question.answer[1].answerId"
+              :name="`aswer-radio-${index}`"
+              v-model="userAswer[index].answer.answerId"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <p>{{ question.question.answer[1].contentAnswer }}</p>
+          </div>
+        </div>
+        <div class="flex flex-col w-full">
+          <p class="font-bold text-zinc-600 px-2">Đáp án C</p>
+          <div
+            class="flex flex-row items-center space-x-2 text-lg font-semibold"
+          >
+            <input
+              type="radio"
+              :value="question.question.answer[2].answerId"
+              :name="`aswer-radio-${index}`"
+              v-model="userAswer[index].answer.answerId"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <p>{{ question.question.answer[2].contentAnswer }}</p>
+          </div>
+        </div>
+        <div class="flex flex-col w-full">
+          <p class="font-bold text-zinc-600 px-2">Đáp án D</p>
+          <div
+            class="flex flex-row items-center space-x-2 text-lg font-semibold"
+          >
+            <input
+              type="radio"
+              :value="question.question.answer[3].answerId"
+              :name="`aswer-radio-${index}`"
+              v-model="userAswer[index].answer.answerId"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <p>{{ question.question.answer[3].contentAnswer }}</p>
+          </div>
         </div>
       </div>
-      <div class="flex flex-col w-full">
-        <p class="font-bold text-zinc-600 px-2">Đáp án C</p>
-        <P>{{ question.question.answer[1].contentAnswer }}</P>
-      </div>
-      <div class="flex flex-col w-full">
-        <p class="font-bold text-zinc-600 px-2">Đáp án B</p>
-        <P>{{ question.question.answer[2].contentAnswer }}</P>
-      </div>
-      <div class="flex flex-col w-full">
-        <p class="font-bold text-zinc-600 px-2">Đáp án D</p>
-        <P>{{ question.question.answer[2].contentAnswer }}</P>
-      </div>
     </div>
-  </div>
-  <button @click="logData()">Click me</button>
+    <button type="submit">Click me</button>
+  </form>
   <Pagination
     @get-list="getList"
     :last-page="response.last_page"
@@ -102,8 +139,15 @@ function getTime() {
     seconds < 10 ? "0" : ""
   }${seconds}`;
 }
-const logData = () => {
-  console.log(userAswer.value);
+const submitExam = async () => {
+  try {
+    console.log(userAswer.value);
+    const data = await api.post("result-exam/create", userAswer.value);
+
+    console.log(data);
+  } catch (e) {
+    console.error(e);
+  }
 };
 const getExamByIdofCourse = async () => {
   const { data } = await api.get(`/course/exam/${route.params.id}`);
@@ -128,7 +172,7 @@ const getAllQuestions = async () => {
           answerId: "",
         },
         user: {
-          userId: 1,
+          userId: 4,
         },
         status: "null",
       });

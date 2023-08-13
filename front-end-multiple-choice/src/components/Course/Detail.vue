@@ -133,7 +133,7 @@ const courseRegistration: unknown = ref({
       roleId: 0,
       roleName: "",
     },
-    userId: 1,
+    userId: 4,
     userPass: "",
     username: "",
   },
