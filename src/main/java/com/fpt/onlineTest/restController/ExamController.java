@@ -77,18 +77,64 @@ public class ExamController {
         }
     }
 
-    @GetMapping("user/{id}/exam")
-    public ResponseEntity<Object> getFinishedExamOfUser(
+    @GetMapping("user/{id}/incoming-exams")
+    public ResponseEntity<Object> getIncomingExamsOfUser(
             @PathVariable Integer id,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "5") Integer size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            Page<Exam> resultExamPage = examService.getExamByUserId(id, pageable);
+            Page<Exam> resultExamPage = examService.getIncomingExamByUserId(id, pageable);
 
             if (resultExamPage.isEmpty()) {
                 // Trả về thông báo nếu không có kết quả
                 return new ResponseEntity<>("No exams found for the user.", HttpStatus.NOT_FOUND);
+            } else {
+                // Trả về danh sách kết quả
+                return new ResponseEntity<>(resultExamPage, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Xử lý ngoại lệ và trả về thông báo lỗi
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("user/{id}/finished-exams")
+    public ResponseEntity<Object> getFinishedExamsOfUser(
+            @PathVariable Integer id,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "5") Integer size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Exam> resultExamPage = examService.getFinishedExamByUserId(id, pageable);
+
+            if (resultExamPage.isEmpty()) {
+                // Trả về thông báo nếu không có kết quả
+                return new ResponseEntity<>("No finished exams found for the user.", HttpStatus.NOT_FOUND);
+            } else {
+                // Trả về danh sách kết quả
+                return new ResponseEntity<>(resultExamPage, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Xử lý ngoại lệ và trả về thông báo lỗi
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("user/{id}/banded-exams")
+    public ResponseEntity<Object> getBandedExamsOfUser(
+            @PathVariable Integer id,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "5") Integer size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Exam> resultExamPage = examService.getBandedExamByUserId(id, pageable);
+
+            if (resultExamPage.isEmpty()) {
+                // Trả về thông báo nếu không có kết quả
+                return new ResponseEntity<>("No banded exams found for the user.", HttpStatus.NOT_FOUND);
             } else {
                 // Trả về danh sách kết quả
                 return new ResponseEntity<>(resultExamPage, HttpStatus.OK);
