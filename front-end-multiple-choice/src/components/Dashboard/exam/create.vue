@@ -64,13 +64,13 @@
 </template>
 <script lang="ts" setup>
 import Navigation from "../../Navigation.vue";
-import { ref, Ref, onBeforeMount, onMounted } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { api } from "../../../services/http-common";
 import { useNotificationStore } from "../../../store/notificationStore";
 import { useVuelidate } from "@vuelidate/core";
 import { useRoute } from "vue-router";
-import { required, alpha, minLength, maxLength } from "@vuelidate/validators";
-import VueTimepicker from "vue3-timepicker";
+import { required, minLength, maxLength } from "@vuelidate/validators";
+
 const notificationStore = useNotificationStore();
 const $externalResults = ref({});
 const rules = {

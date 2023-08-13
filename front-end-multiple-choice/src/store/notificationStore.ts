@@ -10,7 +10,7 @@ export const useNotificationStore = defineStore("notification", {
     message: null,
     type: "error",
     show: false,
-    timeout: 30000,
+    timeout: 3000,
   }),
   getters: {
     isShow: (state) => {

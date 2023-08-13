@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-
+import { useAuthStore } from "../store/authStore";
+import { useNotificationStore } from "../store/notificationStore";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -8,7 +9,18 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/home",
-
+    beforeEnter: (to, from, next) => {
+      const authStore = useAuthStore();
+      if (authStore.isAuthorized) {
+        if (authStore.isUser) {
+          window.location.assign("/course");
+        } else {
+          window.location.assign("/dashboard");
+        }
+        return false;
+      }
+      return next();
+    },
     component: () => import("../components/HomePage.vue"),
   },
   {
@@ -24,6 +36,19 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/dashboard",
     name: "Dashboard",
+    beforeEnter: (to, from, next) => {
+      const notificationStore = useNotificationStore();
+      const authStore = useAuthStore();
+      if (authStore.isAuthorized) {
+        if (authStore.isUser) {
+          console.log(authStore.isUser);
+          notificationStore.openError("Bạn không thể truy cập trang này");
+          window.location.assign(from.path);
+        }
+        return next();
+      }
+      return window.location.assign("/login");
+    },
     children: [
       {
         path: "",

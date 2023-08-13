@@ -6,6 +6,9 @@ import Carousel from "../components/Carousel.vue";
 import { Course } from "../model/course";
 import { ref, Ref, onBeforeMount } from "vue";
 import { api } from "../services/http-common";
+import { useAuthStore } from "../store/authStore";
+const useAuth = useAuthStore();
+
 const popularCourses: Ref<Array<Course>> = ref([]);
 const allCourses: Ref<Array<Course>> = ref([]);
 const getCoursePopular = async () => {

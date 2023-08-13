@@ -49,12 +49,16 @@
           <Icon name="management" class="w-8 h-8 mx-auto" />
           <p>Quản lý</p>
         </router-link>
+
         <li
+          v-if="authStore.isAuthorized"
+          @click="authStore.logOut"
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
         >
           <Icon name="logout" class="w-8 h-8 mx-auto" />
           <p>Đăng xuất</p>
         </li>
+        <li v-else></li>
       </ul>
     </div>
   </div>
@@ -62,6 +66,7 @@
 <script lang="ts" setup>
 import Icon from "../icons/ClientDashboard.vue";
 import { useRoute } from "vue-router";
-
+import { useAuthStore } from "../store/authStore";
+const authStore = useAuthStore();
 const route = useRoute();
 </script>

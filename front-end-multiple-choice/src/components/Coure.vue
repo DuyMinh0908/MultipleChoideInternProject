@@ -7,7 +7,7 @@
       Các khóa hỞc được thiết kế phù hợp cho cả ngưỞi mới, nhiỞu khóa hỞc miễn
       phí, chất lượng, nội dung dễ hiểu.
     </p>
-    <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
+    <div class="flex flex-col w-full mt-10 mx-auto space-y-4" v-if="authStore.isAuthorized">
       <p class="font-semibold text-xl relative w-52 h-10 flex flex-col justify-end">Khóa của bạn
       </p>
       <div class="grid grid-cols-3 gap-6">
@@ -44,6 +44,8 @@ import SideBar from "../components/SideBar.vue";
 import { Course } from "../model/course";
 import { api } from "../services/http-common";
 import {ref, Ref, onBeforeMount} from"vue"
+import { useAuthStore } from "../store/authStore";
+const authStore = useAuthStore();
 const popularCourses : Ref<Array<Course>> = ref([])
 const allCourses :  Ref<Array<Course>> = ref([])
 const myCourses = ref();

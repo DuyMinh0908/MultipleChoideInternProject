@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/v1/user-connect")
+    @RequestMapping("/api/v1/user-connect")
 public class UserConnectController {
 
     @Autowired

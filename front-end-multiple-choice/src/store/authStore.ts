@@ -3,14 +3,13 @@ import { defineStore } from "pinia";
 import { api } from "../services/http-common";
 
 type AuthState = {
-  id: Number;
+  id: Number | undefined;
   address: String;
   email: String;
   fullName: String;
   image: String;
   phone: String;
   username: String;
-  password: String;
   role: Number;
 };
 
@@ -24,52 +23,59 @@ export const useAuthStore = defineStore("auth", {
     image: "",
     phone: "",
     username: "",
-    password: "password",
     role: 3,
   }),
   getters: {
+    //@ts-ignore
     isAuthorized: (state) => {
-      if (localStorage.getItem("token")) {
-        state. = localStorage.getItem("token")?.toString();
+      if (localStorage.getItem("id")) {
+        state.id = Number(localStorage.getItem("id")?.toString());
       }
-      if (localStorage.getItem("currentUser")) {
-        state.user = JSON.parse(
-          // @ts-ignore
-          localStorage.getItem("currentUser")?.toString()
-        );
+      if (localStorage.getItem("address")) {
+        state.address = localStorage.getItem("address")?.toString();
       }
-      return !!state.token;
+      if (localStorage.getItem("email")) {
+        state.email = localStorage.getItem("email")?.toString();
+      }
+      if (localStorage.getItem("fullName")) {
+        state.fullName = localStorage.getItem("fullName")?.toString();
+      }
+      if (localStorage.getItem("image")) {
+        state.image = localStorage.getItem("image")?.toString();
+      }
+      if (localStorage.getItem("phone")) {
+        state.phone = localStorage.getItem("phone")?.toString();
+      }
+      if (localStorage.getItem("username")) {
+        state.username = localStorage.getItem("username")?.toString();
+      }
+      if (localStorage.getItem("role")) {
+        state.role = Number(localStorage.getItem("role")?.toString());
+      }
+
+      return !!state.id;
     },
     userType: (state) => {
-      if (state.user && state.user.type) {
-        return state.user.type;
+      if (state.role) {
+        return state.role;
       }
-      return UserType.CLIENT;
-    },
-    roles() {
-      // @ts-ignore
-      if (!this.isAuthorized) return [];
-      if (localStorage.getItem("roles")) {
-        // @ts-ignore
-        return JSON.parse(localStorage.getItem("roles"));
-      }
-      return [];
+      return "3";
     },
 
     isAdmin() {
       // @ts-ignore
       if (!this.isAuthorized) return false;
       // @ts-ignore
-      return !!this.roles.find((r: Role) => r.name === "Admin");
+      return this.role == 1 ? true : false;
     },
-    isReader() {
+    isTeacher() {
       // @ts-ignore
       if (!this.isAuthorized) return false;
       // @ts-ignore
-      return !!this.roles.find((r: Role) => r.name === "Reader");
+      return this.role == 2 ? true : false;
     },
     isUser() {
-      if (!this.isAuthorized || this.isAdmin || this.isReader) return false;
+      if (!this.isAuthorized || this.isAdmin || this.isTeacher) return false;
       // @ts-ignore
       return true;
     },
@@ -78,66 +84,62 @@ export const useAuthStore = defineStore("auth", {
     },
   },
   actions: {
-    can(permission: string) {
-      // @ts-ignore
-      if (this.isSuperAdmin) return true;
-      return !!this.permissions?.find((p: Permission) => p.name === permission);
+    setId(id: string) {
+      this.id = Number(id);
+      localStorage.setItem("id", id);
     },
-    hasRole(roleName: string) {
-      // @ts-ignore
-      return !!this.roles.find((r: Role) => r.name === roleName);
+    setAddress(address: string) {
+      this.address = address;
+      localStorage.setItem("address", address);
     },
-    setToken(token: string) {
-      this.token = token;
-      localStorage.setItem("token", token);
+    setEmail(email: string) {
+      this.email = email;
+      localStorage.setItem("email", email);
     },
-    setCurrentUserStatus(status: RealtimeStatus) {
-      this.user.realtime_status = status;
+    setPhone(phone: string) {
+      this.phone = phone;
+      localStorage.setItem("phone", phone);
     },
-    setCurrentUser(currentUser: User) {
-      this.user = currentUser;
-      if (currentUser) {
-        localStorage.setItem("currentUser", JSON.stringify(currentUser));
-      }
+    setImage(image: string) {
+      this.image = image;
+      localStorage.setItem("image", image);
     },
-    setRoles(roles: Array<Role>) {
-      localStorage.setItem("roles", JSON.stringify(roles));
+    setFullName(fullName: string) {
+      this.fullName = fullName;
+      localStorage.setItem("fullName", fullName);
     },
-   
-    async refreshProfile() {
-      try {
-        const { data } = await api.get(`/auth/profile`);
-        this.setCurrentUser(data.data.user);
-        if (data.data.banned_readers) {
-          const bannedReaders: Array<User> = [];
-          data.data.banned_readers.forEach((bannedReader: any) => {
-            bannedReaders.push(bannedReader.user);
-          });
-          this.setBannedReaders(bannedReaders);
-        }
-      } catch (error) {}
+    setUserName(username: string) {
+      this.username = username;
+      localStorage.setItem("username", username);
     },
-    setBannedReaders(users: Array<User>) {
-      this.bannedUsers = users;
-    },
-    async logOut() {
-      try {
-        if (this.token) {
-          await api.post(`/change-realtime-status`, {
-            user_id: this.userId,
-            realtime_status: RealtimeStatus.OFFLINE,
-          });
-        }
-      } catch (error) {}
 
-   
-      this.token = undefined;
-      this.user = defaultUser;
-      localStorage.removeItem("token");
-      localStorage.removeItem("currentUser");
-      localStorage.removeItem("roles");
-      localStorage.removeItem("permissions");
+    setRole(role: string) {
+      localStorage.setItem("role", role);
     },
- 
+
+    // async refreshProfile() {
+    //   try {
+    //     const { data } = await api.get(`/auth/profile`);
+    //     this.setCurrentUser(data.data.user);
+    //     if (data.data.banned_readers) {
+    //       const bannedReaders: Array<User> = [];
+    //       data.data.banned_readers.forEach((bannedReader: any) => {
+    //         bannedReaders.push(bannedReader.user);
+    //       });
+    //       this.setBannedReaders(bannedReaders);
+    //     }
+    //   } catch (error) {}
+    // },
+    async logOut() {
+      this.id = undefined;
+      localStorage.removeItem("id");
+      localStorage.removeItem("address");
+      localStorage.removeItem("email");
+      localStorage.removeItem("fullName");
+      localStorage.removeItem("image");
+      localStorage.removeItem("phone");
+      localStorage.removeItem("username");
+      localStorage.removeItem("role");
+    },
   },
 });

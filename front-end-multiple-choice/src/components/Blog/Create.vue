@@ -8,6 +8,8 @@ import { useRouter } from "vue-router";
 import { useNotificationStore } from "../../store/notificationStore";
 import { useVuelidate } from "@vuelidate/core";
 import { required, minLength, maxLength } from "@vuelidate/validators";
+import { useAuthStore } from "../../store/authStore";
+const authStore = useAuthStore();
 const $externalResults = ref({});
 const form = ref({
   titleBlog: "",

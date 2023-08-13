@@ -58,12 +58,17 @@
         </div>
       </form>
       <router-link
+        v-if="!authStore.isAuthorized"
         :to="{ name: 'Login' }"
         class="text-white bg-lightblue hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2"
       >
         Đăng nhập
       </router-link>
+      <div v-else>{{ authStore.fullName }}</div>
     </div>
   </section>
 </template>
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useAuthStore } from "../store/authStore";
+const authStore = useAuthStore();
+</script>

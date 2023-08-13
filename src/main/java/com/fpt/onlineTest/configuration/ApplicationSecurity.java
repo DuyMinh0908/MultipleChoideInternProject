@@ -33,6 +33,7 @@ public class ApplicationSecurity {
 //                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
 //                .antMatchers("/api/v1/teacher/**").hasAuthority("TEACHER")
                 .antMatchers("/api/v1/**").permitAll()
+                .antMatchers("/api/v1/user-connect/**").permitAll()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/**",
                         "/swagger-ui.html",
                         "/v2/api-docs",

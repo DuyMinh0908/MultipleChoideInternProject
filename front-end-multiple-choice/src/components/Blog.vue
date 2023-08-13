@@ -5,6 +5,7 @@
     <div class="flex flex-row justify-between">
       <h3 class="inline font-bold text-2xl">Bài viết nổi bật</h3>
       <router-link
+        v-if="authStore.isAuthorized"
         :to="{ name: 'Blogs.Create' }"
         class="px-5 py-2 bg-lightblue rounded-xl text-white font-semibold flex flex-row text-center items-center"
       >
@@ -35,7 +36,8 @@ import { api } from "../services/http-common";
 import { ref, Ref, onBeforeMount, onMounted } from "vue";
 import Icon from "../icons/ClientDashboard.vue";
 import Pagination from "./Pagination.vue";
-
+import { useAuthStore } from "../store/authStore";
+const authStore = useAuthStore();
 const allBlogs: Ref<Array<Blog>> = ref([]);
 interface SearchForm {
   page: number;
