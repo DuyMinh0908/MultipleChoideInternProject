@@ -38,7 +38,7 @@ public class BlogController {
     @GetMapping("/blogs")
     public ResponseEntity<Page<BlogDto>> getAllBlogs(
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "10") Integer size
+            @RequestParam(defaultValue = "5") Integer size
     ) {
         Pageable pageable = PageRequest.of(page, size);
         try {
