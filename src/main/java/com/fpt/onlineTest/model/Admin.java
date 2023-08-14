@@ -18,7 +18,7 @@ public class Admin implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer adminId;
 
-    @Column(columnDefinition = "varchar(20) ")
+    @Column(columnDefinition = "varchar(20) unique")
     @NotNull
     private String username;
 

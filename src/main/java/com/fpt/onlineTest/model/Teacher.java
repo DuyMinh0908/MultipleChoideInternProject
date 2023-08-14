@@ -20,7 +20,7 @@ public class Teacher implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(columnDefinition = "varchar(20)")
+    @Column(columnDefinition = "varchar(20) unique")
     @NotNull
     private String username;
 
@@ -35,7 +35,7 @@ public class Teacher implements Serializable {
     @NotNull
     private String email;
 
-    @Column(columnDefinition = "varchar(10)")
+    @Column(columnDefinition = "varchar(10) unique")
     @NotNull
     private String phone;
 
