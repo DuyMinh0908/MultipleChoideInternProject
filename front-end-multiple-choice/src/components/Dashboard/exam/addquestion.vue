@@ -1,7 +1,7 @@
 <template>
   <Navigation />
   <div class="w-2/3 mx-auto">
-    <p class="text-xl font-semibold text-orange-500:">Selct Option</p>
+    <p class="text-xl font-semibold text-orange-500:">Options</p>
     <div class="flex flex-row space-x-4">
       <button
         @click="automaticallyExam"

@@ -53,7 +53,7 @@ const validateFormLogin = () => {
   validate.value.$clearExternalResults();
   validate.value.$touch();
   if (validate.value.$invalid) {
-    notificationStore.openError("Hãy kiểm tra lại các trường thông tin.");
+    notificationStore.openError("Hãy kiểm tra lại các trưỞng thông tin.");
     return;
   }
 };
@@ -115,7 +115,7 @@ const validationMessage = (error: any, text: string) => {
           class="text-white bg-lightblue rounded-xl w-36 h-8 md:h-10 mt-5 text-xs md:text-lg"
           type="submit"
         >
-          Register
+          login
         </button>
         <div class="flex flex-row mt-5 mb-7 font-normal text-xs md:text-lg">
           <p>

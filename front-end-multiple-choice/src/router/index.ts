@@ -42,7 +42,9 @@ const routes: Array<RouteRecordRaw> = [
       if (authStore.isAuthorized) {
         if (authStore.isUser) {
           console.log(authStore.isUser);
-          notificationStore.openError("Bạn không thể truy cập trang này");
+          notificationStore.openError(
+            "Bạn không thể truy cập trang này"
+          );
           window.location.assign(from.path);
         }
         return next();
@@ -179,6 +181,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/regiter",
     component: () => import("../components/Register.vue"),
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../components/Profile.vue"),
   },
 ];
 const router = createRouter({

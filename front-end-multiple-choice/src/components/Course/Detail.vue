@@ -1,16 +1,16 @@
 <template>
   <Navigation />
   <SideBar />
-  <div class="flex flex-row container pt-10 mx-auto space-x-20">
+  <div class="flex flex-row container w-3/4 pt-10 mx-auto space-x-20">
     <div class="flex flex-col space-y-4 w-2/3">
       <h3 class="font-bold text-3xl">{{ course.courseName }}</h3>
       <p>{{ course.subject }}</p>
-      <h6 class="text-xl font-bold">Nội dung khóa học</h6>
+      <h6 class="text-xl font-bold">Content Course</h6>
       <div class="flex flex-row">
         <p class="font-bold mr-2">
           {{ course.chapters ? course.chapters.length : 0 }}
         </p>
-        Chương
+        Chapters
       </div>
       <dropdown-menu v-for="(chapter, index) in course.chapters">
         <template #trigger>
@@ -33,7 +33,7 @@
               </svg>
               {{ index + 1 }} . {{ chapter.description }}
             </p>
-            <span>{{ chapter.lessons.length }} bài học</span>
+            <span>{{ chapter.lessons.length }} Lesson</span>
           </div>
         </template>
         <template #body>
@@ -51,13 +51,13 @@
     </div>
     <div class="flex flex-col w-1/3 items-center space-y-4">
       <img :src="String(course.imageCourse)" class="w-5/6 rounded-xl" />
-      <h2 class="text-3xl text-lightblue">Miễn phí</h2>
+      <h2 class="text-3xl text-lightblue">Free</h2>
       <template v-if="!isRegstered">
         <button
           @click="registerCourse()"
           class="uppercase rounded-xl bg-lightblue px-6 py-2 hover:bg-blue-500"
         >
-          Đăng ký học
+         Subscribe
         </button>
       </template>
       <template v-else>
@@ -65,15 +65,14 @@
           @click="unSubCourse()"
           class="uppercase rounded-xl bg-lightblue px-6 py-2 hover:bg-blue-500"
         >
-          Hủy đăng kí
+          Unsubscribe
         </button>
       </template>
 
       <div class="flex flex-col space-y-2">
         <span
           class="flex flex-row first-letter: justify-items-center text-center"
-          ><Icon class="w-6 h-6 items-center mr-2" name="dashboard" /> Trình độ
-          cơ bản</span
+          ><Icon class="w-6 h-6 items-center mr-2" name="dashboard" /> Basic</span
         >
 
         <span class="flex flex-row text-start"
@@ -81,9 +80,8 @@
           {{}}</span
         >
 
-        <span class="flex flex-row space-x-2 text-start"
-          ><Icon class="w-5 h-5 items-center mr-2" name="battery" /> Học mọi
-          lúc, mọi nơi</span
+        <span class="flex flex-row items-center space-x-2 text-start"
+          ><Icon class="w-5 h-5 items-center mr-2" name="battery" /> Learn any where, any time</span
         >
       </div>
     </div>

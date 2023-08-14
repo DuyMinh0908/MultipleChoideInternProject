@@ -20,7 +20,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
-    @Column(columnDefinition = "varchar(20) not null")
+    @Column(columnDefinition = "varchar(20) not null unique")
     private String username;
 
     @Column(columnDefinition = "varchar(MAX) not null")
@@ -29,9 +29,10 @@ public class User implements Serializable {
     @Column(columnDefinition = "nvarchar(50) not null")
     private String fullName;
 
+    @Column(columnDefinition = "nvarchar(100) unique")
     private String email;
 
-    @Column(columnDefinition = "varchar(10)not null")
+    @Column(columnDefinition = "varchar(10) not null unique")
     private String phone;
 
     @Column(columnDefinition = "nvarchar(100) not null")

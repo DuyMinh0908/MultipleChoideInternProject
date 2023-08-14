@@ -1,7 +1,7 @@
 <template>
   <Navigation />
   <SideBar />
-  <div class="flex flex-col w-5/6 mx-auto">
+  <div class="flex flex-col w-3/4 mx-auto">
     <h3 class="inline font-bold text-2xl">Course</h3>
     <p>
       The Open Courses are designed to suit beginners, many of them are free
@@ -19,7 +19,7 @@
     
       <p class="font-semibold text-xl relative w-52 h-10 flex flex-col justify-end">Popular Course
         <div class="absolute top-0 right-0  text-sm text-white font-semibold bg-blue-500 px-2 rounded-md">
-          Mới
+          New
         </div>
       </p>
       <div class="grid grid-cols-3 gap-6">

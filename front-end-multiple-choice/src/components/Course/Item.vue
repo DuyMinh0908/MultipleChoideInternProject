@@ -22,7 +22,7 @@ const prop = defineProps<Props>();
           }"
           class="bg-white rounded-xl absolute hidden group-hover:block py-2 px-4 cursor-pointer"
         >
-          Xem khóa học
+          Watch more
         </router-link>
       </div>
     </div>

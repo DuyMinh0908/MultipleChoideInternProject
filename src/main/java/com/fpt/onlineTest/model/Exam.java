@@ -35,9 +35,9 @@ public class Exam {
     @NotNull
     private LocalTime duration; // (hh:mm:ss)
 
-//    @ManyToOne
-//    @JoinColumn(name = "resultExamId")
-//    ResultExam resultExam;
+    @JsonIgnore
+    @OneToMany(mappedBy = "exam",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<ResultExam> resultExam;
 
     @JsonIgnoreProperties({"courseName", "numberStudent", "imageCourse", "status", "subject", "teacher"})
     @ManyToOne
@@ -45,12 +45,8 @@ public class Exam {
     Course courses;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "exam")
+    @OneToMany(mappedBy = "exam",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ExamQuestion> examQuestions;
-
-//    public String getFormattedDuration() {
-//        return duration.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-//    }
 
     public Exam(Integer questionId) {
     }

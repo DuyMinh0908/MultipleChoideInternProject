@@ -17,7 +17,7 @@ const getInComingExam = async () => {
     );
     listExamInComing.value = data.content;
   } else {
-    notificationStore.openError("Bạn phải đăng nhập ");
+    notificationStore.openError("You are not sign in!");
   }
 };
 const getFinishExam = async () => {
@@ -27,7 +27,7 @@ const getFinishExam = async () => {
     );
     listExamFinish.value = data.content;
   } else {
-    notificationStore.openError("Bạn phải đăng nhập ");
+    notificationStore.openError("You are not sign in!");
   }
 };
 
@@ -40,8 +40,8 @@ onBeforeMount(() => {
 <template>
   <Navigation />
   <SideBar />
-  <div class="flex flex-col w-5/6 mx-auto">
-    <h3 class="inline font-bold text-2xl">Đề thi</h3>
+  <div class="flex flex-col w-3/4 mx-auto">
+    <h3 class="inline font-bold text-2xl">Exams</h3>
     <div class="pt-10 container space-y-4 text-start">
       <div class="grid grid-cols-3 gap-6">
         <div
@@ -66,7 +66,7 @@ onBeforeMount(() => {
             }"
             class="bg-lightblue text-white font-see.mibold px-3 py-2 w-32 rounded-xl text-center"
           >
-            Thi ngay</router-link
+            Start</router-link
           >
         </div>
       </div>
@@ -100,7 +100,7 @@ onBeforeMount(() => {
             }"
             class="bg-lightblue text-white font-see.mibold px-3 py-2 w-32 rounded-xl text-center"
           >
-            Thi ngay</router-link
+            Start</router-link
           >
         </div>
       </div>

@@ -42,8 +42,8 @@ onBeforeMount(() => {
   <Navigation />
   <SideBar />
   <Carousel />
-  <div class="flex flex-col w-5/6 pt-10 mx-auto space-y-4">
-    <p class="font-semibold text-xl">Khóa học nổi bật</p>
+  <div class="flex flex-col w-3/4 pt-10 mx-auto space-y-4">
+    <p class="font-semibold text-xl">Popular courses</p>
     <div class="grid grid-cols-3 gap-4">
       <Item
         v-for="course in popularCourses"
@@ -55,8 +55,8 @@ onBeforeMount(() => {
       <p class="hover:font-semibold cursor-pointer text-lightblue">More >></p>
     </div>
   </div>
-  <div class="flex flex-col w-5/6 py-10 mx-auto space-y-4">
-    <p class="font-semibold text-xl">Khóa học miễn phí</p>
+  <div class="flex flex-col w-3/4 py-10 mx-auto space-y-4">
+    <p class="font-semibold text-xl">Free courses</p>
     <div class="grid grid-cols-3 gap-6">
       <Item
         v-for="course in allCourses"
@@ -68,8 +68,8 @@ onBeforeMount(() => {
       <p class="hover:font-semibold cursor-pointer text-lightblue">More >></p>
     </div>
   </div>
-  <div class="flex flex-col w-5/6 pb-10 mx-auto space-y-4">
-    <p class="font-semibold text-xl">Blog</p>
+  <div class="flex flex-col w-3/4 pb-10 mx-auto space-y-4">
+    <p class="font-semibold text-xl">Blogs</p>
     <div class="grid grid-cols-3 gap-6">
       <Item v-for="course in courses" :key="course.id" :course="course" />
     </div>

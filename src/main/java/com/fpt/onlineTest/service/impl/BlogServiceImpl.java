@@ -30,6 +30,7 @@ public class BlogServiceImpl implements BlogService {
             return null;
         else
             blog.setUser(user);
+        blog.setNumberVisitors("0");
         return blogRepository.save(blog);
     }
 

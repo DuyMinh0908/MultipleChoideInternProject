@@ -37,7 +37,7 @@ public class ApplicationSecurity {
                 .antMatchers("/swagger-ui/**", "/swagger-resources/**",
                         "/swagger-ui.html",
                         "/v2/api-docs",
-                        "/webjars/**").permitAll()
+                        "/webjars/**","http://127.0.0.1:5173/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

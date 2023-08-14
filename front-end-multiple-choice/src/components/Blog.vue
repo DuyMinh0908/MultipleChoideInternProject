@@ -1,21 +1,20 @@
 <template>
   <Navigation />
   <SideBar />
-  <div class="flex flex-col w-5/6 mx-auto">
+  <div class="flex flex-col w-3/4 mx-auto">
     <div class="flex flex-row justify-between">
-      <h3 class="inline font-bold text-2xl">Bài viết nổi bật</h3>
+      <h3 class="inline font-bold text-2xl">Blogs</h3>
       <router-link
         v-if="authStore.isAuthorized"
         :to="{ name: 'Blogs.Create' }"
         class="px-5 py-2 bg-lightblue rounded-xl text-white font-semibold flex flex-row text-center items-center"
       >
         <Icon class="w-5 h-5 mr-2 stroke-slate-800" name="plus" />
-        Thêm bài viết
+        Create blog
       </router-link>
     </div>
     <p>
-      Tổng hợp các bài viết chia sẻ về kinh nghiệm tự học lập trình online và
-      các kỹ thuật lập trình web.
+      Compilation of articles sharing experiences in self-learning programming online and programming techniques.
     </p>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
       <Item v-for="blog in allBlogs" :key="Number(blog.blogId)" :blog="blog" />

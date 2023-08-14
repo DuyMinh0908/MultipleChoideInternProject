@@ -65,12 +65,16 @@
           Login
         </router-link>
       </div>
-      <div v-else class="flex flex-row items-center space-x-2">
-        <img
-          :src="'http://localhost:8080/api/v1/file/upload/' + authStore.image"
-          class="w-10 h-10 rounded-full"
-        />
-        <p class="text-xl">{{ authStore.fullName }}</p>
+      <div v-else class="flex flex-row cursor-pointer items-center space-x-2">
+        <router-link :to="{ name: 'Profile' }" 
+         class="flex flex-row items-center space-x-2"
+        >
+          <img
+            :src="'http://localhost:8080/api/v1/file/upload/' + authStore.image"
+            class="w-10 h-10 rounded-full"
+          />
+          <p class="text-xl">{{ authStore.fullName }}</p>
+        </router-link>
       </div>
     </div>
   </section>
@@ -78,4 +82,7 @@
 <script lang="ts" setup>
 import { useAuthStore } from "../store/authStore";
 const authStore = useAuthStore();
+// const goToProfilePage = () => {
+//   this.$router.push({ name: 'profile' }); // N?u b?n ðang s? d?ng Vue Router
+// };
 </script>
