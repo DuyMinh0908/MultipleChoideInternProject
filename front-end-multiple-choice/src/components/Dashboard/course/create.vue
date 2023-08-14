@@ -149,7 +149,7 @@ const notificationStore = useNotificationStore();
 const $externalResults = ref({});
 const rules = {
   courseName: { required, minLength: minLength(10), maxLength: maxLength(256) },
-  subject: { required, minLength: minLength(6), maxLength: maxLength(256) },
+  subject: { required, minLength: minLength(2), maxLength: maxLength(256) },
 };
 
 const router = useRouter();

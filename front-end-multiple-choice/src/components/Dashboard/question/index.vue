@@ -45,6 +45,7 @@ const { open, close } = useModal({
 const getAllQuestions = async () => {
   const { data } = await api.get(`/questions/subject/${subject.value}`);
   allQuestions.value = data;
+
   console.log(allQuestions.value);
 };
 const deleteQuestionItem = async (id: Number) => {
@@ -90,15 +91,15 @@ onBeforeMount(() => {
         </div>
         <div class="flex flex-col w-full">
           <p class="font-bold text-zinc-600 px-2">Đáp án C</p>
-          <P>{{ question.answer[1].contentAnswer }}</P>
+          <p>{{ question.answer[1].contentAnswer }}</p>
         </div>
         <div class="flex flex-col w-full">
           <p class="font-bold text-zinc-600 px-2">Đáp án B</p>
-          <P>{{ question.answer[2].contentAnswer }}</P>
+          <p>{{ question.answer[2].contentAnswer }}</p>
         </div>
         <div class="flex flex-col w-full">
           <p class="font-bold text-zinc-600 px-2">Đáp án D</p>
-          <P>{{ question.answer[2].contentAnswer }}</P>
+          <P>{{ question.answer[3].contentAnswer }}</P>
         </div>
       </div>
     </div>

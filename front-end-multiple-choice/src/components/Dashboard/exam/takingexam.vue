@@ -14,12 +14,13 @@ const exam = ref();
 const second = ref();
 const timeCountDown = ref();
 const allQuestions = ref();
+
 const userAswer = ref({
   exam: {
-    examId: 0,
+    examId: route.params.id,
   },
   user: {
-    userId: authStore.id,
+    userId: 3,
   },
   answerDtos: [
     {
@@ -69,6 +70,8 @@ const submitExam = async () => {
   } catch (e) {
     console.error(e);
   }
+  console.log(userAswer.value);
+  console.log(authStore.id);
 };
 const getExamByIdofCourse = async () => {
   const { data } = await api.get(`/course/exam/${route.params.id}`);
