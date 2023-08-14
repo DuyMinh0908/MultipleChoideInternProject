@@ -20,7 +20,7 @@ const userAswer = ref({
     examId: route.params.id,
   },
   user: {
-    userId: 3,
+    userId: 0,
   },
   answerDtos: [
     {
@@ -64,14 +64,15 @@ function getTime() {
   }${seconds}`;
 }
 const submitExam = async () => {
-  try {
-    const data = await api.post("user-answers/create", userAswer.value);
-    console.log(data);
-  } catch (e) {
-    console.error(e);
+  if (authStore.isAuthorized) {
+    userAswer.value.user.userId = authStore.id;
+    try {
+      const data = await api.post("user-answers/create", userAswer.value);
+      console.log(data);
+    } catch (e) {
+      console.error(e);
+    }
   }
-  console.log(userAswer.value);
-  console.log(authStore.id);
 };
 const getExamByIdofCourse = async () => {
   const { data } = await api.get(`/course/exam/${route.params.id}`);

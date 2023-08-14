@@ -41,7 +41,7 @@ onBeforeMount(() => {
   <Navigation />
   <SideBar />
   <div class="flex flex-col w-5/6 mx-auto">
-    <h3 class="inline font-bold text-2xl">Đề thi</h3>
+    <h3 class="inline font-bold text-2xl">Exam is Coming</h3>
     <div class="pt-10 container space-y-4 text-start">
       <div class="grid grid-cols-3 gap-6">
         <div
@@ -66,7 +66,7 @@ onBeforeMount(() => {
             }"
             class="bg-lightblue text-white font-see.mibold px-3 py-2 w-32 rounded-xl text-center"
           >
-            Thi ngay</router-link
+            Exam Now</router-link
           >
         </div>
       </div>
@@ -80,7 +80,7 @@ onBeforeMount(() => {
       <div class="grid grid-cols-3 gap-6">
         <div
           v-for="examFinish in listExamFinish"
-          class="flex flex-col rounded-xl shadow-xl items-center space-y-4 py-5 bg-slate-200"
+          class="flex flex-col rounded-xl shadow-xl items-center space-y-4 bg-slate-200 py-10"
         >
           <p class="text-xl font-normal">
             Number of Question:<span class="text-xl ml-2 font-semibold">{{
@@ -92,16 +92,26 @@ onBeforeMount(() => {
               examFinish.duration
             }}</span>
           </p>
-
-          <router-link
-            :to="{
-              name: 'Exam.TakeExam',
-              params: { id: examFinish.examId },
-            }"
-            class="bg-lightblue text-white font-see.mibold px-3 py-2 w-32 rounded-xl text-center"
-          >
-            Thi ngay</router-link
-          >
+          <div class="flex flex-row justify-center space-x-6 w-full">
+            <router-link
+              :to="{
+                name: 'Exam.TakeExam',
+                params: { id: examFinish.examId },
+              }"
+              class="bg-lightblue text-white font-semibold py-2 w-32 rounded-xl text-center"
+            >
+              Retest</router-link
+            >
+            <router-link
+              :to="{
+                name: 'Exam.TakeExam',
+                params: { id: examFinish.examId },
+              }"
+              class="bg-lightblue text-white font-semibold py-2 w-32 rounded-xl text-center"
+            >
+              View Result</router-link
+            >
+          </div>
         </div>
       </div>
     </div>

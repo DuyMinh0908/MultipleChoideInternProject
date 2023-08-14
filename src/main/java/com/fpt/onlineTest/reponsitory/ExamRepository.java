@@ -51,10 +51,8 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
 //            "where u.userId=:userId")
 //    Page<Exam> findIncomingExamOfUser(@Param("userId") Integer userId, Pageable pageable);
 
-    @Query("select e from Exam e " +
-            "left join ResultExam re on e.examId = re.exam.examId " +
-            "left join User u on re.user.userId=u.userId " +
-            "where re.user.userId=:userId")
+    @Query(value = "select * from exams where exam_id in (select exams.exam_id from exams inner join result_exams on exams.exam_id= result_exams.exam_id\n" +
+            "where result_exams.user_id =:userId)", nativeQuery = true)
     Page<Exam> findFinishedExamOfUser(@Param("userId") Integer userId,Pageable pageable);
 
     //    find banded exam of user

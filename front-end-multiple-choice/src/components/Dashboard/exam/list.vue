@@ -45,6 +45,7 @@
               >
                 Delete
               </button>
+              <route-link> Edit </route-link>
             </td>
           </tr>
         </tbody>
@@ -71,7 +72,6 @@ const deleteExamById = async (id) => {
 };
 const getAllCourse = async () => {
   const { data } = await api.get("/courses");
-
   allCourse.value = data.content;
   console.log(allCourse.value);
 };
