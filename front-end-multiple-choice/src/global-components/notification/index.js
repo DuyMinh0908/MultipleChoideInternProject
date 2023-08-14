@@ -6,7 +6,7 @@ const toastifyClass = "_" + Math.random().toString(36).substr(2, 9);
 const init = (el, props) => {
   el.showToast = () => {
     const clonedEl = dom(el).clone().removeClass("hidden")[0];
-    console.log(clonedEl);
+
     dom(clonedEl).addClass(toastifyClass);
     clonedEl.toastify = Toastify({
       duration: -1,

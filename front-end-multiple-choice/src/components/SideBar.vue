@@ -14,7 +14,7 @@
           :class="route.name === 'Home' ? 'bg-slate-400' : ''"
         >
           <Icon name="home" class="w-8 h-8 mx-auto" />
-          <p>Trang chủ</p>
+          <p>Home</p>
         </router-link>
 
         <router-link
@@ -23,7 +23,7 @@
           :class="route.name === 'Courses.Index' ? 'bg-slate-400' : ''"
         >
           <Icon name="course" class="w-8 h-8 mx-auto" />
-          <p>Khóa học</p>
+          <p>Course</p>
         </router-link>
         <router-link
           :to="{ name: 'Exam' }"
@@ -31,7 +31,7 @@
           :class="route.name === 'Exam' ? 'bg-slate-400' : ''"
         >
           <Icon name="exam" class="w-8 h-8 mx-auto" />
-          <p>Đề thi</p>
+          <p>Exam</p>
         </router-link>
         <router-link
           :to="{ name: 'Blogs.Index' }"
@@ -47,7 +47,7 @@
           :class="route.name === 'Dashboard' ? 'bg-slate-400' : ''"
         >
           <Icon name="management" class="w-8 h-8 mx-auto" />
-          <p>Quản lý</p>
+          <p>Management</p>
         </router-link>
 
         <li
@@ -56,7 +56,7 @@
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
         >
           <Icon name="logout" class="w-8 h-8 mx-auto" />
-          <p>Đăng xuất</p>
+          <p>Logout</p>
         </li>
         <li v-else></li>
       </ul>

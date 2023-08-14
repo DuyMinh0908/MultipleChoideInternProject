@@ -7,7 +7,9 @@
       <p>{{ course.subject }}</p>
       <h6 class="text-xl font-bold">Nội dung khóa học</h6>
       <div class="flex flex-row">
-        <p class="font-bold mr-2">{{ course.chapters.length }}</p>
+        <p class="font-bold mr-2">
+          {{ course.chapters ? course.chapters.length : 0 }}
+        </p>
         Chương
       </div>
       <dropdown-menu v-for="(chapter, index) in course.chapters">
@@ -48,7 +50,7 @@
       </dropdown-menu>
     </div>
     <div class="flex flex-col w-1/3 items-center space-y-4">
-      <img :src="course.imageCourse" class="w-5/6 rounded-xl" />
+      <img :src="String(course.imageCourse)" class="w-5/6 rounded-xl" />
       <h2 class="text-3xl text-lightblue">Miễn phí</h2>
       <template v-if="!isRegstered">
         <button
@@ -96,10 +98,13 @@ import { ref, Ref, onBeforeMount, onMounted } from "vue";
 import { api } from "../../services/http-common";
 import Icon from "../../icons/ClientDashboard.vue";
 import { User } from "../../model/user";
-
+import { useAuthStore } from "../../store/authStore";
+import { useRouter } from "vue-router";
+const authStore = useAuthStore();
+const router = useRouter();
 const isRegstered: Ref<boolean> = ref(false);
 const route = useRoute();
-const courseRegistration: unknown = ref({
+const courseRegistration = ref({
   course: {
     courseId: 0,
     courseName: "",
@@ -108,34 +113,12 @@ const courseRegistration: unknown = ref({
     status: true,
     subject: "",
     teacher: {
-      address: "",
-      email: "",
-      fullName: "",
-      id: 2,
-      imageTeacher: "",
-      phone: "",
-      role: {
-        roleId: 0,
-        roleName: "",
-      },
-      userPass: "",
-      username: "",
+      id: "",
     },
   },
   id: 0,
   user: {
-    address: "",
-    email: "",
-    fullName: "",
-    imageUser: "",
-    hone: "",
-    role: {
-      roleId: 0,
-      roleName: "",
-    },
-    userId: 4,
-    userPass: "",
-    username: "",
+    userId: "",
   },
 });
 const userInCourse: Ref<Array<User>> = ref([]);
@@ -148,22 +131,25 @@ const course: Ref<Course> = ref({
   subject: "",
 });
 const registerCourse = async () => {
-  try {
-    courseRegistration.value.course = course.value;
-    const { data } = await api.post(
-      `/course/subscribe`,
-      courseRegistration.value
-    );
+  if (authStore.isAuthorized) {
+    try {
+      courseRegistration.value.id = course.value.courseId;
+      courseRegistration.value.course = course.value;
+      courseRegistration.value.user.userId = authStore.id;
 
-    await getUserInCourse();
-  } catch (e) {
-    console.error(e);
+      await api.post(`/course/subscribe`, courseRegistration.value);
+      await getUserInCourse();
+    } catch (e) {
+      console.error(e);
+    }
+  } else {
+    router.push("/login");
   }
 };
 const unSubCourse = async () => {
   try {
     await api.delete(
-      `course/un-subscribe/${courseRegistration.value.user.userId}&${course.value.courseId}`
+      `course/un-subscribe/${authStore.id}&${course.value.courseId}`
     );
     isRegstered.value = false;
     await getUserInCourse();
@@ -176,13 +162,17 @@ const getDetailCourse = async () => {
   course.value = data;
 };
 const getUserInCourse = async () => {
-  const { data } = await api.get(`/course/${route.params.id}/users`);
-  userInCourse.value = data.userDto.content;
-  userInCourse.value.forEach((e) => {
-    if (e.userId === courseRegistration.value.user.userId) {
-      isRegstered.value = true;
-    }
-  });
+  if (authStore.isAuthorized) {
+    const { data } = await api.get(`/course/${route.params.id}/users`);
+    userInCourse.value = data.userDto.content;
+    userInCourse.value.forEach((e) => {
+      if (e.userId === authStore.id) {
+        isRegstered.value = true;
+      }
+    });
+  } else {
+    isRegstered.value = false;
+  }
 };
 onMounted(() => {
   getDetailCourse();

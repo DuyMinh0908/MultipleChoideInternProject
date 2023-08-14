@@ -41,7 +41,6 @@ const successNotification = ref();
 const route = useRoute();
 
 provide("bind[successNotification]", (el: any) => {
-  console.log(el);
   successNotification.value = el;
 });
 

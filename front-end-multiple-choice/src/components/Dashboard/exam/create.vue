@@ -20,7 +20,7 @@
         </div>
         <div class="flex flex-col col-span-2 w-full ml-60">
           <label class="text-lg font-semibold">Tên giáo viên : </label>
-          <p>{{ course.fullName }}</p>
+          <p>{{ authStore.fullName }}</p>
         </div>
         <div>
           <p class="font-bold px-2">Số lượng câu hỏi</p>
@@ -68,9 +68,10 @@ import { ref, onBeforeMount } from "vue";
 import { api } from "../../../services/http-common";
 import { useNotificationStore } from "../../../store/notificationStore";
 import { useVuelidate } from "@vuelidate/core";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { required, minLength, maxLength } from "@vuelidate/validators";
-
+import { useAuthStore } from "../../../store/authStore";
+const authStore = useAuthStore();
 const notificationStore = useNotificationStore();
 const $externalResults = ref({});
 const rules = {
@@ -94,6 +95,7 @@ function toHoursAndMinutes(totalMinutes) {
 
   return `${padTo2Digits(hours)}:${padTo2Digits(minutes)}:00`;
 }
+const router = useRouter();
 const form = ref({
   courses: {
     courseId: 0,
@@ -103,22 +105,10 @@ const form = ref({
     status: true,
     subject: course.value.subject,
     teacher: {
-      address: "",
-      email: "",
-      fullName: "",
-      id: 2,
-      imageTeacher: "",
-      phone: "",
-      role: {
-        roleId: 0,
-        roleName: "",
-      },
-      userPass: "",
-      username: "",
+      id: authStore.id,
     },
   },
-  timeStart: "01:00:00",
-  timeEnd: "02:00:00",
+
   duration: "",
   examId: 0,
   numQuestion: 0,
@@ -150,7 +140,10 @@ const saveExam = async () => {
   try {
     form.value.duration = toHoursAndMinutes(form.value.duration);
     const data = await api.post(`/course/exam/add`, form.value);
-    console.log(data);
+    router.push({
+      name: "Dashboard.Exam.AddQuestion",
+      params: { id: data.data.examId, subject: course.value.subject },
+    });
   } catch (e) {
     console.error(e);
   }

@@ -60,7 +60,7 @@ onBeforeMount(() => {
   <Navigation />
   <SideBarDasboard />
   <div class="w-4/6 ml-96 flex flex-col items-center">
-    <h1 class="text-3xl font-bold">Danh sách câu hỏi</h1>
+    <h1 class="text-3xl font-bold">List Question</h1>
     <div
       v-for="question in allQuestions"
       :key="question.questionId"

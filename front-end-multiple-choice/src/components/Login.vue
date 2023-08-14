@@ -74,13 +74,13 @@ const validationMessage = (error: any, text: string) => {
         @keydown="validateFormLogin"
       >
         <Icon name="logo" class="w-24 md:w-28 h-24 md:h-28" />
-        <p class="font-bold text-xs md:text-xl mt-3">Đăng nhập tài khoản</p>
+        <p class="font-bold text-xs md:text-xl mt-3">Login</p>
         <div class="flex flex-col gap-4 mt-4">
           <div>
             <input
               v-model="form.username"
               class="w-48 md:w-72 border border-black rounded-md h-8 md:h-10 pl-2 placeholder-black text-xs md:text-lg"
-              placeholder="Tên đăng nhập"
+              placeholder="Enter username"
             />
             <template v-if="validate.username.$error">
               <div
@@ -88,14 +88,15 @@ const validationMessage = (error: any, text: string) => {
                 :key="index"
                 class="text-red-500 mt-2 italic text-sm"
               >
-                {{ validationMessage(error.$message, "Nội dung môn học") }}
+                {{ validationMessage(error.$message, "username") }}
               </div>
             </template>
           </div>
           <div>
             <input
               v-model="form.password"
-              placeholder="Mật khẩu"
+              placeholder="Enter password"
+              type="password"
               class="placeholder-black border border-black rounded-md h-8 md:h-10 w-48 md:w-72 pl-2 text-xs md:text-lg"
             />
             <template v-if="validate.password.$error">
@@ -104,26 +105,22 @@ const validationMessage = (error: any, text: string) => {
                 :key="index"
                 class="text-red-500 mt-2 italic text-sm"
               >
-                {{ validationMessage(error.$message, "Nội dung môn học") }}
+                {{ validationMessage(error.$message, "password") }}
               </div>
             </template>
           </div>
         </div>
-        <div
-          class="font-semibold mt-2 md:mt-4 mr-24 md:mr-36 text-xs md:text-lg"
-        >
-          <button type="submit">Quên mật khẩu?</button>
-        </div>
+
         <button
-          class="rounded-md text-white bg-yellow-500 w-36 h-8 md:h-10 mt-5 text-xs md:text-lg"
+          class="text-white bg-lightblue rounded-xl w-36 h-8 md:h-10 mt-5 text-xs md:text-lg"
           type="submit"
         >
-          Đăng nhập
+          Register
         </button>
         <div class="flex flex-row mt-5 mb-7 font-normal text-xs md:text-lg">
           <p>
-            Bạn chưa có tài khoản?
-            <router-link :to="{ name: 'Register' }"> Đăng ký !</router-link>
+            You are not have account?
+            <router-link :to="{ name: 'Register' }"> Register !</router-link>
           </p>
         </div>
       </form>

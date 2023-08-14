@@ -16,15 +16,7 @@ const form = ref({
   contentBlog: "",
   numberVisitors: "",
   user: {
-    userId: 4,
-    username: "tom.denesik",
-    userPass: "password",
-    fullName: "Vandervort",
-    email: "rayna.gulgowski@yahoo.com",
-    phone: "0867987223",
-    address: "Suite 810 5389 Andre Rapid, Hahnborough, WA 18463-3193",
-    imageUser: "http://lorempixel.com/320/200/nature/",
-    role: null,
+    userId: authStore.userId,
   },
 });
 const rules = {

@@ -22,4 +22,9 @@ public interface UserReponsitory extends JpaRepository< User,Integer> {
     @Query(value = "SELECT * FROM users WHERE username = ? AND user_pass = ?", nativeQuery = true)
     User login(String userName, String password);
 
+    @Query(value = "SELECT * FROM users WHERE username = ?", nativeQuery = true)
+    User findByUsername(String username);
+
+    @Query(value = "SELECT * FROM users WHERE email = ?", nativeQuery = true)
+    User findByEmail(String email);
 }

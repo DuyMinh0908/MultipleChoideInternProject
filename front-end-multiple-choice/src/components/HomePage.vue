@@ -52,9 +52,7 @@ onBeforeMount(() => {
       />
     </div>
     <div class="flex flex-row-reverse justify-items-end">
-      <p class="hover:font-semibold cursor-pointer text-lightblue">
-        Xem thêm >>
-      </p>
+      <p class="hover:font-semibold cursor-pointer text-lightblue">More >></p>
     </div>
   </div>
   <div class="flex flex-col w-5/6 py-10 mx-auto space-y-4">
@@ -67,9 +65,7 @@ onBeforeMount(() => {
       />
     </div>
     <div class="flex flex-row-reverse justify-items-end">
-      <p class="hover:font-semibold cursor-pointer text-lightblue">
-        Xem thêm >>
-      </p>
+      <p class="hover:font-semibold cursor-pointer text-lightblue">More >></p>
     </div>
   </div>
   <div class="flex flex-col w-5/6 pb-10 mx-auto space-y-4">
@@ -78,9 +74,7 @@ onBeforeMount(() => {
       <Item v-for="course in courses" :key="course.id" :course="course" />
     </div>
     <div class="flex flex-row-reverse justify-items-end">
-      <p class="hover:font-semibold cursor-pointer text-lightblue">
-        Xem thêm >>
-      </p>
+      <p class="hover:font-semibold cursor-pointer text-lightblue">More >></p>
     </div>
   </div>
 </template>
