@@ -68,7 +68,7 @@ public class UserConnectController {
             }
             return new ResponseEntity<>(new ResponseObject("success", "Login successfully!!", userConnectDto), HttpStatus.OK);
         }catch (Exception e) {
-            return new ResponseEntity<>(new ResponseObject("failed", "Username or password is incorrect!!", ""), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseObject("failed", "Login failed!!", e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -115,6 +115,7 @@ public class UserConnectController {
             user.setUserPass(userPass);
             user.setUsername(userName);
             user.setRole(roleId);
+            user.setStatus("true");
             userConnectService.createUser(user);
             return new ResponseEntity<>(new ResponseObject("success", "Create user successfully!!", user), HttpStatus.OK);
         } catch (Exception e) {
@@ -150,6 +151,16 @@ public class UserConnectController {
                 isChecked = false;
             }
             return new ResponseEntity<>(new ResponseObject("success", "Check user successfully!!", isChecked), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(new ResponseObject("failed", e.getMessage(), ""), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/user/delete/{id}")
+    public ResponseEntity<ResponseObject> deleteUser(@PathVariable Integer id){
+        try{
+            userConnectService.deleteUser(id);
+            return new ResponseEntity<>(new ResponseObject("success", "Delete user successfully!!", ""), HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(new ResponseObject("failed", e.getMessage(), ""), HttpStatus.NOT_FOUND);
         }
@@ -207,6 +218,7 @@ public class UserConnectController {
             teacher.setUserPass(userPass);
             teacher.setUsername(userName);
             teacher.setRole(roleId);
+            teacher.setStatus("true");
             userConnectService.createTeacher(teacher);
             return new ResponseEntity<>(new ResponseObject("success", "Create user successfully!!", teacher), HttpStatus.OK);
         } catch (Exception e) {
@@ -242,6 +254,16 @@ public class UserConnectController {
                 isChecked = false;
             }
             return new ResponseEntity<>(new ResponseObject("success", "Check username successfully!!", isChecked), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(new ResponseObject("failed", e.getMessage(), ""), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/teacher/delete/{id}")
+    public ResponseEntity<ResponseObject> deleteTeacher(@PathVariable Integer id){
+        try{
+            userConnectService.deleteTeacher(id);
+            return new ResponseEntity<>(new ResponseObject("success", "Delete teacher successfully!!", ""), HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(new ResponseObject("failed", e.getMessage(), ""), HttpStatus.NOT_FOUND);
         }
