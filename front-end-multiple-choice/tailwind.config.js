@@ -32,10 +32,7 @@ export default {
         darkblue: "#0089BB",
         lightblue: "#00D1FF",
       },
-      fontFamily: {
-        poppins: ["Poppins"],
-        tangerine: ["Tangerine"],
-      },
+
       container: {
         center: true,
       },

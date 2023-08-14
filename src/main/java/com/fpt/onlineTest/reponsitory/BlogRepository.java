@@ -20,12 +20,13 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
             "order by b.numberVisitors desc ")
     List<BlogDto> findTopBlogs();
 
-    @Query("select new com.fpt.onlineTest.dto.BlogDto(b.blogId, b.titleBlog, b.contentBlog, b.numberVisitors, u.userId, u.fullName, u.imageUser) " +
+        @Query(value = "select new com.fpt.onlineTest.dto.BlogDto(b.blogId, b.titleBlog, b.contentBlog, b.numberVisitors, u.userId, u.fullName, u.imageUser) " +
             "from Blog b " +
-            "left join b.user u")
+            "left join b.user u " +
+            "ORDER BY b.blogId asc ")
     Page<BlogDto> findAllBlogs(Pageable pageable);
 
-    @Query("select new com.fpt.onlineTest.dto.BlogDto(b.blogId, b.titleBlog, b.contentBlog, b.numberVisitors, u.userId, u.fullName, u.imageUser) "+
+    @Query("select new com.fpt.onlineTest.dto.BlogDto(b.blogId, b.titleBlog, b.contentBlog, b.numberVisitors, u.userId, u.fullName, u.imageUser) " +
             "from Blog b " +
             "left join b.user u " +
             "where b.blogId=:blogId")

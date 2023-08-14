@@ -1,5 +1,7 @@
 package com.fpt.onlineTest.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +21,12 @@ public class ExamQuestion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonIgnoreProperties({"subject","level"})
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Questions question;
 
+    @JsonIgnoreProperties({"numQuestion","duration","courses"})
     @ManyToOne
     @JoinColumn(name = "exam_id")
     private Exam exam;

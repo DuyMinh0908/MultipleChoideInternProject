@@ -26,10 +26,13 @@ public class Answer implements Serializable {
     @NotNull
     private String contentAnswer;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "questionId")
+    @JsonBackReference
     Questions question;
+
+    @Column(name = "status", columnDefinition = "varchar(100)")
+    private String status;
 
     @JsonIgnore
     @OneToMany(mappedBy = "answer")

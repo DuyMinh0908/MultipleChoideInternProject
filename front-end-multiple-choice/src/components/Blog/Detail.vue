@@ -8,7 +8,7 @@
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmBjkH1mY9ZkjRNE8WqgATE9VFKoPDO2dNEA&usqp=CAU"
         class="w-16 h-16 rounded-full"
       />
-      <p class="font-semibold">{{ blog.user.fullName }}</p>
+      <p class="font-semibold">{{ blog.fullName }}</p>
     </div>
     <span v-html="blog.contentBlog"></span>
   </div>

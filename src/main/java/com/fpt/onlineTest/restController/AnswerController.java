@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/v1/answers")
 public class AnswerController {
     @Autowired
@@ -29,6 +30,15 @@ public class AnswerController {
         try{
             return new ResponseEntity<>(answerService.newAnswer(newAnswer), HttpStatus.OK);
         }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<Answer>> getAnswerByStatus(@PathVariable String status) {
+        try {
+            return new ResponseEntity<>(answerService.getAnswerByStatus(status), HttpStatus.OK);
+        }catch(Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

@@ -27,15 +27,15 @@ public class ResultExam implements Serializable {
     @NotNull
     private Double point;
 
-    @OneToOne
-    @JoinColumn(name = "exam_id")
+    @ManyToOne
+    @JoinColumn(name = "examId")
     @JsonIgnoreProperties({"numQuestion", "timeStart", "timeEnd", "courses"})
     @NotNull
     private Exam exam;
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    @JsonIgnoreProperties({"userPass", "fullName", "email", "phone", "address", "imageUser", "role"})
+    @JsonIgnoreProperties({"userPass", "username", "email", "phone", "address", "imageUser", "role"})
     User user;
 
 }

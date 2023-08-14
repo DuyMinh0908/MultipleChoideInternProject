@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class ApplicationSecurity{
+public class ApplicationSecurity {
     @Autowired
     private JwtEntryPoint jwtEntryPoint;
 
@@ -24,6 +24,7 @@ public class ApplicationSecurity{
     public JwtTokenFilter jwtTokenFilter() {
         return new JwtTokenFilter();
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
@@ -32,6 +33,11 @@ public class ApplicationSecurity{
 //                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
 //                .antMatchers("/api/v1/teacher/**").hasAuthority("TEACHER")
                 .antMatchers("/api/v1/**").permitAll()
+                .antMatchers("/api/v1/user-connect/**").permitAll()
+                .antMatchers("/swagger-ui/**", "/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/v2/api-docs",
+                        "/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

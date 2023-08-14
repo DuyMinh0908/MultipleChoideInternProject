@@ -30,4 +30,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
             "from Course c " +
             "left join c.teacher t")
     Page<CourseDto> findAllCourses(Pageable pageable);
+    // get course subject
+    @Query("select c.subject from Course c where c.courseId=:courseId")
+    String findCourseSubject(@Param("courseId") Integer courseId);
 }

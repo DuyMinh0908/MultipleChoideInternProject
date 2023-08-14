@@ -1,8 +1,8 @@
 package com.fpt.onlineTest.service.impl;
 
-import com.fpt.onlineTest.model.ResultQuestion;
+import com.fpt.onlineTest.model.Answer;
 import com.fpt.onlineTest.model.UserAnswers;
-import com.fpt.onlineTest.reponsitory.ResultQuestionRepository;
+import com.fpt.onlineTest.reponsitory.AnswerRepository;
 import com.fpt.onlineTest.reponsitory.UserAnswerRepository;
 import com.fpt.onlineTest.service.UserAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class UserAnswerServiceImpl implements UserAnswerService {
     UserAnswerRepository userAnswerRepository;
 
     @Autowired
-    ResultQuestionRepository resultQuestionRepository;
+    AnswerRepository answerRepository;
 
     @Override
     public List<UserAnswers> getAllUserAnswers() {
@@ -29,12 +29,13 @@ public class UserAnswerServiceImpl implements UserAnswerService {
     }
 
     @Override
-    public void createUserAnswer(List<UserAnswers> userAnswers) {
+    public UserAnswers createUserAnswer(List<UserAnswers> userAnswers) {
         for (UserAnswers userAnswer : userAnswers) {
-            List<ResultQuestion> resultQuestions = resultQuestionRepository.findAll();
+            String status = "true";
+            List<Answer> answers = answerRepository.findAnswerByStatus(status);
             boolean isCorrect = false;
-            for (ResultQuestion resultQuestion : resultQuestions) {
-                if (resultQuestion.getAnswer().getAnswerId().equals(userAnswer.getAnswer().getAnswerId())) {
+            for (Answer answer : answers) {
+                if (answer.getAnswerId().equals(userAnswer.getAnswer().getAnswerId())) {
                     isCorrect = true;
                     break;
                 }
@@ -43,6 +44,7 @@ public class UserAnswerServiceImpl implements UserAnswerService {
             userAnswer.setStatus (isCorrect ? "true" : "false");
             userAnswerRepository.save(userAnswer);
         }
+        return null;
     }
 
     @Override
