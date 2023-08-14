@@ -16,11 +16,13 @@ public interface UserConnectService {
 
     Optional<User> getUserById(Integer userId);
 
-    User createUser(User user);
+    void createUser(User user);
 
     User checkUsername(String username);
 
     User checkEmail(String email);
+
+    void deleteUser(Integer userId);
 
     //Teacher
     List<Teacher> getAllTeacher();
@@ -34,6 +36,8 @@ public interface UserConnectService {
     Teacher checkUserNameForTeacher(String username);
 
     Teacher checkEmailForTeacher(String email);
+
+    void deleteTeacher(Integer teacherId);
 
     //Admin
     Admin loginAdmin(String username, String password);

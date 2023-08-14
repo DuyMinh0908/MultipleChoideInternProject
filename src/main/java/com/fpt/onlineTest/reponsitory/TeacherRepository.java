@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 public interface TeacherRepository extends JpaRepository<Teacher,Integer> {
     Teacher findByUsername(String username);
 
-    @Query(value = "SELECT * FROM teachers WHERE username = ? AND user_pass = ?", nativeQuery = true)
-    Teacher login(String userName, String password);
+    @Query(value = "SELECT * FROM teachers WHERE username = ? AND user_pass = ? AND status = ?", nativeQuery = true)
+    Teacher login(String userName, String password, String status);
 
     @Query(value = "SELECT * FROM teachers WHERE username = ?", nativeQuery = true)
     Teacher findByUsername2(String username);

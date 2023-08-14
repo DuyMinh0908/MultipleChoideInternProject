@@ -19,10 +19,10 @@ public interface UserReponsitory extends JpaRepository< User,Integer> {
     @Query("select u from User u where u.userId in :userId")
     Page<User> findCourseSUsers(@Param("userId") List<Integer> userId, Pageable pageable);
 
-    @Query(value = "SELECT * FROM users WHERE username = ? AND user_pass = ?", nativeQuery = true)
-    User login(String userName, String password);
+    @Query(value = "SELECT * FROM users WHERE username = ? AND user_pass = ? AND status = ?", nativeQuery = true)
+    User login(String userName, String password, String status);
 
-    @Query(value = "SELECT * FROM users WHERE username = ?", nativeQuery = true)
+    @Query(value = "SELECT * FROM users WHERE username = ? ", nativeQuery = true)
     User findByUsername(String username);
 
     @Query(value = "SELECT * FROM users WHERE email = ?", nativeQuery = true)

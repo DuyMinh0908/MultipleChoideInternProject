@@ -28,7 +28,7 @@ public class UserConnectServiceImpl implements UserConnectService {
     //User
     @Override
     public User login(String username, String password) {
-        return userReponsitory.login(username, password);
+        return userReponsitory.login(username, password, "true");
     }
 
     @Override
@@ -42,9 +42,8 @@ public class UserConnectServiceImpl implements UserConnectService {
     }
 
     @Override
-    public User createUser(User user) {
+    public void createUser(User user) {
         userReponsitory.save(user);
-        return user;
     }
 
     @Override
@@ -57,10 +56,17 @@ public class UserConnectServiceImpl implements UserConnectService {
         return userReponsitory.findByEmail(email);
     }
 
+    @Override
+    public void deleteUser(Integer userId) {
+        User user = userReponsitory.findById(userId).orElseGet(null);
+        user.setStatus("false");
+        userReponsitory.save(user);
+    }
+
     //Teacher
     @Override
     public Teacher loginTeacher(String username, String password) {
-        return teacherRepository.login(username, password);
+        return teacherRepository.login(username, password, "true");
     }
 
     public List<Teacher> getAllTeacher() {
@@ -86,6 +92,13 @@ public class UserConnectServiceImpl implements UserConnectService {
     @Override
     public Teacher checkEmailForTeacher(String email) {
         return teacherRepository.findByEmail(email);
+    }
+
+    @Override
+    public void deleteTeacher(Integer teacherId) {
+        Teacher teacher = teacherRepository.findById(teacherId).orElseGet(null);
+        teacher.setStatus("false");
+        teacherRepository.save(teacher);
     }
 
     //Admin

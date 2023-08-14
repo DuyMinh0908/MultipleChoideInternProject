@@ -31,7 +31,7 @@ public class Teacher implements Serializable {
     @Column(columnDefinition = "nvarchar(50)")
     @NotNull
     private String fullName;
-//
+
     @NotNull
     private String email;
 
@@ -50,6 +50,9 @@ public class Teacher implements Serializable {
     @ManyToOne
     @JoinColumn(name = "roleId")
     private Role role;
+
+    @Column(columnDefinition = "nvarchar(100) not null")
+    private String status;
 
     @JsonIgnore
     @OneToMany(mappedBy = "teacher",fetch = FetchType.LAZY, cascade = CascadeType.ALL)

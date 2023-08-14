@@ -44,6 +44,9 @@ public class User implements Serializable {
     @JoinColumn(name = "roleId")
     private Role role;
 
+    @Column(name = "status", columnDefinition = "varchar(255) not null")
+    private String status;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CoursesRegistration> courseRegistrations;
