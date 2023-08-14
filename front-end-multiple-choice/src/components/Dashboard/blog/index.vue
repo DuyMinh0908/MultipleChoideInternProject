@@ -1,11 +1,11 @@
 <template>
   <Navigation />
-  <div class="container">
+  <div class="container flex flex-col">
     <table class="w-full text border-collapse border border-slate-400">
       <caption class="caption-top uppercase text-3xl font-bold">
         Danh sách bài viêt
       </caption>
-      <thead class="bg-green-600">
+      <thead class="bg-lightblue h-12">
         <tr class="uppercase">
           <th scope="col" class="border border-slate-300 col-span-1">ID</th>
           <th scope="col" class="border border-slate-300">Tiêu đề</th>
@@ -20,7 +20,15 @@
           :key="Number(blog.blogId)"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-justify"
         >
-          <td class="w-20 px-5">{{ blog.blogId }}</td>
+          <td class="w-20 px-5">
+            <router-link
+              :to="{
+                name: 'Blogs.Detail',
+                params: { id: Number(blog.blogId) },
+              }"
+              >{{ blog.blogId }}
+            </router-link>
+          </td>
           <td class="w-80">
             {{ blog.titleBlog }}
           </td>
@@ -53,7 +61,11 @@
         </tr>
       </tbody>
     </table>
-
+    <Pagination
+      @get-list="getList"
+      :last-page="response.last_page"
+      :current-page="response.current_page"
+    />
     <ModalsContainer />
   </div>
 </template>
@@ -61,15 +73,32 @@
 import Navigation from "../../Navigation.vue";
 import { Blog } from "../../../model/blog";
 import { api } from "../../../services/http-common";
-import { ref, Ref, onBeforeMount } from "vue";
+import { ref, Ref, onBeforeMount, onMounted } from "vue";
 import Icon from "../../../icons/ClientDashboard.vue";
 import { ModalsContainer, useModal } from "vue-final-modal";
 import ModalConfirm from "../../modals/ModalConfirm.vue";
-
+import Pagination from "../../Pagination.vue";
 const allBlogs: Ref<Array<Blog>> = ref([]);
 const currentIdBlog: Ref<Number | undefined> = ref(undefined);
 const deleteConfirmationModal: Ref<boolean> = ref(false);
-
+import { useNotificationStore } from "../../../store/notificationStore";
+const notificationStore = useNotificationStore();
+interface ResponseData {
+  last_page: number;
+  current_page: number;
+}
+interface SearchForm {
+  page: number;
+  size: number;
+}
+const response: Ref<ResponseData> = ref({
+  last_page: 1,
+  current_page: 0,
+});
+const searchForm: Ref<SearchForm> = ref({
+  page: 0,
+  size: 5,
+});
 const { open, close } = useModal({
   component: ModalConfirm,
   attrs: {
@@ -80,12 +109,13 @@ const { open, close } = useModal({
         const data = await api.delete(
           `/blogs/user-blogs/delete/${currentIdBlog.value}`
         );
+
         await getAllBlogs();
-        console.log(data);
+        notificationStore.openSuccess("Delete Blog success.");
+        close();
       } catch (e) {
         console.error(e);
       }
-      close();
     },
     onReject() {
       currentIdBlog.value = undefined;
@@ -104,14 +134,27 @@ const deleteBlogItem = (id: Number) => {
 const getAllBlogs = async () => {
   try {
     const data = await api.get("/blogs");
-    allBlogs.value = data.data;
     console.log(data);
+    allBlogs.value = data.data.content;
   } catch (e) {
     console.error(e);
   }
 };
-
+const getList = async (page: number = 0) => {
+  try {
+    searchForm.value.page = page;
+    // @ts-ignore
+    const params = new URLSearchParams(searchForm.value).toString();
+    let data = await api.get(`/blogs?${params}`);
+    allBlogs.value = data.data.content;
+    response.value.current_page = data.data.number;
+    response.value.last_page = data.data.totalPages - 1;
+  } catch (e) {}
+};
 onBeforeMount(() => {
   getAllBlogs();
+});
+onMounted(() => {
+  getList();
 });
 </script>

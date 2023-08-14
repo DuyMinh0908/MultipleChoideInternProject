@@ -33,10 +33,11 @@ public class ApplicationSecurity {
 //                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
 //                .antMatchers("/api/v1/teacher/**").hasAuthority("TEACHER")
                 .antMatchers("/api/v1/**").permitAll()
+                .antMatchers("/api/v1/user-connect/**").permitAll()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/**",
                         "/swagger-ui.html",
                         "/v2/api-docs",
-                        "/webjars/**").permitAll()
+                        "/webjars/**","http://127.0.0.1:5173/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

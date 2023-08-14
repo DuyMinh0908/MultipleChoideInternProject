@@ -6,6 +6,9 @@ import Carousel from "../components/Carousel.vue";
 import { Course } from "../model/course";
 import { ref, Ref, onBeforeMount } from "vue";
 import { api } from "../services/http-common";
+import { useAuthStore } from "../store/authStore";
+const useAuth = useAuthStore();
+
 const popularCourses: Ref<Array<Course>> = ref([]);
 const allCourses: Ref<Array<Course>> = ref([]);
 const getCoursePopular = async () => {
@@ -22,8 +25,8 @@ const getCoursePopular = async () => {
 const getAllCourses = async () => {
   try {
     const data = await api.get("/courses");
-    console.log(data.data);
-    allCourses.value = data.data;
+
+    allCourses.value = data.data.content;
 
     // console.log(typeof courses.value)
   } catch (e) {
@@ -39,8 +42,8 @@ onBeforeMount(() => {
   <Navigation />
   <SideBar />
   <Carousel />
-  <div class="flex flex-col w-5/6 pt-10 mx-auto space-y-4">
-    <p class="font-semibold text-xl">Khóa học nổi bật</p>
+  <div class="flex flex-col w-3/4 pt-10 mx-auto space-y-4">
+    <p class="font-semibold text-xl">Popular courses</p>
     <div class="grid grid-cols-3 gap-4">
       <Item
         v-for="course in popularCourses"
@@ -49,13 +52,11 @@ onBeforeMount(() => {
       />
     </div>
     <div class="flex flex-row-reverse justify-items-end">
-      <p class="hover:font-semibold cursor-pointer text-lightblue">
-        Xem thêm >>
-      </p>
+      <p class="hover:font-semibold cursor-pointer text-lightblue">More >></p>
     </div>
   </div>
-  <div class="flex flex-col w-5/6 py-10 mx-auto space-y-4">
-    <p class="font-semibold text-xl">Khóa học miễn phí</p>
+  <div class="flex flex-col w-3/4 py-10 mx-auto space-y-4">
+    <p class="font-semibold text-xl">Free courses</p>
     <div class="grid grid-cols-3 gap-6">
       <Item
         v-for="course in allCourses"
@@ -64,20 +65,16 @@ onBeforeMount(() => {
       />
     </div>
     <div class="flex flex-row-reverse justify-items-end">
-      <p class="hover:font-semibold cursor-pointer text-lightblue">
-        Xem thêm >>
-      </p>
+      <p class="hover:font-semibold cursor-pointer text-lightblue">More >></p>
     </div>
   </div>
-  <div class="flex flex-col w-5/6 pb-10 mx-auto space-y-4">
-    <p class="font-semibold text-xl">Blog</p>
+  <div class="flex flex-col w-3/4 pb-10 mx-auto space-y-4">
+    <p class="font-semibold text-xl">Blogs</p>
     <div class="grid grid-cols-3 gap-6">
       <Item v-for="course in courses" :key="course.id" :course="course" />
     </div>
     <div class="flex flex-row-reverse justify-items-end">
-      <p class="hover:font-semibold cursor-pointer text-lightblue">
-        Xem thêm >>
-      </p>
+      <p class="hover:font-semibold cursor-pointer text-lightblue">More >></p>
     </div>
   </div>
 </template>

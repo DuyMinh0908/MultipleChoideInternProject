@@ -6,7 +6,7 @@ interface Props {
 const prop = defineProps<Props>();
 </script>
 <template>
-  <div class="flex flex-col space-y-2">
+  <div class="flex flex-col space-y-2 rounded-xl shadow-xl">
     <div class="group">
       <div
         class="bg-cover overflow-hidden bg-center bg-no-repeat h-60 rounded-xl relative flex items-center justify-center"
@@ -22,7 +22,7 @@ const prop = defineProps<Props>();
           }"
           class="bg-white rounded-xl absolute hidden group-hover:block py-2 px-4 cursor-pointer"
         >
-          Xem khóa học
+          Watch more
         </router-link>
       </div>
     </div>

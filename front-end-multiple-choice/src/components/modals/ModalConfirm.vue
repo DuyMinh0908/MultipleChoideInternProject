@@ -25,13 +25,13 @@ const emit = defineEmits<{
         class="mt-1 px-2 border rounded-xl w-28 py-2 bg-green-600"
         @click="emit('confirm')"
       >
-        Xác nhận
+        Confirm
       </button>
       <button
         class="mt-1 px-2 border bg-gray-500 w-28 py-2 rounded-xl"
         @click="emit('reject')"
       >
-        Hủy
+        Cancel
       </button>
     </div>
   </VueFinalModal>

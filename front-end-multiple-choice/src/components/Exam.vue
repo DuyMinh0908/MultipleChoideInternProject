@@ -1,9 +1,109 @@
+<script lang="ts" setup>
+import Navigation from "../components/Navigation.vue";
+import SideBar from "../components/SideBar.vue";
+import { api } from "../services/http-common";
+import { ref, Ref, onBeforeMount } from "vue";
+import Item from "../components/Exam/Item.vue";
+import { useAuthStore } from "../store/authStore";
+import { useNotificationStore } from "../store/notificationStore";
+const authStore = useAuthStore();
+const notificationStore = useNotificationStore();
+const listExamInComing = ref();
+const listExamFinish = ref();
+const getInComingExam = async () => {
+  if (authStore.isAuthorized) {
+    const { data } = await api.get(
+      `user/${authStore.id}/incoming-exams?page=0&size=10`
+    );
+    listExamInComing.value = data.content;
+  } else {
+    notificationStore.openError("You are not sign in!");
+  }
+};
+const getFinishExam = async () => {
+  if (authStore.isAuthorized) {
+    const { data } = await api.get(
+      `user/${authStore.id}/finished-exams?page=0&size=5`
+    );
+    listExamFinish.value = data.content;
+  } else {
+    notificationStore.openError("You are not sign in!");
+  }
+};
+
+onBeforeMount(() => {
+  getInComingExam();
+  getFinishExam();
+});
+</script>
+
 <template>
   <Navigation />
   <SideBar />
-</template>
-<script lang="ts" setup>
-import Navigation from "../components/Navigation.vue";
+  <div class="flex flex-col w-3/4 mx-auto">
+    <h3 class="inline font-bold text-2xl">Exams</h3>
+    <div class="pt-10 container space-y-4 text-start">
+      <div class="grid grid-cols-3 gap-6">
+        <div
+          v-for="examInComing in listExamInComing"
+          class="flex flex-col rounded-xl shadow-xl items-center space-y-4 py-5 bg-slate-200"
+        >
+          <p class="text-xl font-normal">
+            Number of Question:<span class="text-xl ml-2 font-semibold">{{
+              examInComing.numQuestion
+            }}</span>
+          </p>
+          <p class="text-xl font-normal">
+            Time:<span class="text-xl ml-2 font-semibold text-red-600">{{
+              examInComing.duration
+            }}</span>
+          </p>
 
-import SideBar from "../components/SideBar.vue";
-</script>
+          <router-link
+            :to="{
+              name: 'Exam.TakeExam',
+              params: { id: examInComing.examId },
+            }"
+            class="bg-lightblue text-white font-see.mibold px-3 py-2 w-32 rounded-xl text-center"
+          >
+            Start</router-link
+          >
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
+      <p
+        class="font-semibold text-xl relative w-52 h-10 flex flex-col justify-end"
+      >
+        Fininsh Exam
+      </p>
+      <div class="grid grid-cols-3 gap-6">
+        <div
+          v-for="examFinish in listExamFinish"
+          class="flex flex-col rounded-xl shadow-xl items-center space-y-4 py-5 bg-slate-200"
+        >
+          <p class="text-xl font-normal">
+            Number of Question:<span class="text-xl ml-2 font-semibold">{{
+              examFinish.numQuestion
+            }}</span>
+          </p>
+          <p class="text-xl font-normal">
+            Time:<span class="text-xl ml-2 font-semibold text-red-600">{{
+              examFinish.duration
+            }}</span>
+          </p>
+
+          <router-link
+            :to="{
+              name: 'Exam.TakeExam',
+              params: { id: examFinish.examId },
+            }"
+            class="bg-lightblue text-white font-see.mibold px-3 py-2 w-32 rounded-xl text-center"
+          >
+            Start</router-link
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

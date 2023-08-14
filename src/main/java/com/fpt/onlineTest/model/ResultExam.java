@@ -29,8 +29,7 @@ public class ResultExam implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "examId")
-    @JsonIgnoreProperties({"numQuestion", "timeStart", "timeEnd", "courses"})
-    @NotNull
+    @JsonIgnoreProperties({"numQuestion", "timeStart", "timeEnd", "courses", "resultExam"})
     private Exam exam;
 
     @ManyToOne

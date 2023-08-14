@@ -45,7 +45,7 @@ public class UserRestController {
 
     @PutMapping("users/updateUser/{userId}")
     public User update(@PathVariable("userId") Integer userId, @RequestBody User user) {
-        return userService.saveAndFlush(user);
+        return userService.save(user);
     }
 
     //--------------Delete User-------------------

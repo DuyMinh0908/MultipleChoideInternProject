@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-
+import { useAuthStore } from "../store/authStore";
+import { useNotificationStore } from "../store/notificationStore";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -8,7 +9,18 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/home",
-
+    beforeEnter: (to, from, next) => {
+      const authStore = useAuthStore();
+      if (authStore.isAuthorized) {
+        if (authStore.isUser) {
+          window.location.assign("/course");
+        } else {
+          window.location.assign("/dashboard");
+        }
+        return false;
+      }
+      return next();
+    },
     component: () => import("../components/HomePage.vue"),
   },
   {
@@ -24,9 +36,29 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/dashboard",
     name: "Dashboard",
+    beforeEnter: (to, from, next) => {
+      const notificationStore = useNotificationStore();
+      const authStore = useAuthStore();
+      if (authStore.isAuthorized) {
+        if (authStore.isUser) {
+          console.log(authStore.isUser);
+          notificationStore.openError(
+            "Bạn không thể truy cập trang này"
+          );
+          window.location.assign(from.path);
+        }
+        return next();
+      }
+      return window.location.assign("/login");
+    },
     children: [
       {
         path: "",
+        name: "Dashboard.Index",
+        component: () => import("../components/Dashboard/dashboard.vue"),
+      },
+      {
+        path: "/blog/index",
         name: "Dashboard.Blog.Index",
         component: () => import("../components/Dashboard/blog/index.vue"),
       },
@@ -34,6 +66,51 @@ const routes: Array<RouteRecordRaw> = [
         path: ":id/update",
         name: "Dashboard.Blog.Update",
         component: () => import("../components/Dashboard/blog/update.vue"),
+      },
+      {
+        path: "/course/index",
+        name: "Dashboard.Course.Index",
+        component: () => import("../components/Dashboard/course/index.vue"),
+      },
+      {
+        path: "/course/create",
+        name: "Dashboard.Course.Create",
+        component: () => import("../components/Dashboard/course/create.vue"),
+      },
+      {
+        path: ":id/update",
+        name: "Dashboard.Course.Update",
+        component: () => import("../components/Dashboard/course/update.vue"),
+      },
+      {
+        path: ":subject/question/create",
+        name: "Dashboard.Question.Create",
+        component: () => import("../components/Dashboard/question/create.vue"),
+      },
+      {
+        path: "subject/:subject",
+        name: "Dashboard.Question.Index",
+        component: () => import("../components/Dashboard/question/index.vue"),
+      },
+      {
+        path: ":idcourse/exam/create",
+        name: "Dashboard.Exam.Create",
+        component: () => import("../components/Dashboard/exam/create.vue"),
+      },
+      {
+        path: ":id/exam/addquestion/:subject",
+        name: "Dashboard.Exam.AddQuestion",
+        component: () => import("../components/Dashboard/exam/addquestion.vue"),
+      },
+      {
+        path: "exam/detail",
+        name: "Dashboard.Exam.Detail",
+        component: () => import("../components/Dashboard/exam/detail.vue"),
+      },
+      {
+        path: "exam/list",
+        name: "Dashboard.Exam.List",
+        component: () => import("../components/Dashboard/exam/list.vue"),
       },
     ],
   },
@@ -50,7 +127,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../components/Blog.vue"),
       },
       {
-        path: ":id",
+        path: ":id/detail",
         name: "Blogs.Detail",
         component: () => import("../components/Blog/Detail.vue"),
       },
@@ -60,7 +137,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../components/Blog/Create.vue"),
       },
       {
-        path: ":id/Update",
+        path: ":id/update",
         name: "Blogs.Update",
         component: () => import("../components/Blog/Update.vue"),
       },
@@ -70,6 +147,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/exam",
     name: "Exam",
     component: () => import("../components/Exam.vue"),
+  },
+  {
+    path: "/exam/:id/taking-exam",
+    name: "Exam.TakeExam",
+    component: () => import("../components/Dashboard/exam/takingexam.vue"),
   },
   {
     path: "/course",
@@ -99,6 +181,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/regiter",
     component: () => import("../components/Register.vue"),
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../components/Profile.vue"),
   },
 ];
 const router = createRouter({
