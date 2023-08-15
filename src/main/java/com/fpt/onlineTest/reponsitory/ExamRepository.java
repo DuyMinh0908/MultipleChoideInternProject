@@ -26,40 +26,17 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     Integer getExamQuestionAmount(@Param("examId") Integer examId);
 
     //    find finished exam of user
-//    @Query("select re from ResultExam re " +
-//            "left join User u on re.user.userId=u.userId " +
-//            "left join Exam e on re.exam.examId=e.examId " +
-//            "where re.user.userId=:userId")
-//    @Query("select e from Exam e " +
-//            "left join ResultExam re on e.examId = re.exam.examId " +
-//            "left join User u on re.user.userId=u.userId " +
-//            "where re.user.userId=:userId")
-//    Page<Exam> findFinishedExamOfUser(@Param("userId") Integer userId,Pageable pageable);
-//
-//    //    find banded exam of user
-//    @Query("select e from Exam e " +
-//            "left join BanUser bu on bu.exam.examId=e.examId " +
-//            "left join User u on bu.user.userId=u.userId " +
-//            "where bu.user.userId=:userId")
-//    Page<Exam> findBandedExamOfUser(@Param("userId") Integer userId, Pageable pageable);
-//
-//    // find incoming exam of user
-//    @Query("select e from Exam e " +
-//            "join Course c on e.courses.courseId = c.courseId " +
-//            "join CoursesRegistration cr on c.courseId = cr.course.courseId " +
-//            "join User u on cr.user.userId = u.userId " +
-//            "where u.userId=:userId")
-//    Page<Exam> findIncomingExamOfUser(@Param("userId") Integer userId, Pageable pageable);
-
     @Query(value = "select * from exams where exam_id in (select exams.exam_id from exams inner join result_exams on exams.exam_id= result_exams.exam_id\n" +
             "where result_exams.user_id =:userId)", nativeQuery = true)
     Page<Exam> findFinishedExamOfUser(@Param("userId") Integer userId,Pageable pageable);
 
     //    find banded exam of user
-    @Query("select e from Exam e " +
-            "left join BanUser bu on bu.exam.examId=e.examId " +
-            "left join User u on bu.user.userId=u.userId " +
-            "where bu.user.userId=:userId")
+//    @Query("select e from Exam e " +
+//            "left join BanUser bu on bu.exam.examId=e.examId " +
+//            "left join User u on bu.user.userId=u.userId " +
+//            "where bu.user.userId=:userId")
+    @Query(value = "select * from exams where exam_id in (select exams.exam_id from exams inner join ban_user on exams.exam_id= ban_user.exam_id\n" +
+            "where ban_user.user_id =:userId)", nativeQuery = true)
     Page<Exam> findBandedExamOfUser(@Param("userId") Integer userId, Pageable pageable);
 
     // find incoming exam of user

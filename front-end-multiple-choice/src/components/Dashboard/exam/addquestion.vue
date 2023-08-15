@@ -11,7 +11,7 @@
     questions
   </div>
   <div class="w-2/3 mx-auto">
-    <p class="text-xl font-semibold text-orange-500:">Selct Option</p>
+    <p class="text-xl font-semibold text-orange-500:">Options</p>
     <div class="flex flex-row space-x-4">
       <button
         @click="automaticallyExam"
@@ -76,9 +76,8 @@
 </template>
 <script lang="ts" setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, Ref, onBeforeMount, watch } from "vue";
+import { ref, onBeforeMount, watch } from "vue";
 import { api } from "../../../services/http-common";
-import { useAuthStore } from "../../../store/authStore";
 import Navigation from "../../Navigation.vue";
 import { useNotificationStore } from "../../../store/notificationStore";
 const allQuestions = ref();
@@ -95,7 +94,7 @@ const getExamById = async () => {
 };
 console.log(form.value);
 const numQuestion = ref();
-const logData = () => [console.log(form.value)];
+
 const getAllQuestionBySubject = async () => {
   const { data } = await api.get(`/questions/subject/${route.params.subject}`);
   allQuestions.value = data;
@@ -107,18 +106,21 @@ const manuallyQuestion = async () => {
   const num = numQuestion.value - form.value.length;
   console.log(num);
   if (num == 0) {
-    await form.value.forEach((element) => {
+    await form.value.forEach((e) => {
       formQuestion.value.push({
         exam: {
           examId: exam.value.examId,
         },
         question: {
-          questionId: element.questionId,
+          questionId: e.questionId,
         },
       });
     });
     try {
-      const { data } = await api.post(formQuestion.value);
+      const { data } = await api.post(
+        "/exam/question/add-multiple",
+        formQuestion.value
+      );
       console.log(data);
     } catch (e) {
       console.error(e);

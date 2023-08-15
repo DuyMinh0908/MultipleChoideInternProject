@@ -16,6 +16,27 @@ const subject: Ref<String> = ref("");
 subject.value = String(route.params.subject);
 const currentIdQuestion: Ref<Number> = ref(0);
 const router = useRouter();
+const formQuestion = ref({
+  answer: [
+    {
+      answerId: 0,
+      contentAnswer: "string",
+      status: "string",
+    },
+  ],
+  contentQuestion: "string",
+  level: "string",
+  questionId: 0,
+  subject: "string",
+});
+
+const updateQuestionById = async (id) => {
+  try {
+    await api.put(`​​/questions​/update​/${id}`, formQuestion.value);
+  } catch (e) {
+    console.error(e);
+  }
+};
 const { open, close } = useModal({
   component: ModalConfirm,
   attrs: {
@@ -75,8 +96,11 @@ onBeforeMount(() => {
       <div class="grid grid-cols-2 gap-6 px-5 mt-4 w-full">
         <div class="flex flex-col w-full">
           <p class="font-bold text-zinc-600 px-2">Câu hỏi</p>
-          <p class="text-red">{{ question.contentQuestion }}</p>
+          <p class="text-red-500 text-xl font-bold">
+            {{ question.contentQuestion }}
+          </p>
         </div>
+
         <div
           class="flex flex-row items-center justify-items-center space-x-2 w-full"
         >
@@ -87,7 +111,7 @@ onBeforeMount(() => {
         </div>
         <div class="flex flex-col w-full">
           <p class="font-bold text-zinc-600 px-2">Đáp án A</p>
-          <P>{{ question.answer[0].contentAnswer }}</P>
+          <input :placeholder="question.answer[0].contentAnswer" />
         </div>
         <div class="flex flex-col w-full">
           <p class="font-bold text-zinc-600 px-2">Đáp án C</p>

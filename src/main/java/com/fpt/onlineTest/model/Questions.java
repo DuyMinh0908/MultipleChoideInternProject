@@ -36,7 +36,8 @@ public class Questions {
     private String level;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"question", "resultQuestions", "status"})
+    // @JsonIgnoreProperties({"question", "resultQuestions", "status"})
+    @JsonManagedReference
     List<Answer> answer;
 
     @JsonIgnore

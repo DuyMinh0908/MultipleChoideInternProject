@@ -53,7 +53,7 @@ const validateFormLogin = () => {
   validate.value.$clearExternalResults();
   validate.value.$touch();
   if (validate.value.$invalid) {
-    notificationStore.openError("Hãy kiểm tra lại các trường thông tin.");
+    notificationStore.openError("Hãy kiểm tra lại các trưỞng thông tin.");
     return;
   }
 };
@@ -66,17 +66,28 @@ const validationMessage = (error: any, text: string) => {
 </script>
 
 <template>
-  <section class="flex flex-row items-center justify-center p-20 md:p-44">
-    <div class="bg-white w-72 md:w-1/3 p-10 rounded-lg">
+  <section
+    class="flex flex-row items-center justify-center p-20 md:p-44 bg-gradient-to-r from-sky-800 from-10% to-purple-700 h-screen"
+  >
+    <div
+      class="bg-white w-fit p-10 rounded-lg flex flex-row items-center space-x-10"
+    >
+      <Icon name="logoregister" class="w-60 h-80" />
       <form
-        class="border-2 w-full flex flex-col items-center rounded-md"
+        class="w-full flex flex-col items-center"
         @submit.prevent="onLogin()"
         @keydown="validateFormLogin"
       >
-        <Icon name="logo" class="w-24 md:w-28 h-24 md:h-28" />
-        <p class="font-bold text-xs md:text-xl mt-3">Login</p>
+        <p
+          class="font-bold text-3xl from-sky-800 from-10% to-purple-700 bg-gradient-to-r bg-clip-text text-transparent"
+        >
+          Login
+        </p>
         <div class="flex flex-col gap-4 mt-4">
-          <div>
+          <div class="flex flex-col">
+            <label class="font-bold text-zinc-600 px-2">
+              User Name<span class="text-red-600 font-bold">*</span>
+            </label>
             <input
               v-model="form.username"
               class="w-48 md:w-72 border border-black rounded-md h-8 md:h-10 pl-2 placeholder-black text-xs md:text-lg"
@@ -92,7 +103,10 @@ const validationMessage = (error: any, text: string) => {
               </div>
             </template>
           </div>
-          <div>
+          <div class="flex flex-col">
+            <label class="font-bold text-zinc-600 px-2">
+              Password<span class="text-red-600 font-bold">*</span>
+            </label>
             <input
               v-model="form.password"
               placeholder="Enter password"
@@ -112,15 +126,17 @@ const validationMessage = (error: any, text: string) => {
         </div>
 
         <button
-          class="text-white bg-lightblue rounded-xl w-36 h-8 md:h-10 mt-5 text-xs md:text-lg"
+          class="text-white bg-gradient-to-r from-sky-800 from-10% to-purple-700 rounded-xl w-36 h-8 md:h-10 mt-5 text-xs md:text-lg"
           type="submit"
         >
-          Register
+          login
         </button>
         <div class="flex flex-row mt-5 mb-7 font-normal text-xs md:text-lg">
           <p>
             You are not have account?
-            <router-link :to="{ name: 'Register' }"> Register !</router-link>
+            <router-link :to="{ name: 'Register' }" class="font-semibold">
+              Register !</router-link
+            >
           </p>
         </div>
       </form>

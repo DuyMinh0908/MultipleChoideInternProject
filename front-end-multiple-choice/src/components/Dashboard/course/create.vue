@@ -107,7 +107,7 @@
             class="h-56 w-60 rounded-md border-2 bg-white flex justify-center items-center"
           >
             <div class="w-14 h-fit py-2 bg-zinc-400 flex flex-col items-center">
-              <label for="file-input"> Iamge </label>
+              <label for="file-input"> Image </label>
               <input
                 class="hidden"
                 id="file-input"

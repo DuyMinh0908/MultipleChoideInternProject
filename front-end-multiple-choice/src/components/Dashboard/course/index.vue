@@ -6,14 +6,14 @@
       class="bg-lightblue px-3 py-2 rounded-xl flex-row flex items-center w-fit"
       :to="{ name: 'Dashboard.Course.Create' }"
     >
-      Thêm khóa học
+      Add new course
       <Icon name="plus" class="ml-2 w-5 h-5" />
     </router-link>
     <table
       class="w-full text border-collapse border border-slate-400 rounded-xl overflow-hidden"
     >
       <caption class="caption-top uppercase text-3xl font-bold">
-        Danh sách khóa học
+        Courses
       </caption>
       <thead class="bg-gray-50 rounded-xl overflow-hidden">
         <tr class="uppercase">
@@ -21,17 +21,17 @@
             ID
           </th>
           <th scope="col" class="border border-slate-300 px-6 py-4">
-            Tên khóa học
+            Course name
           </th>
           <th scope="col" class="border border-slate-300 px-6 py-4">
-            Giáo viên
+            Teacher
           </th>
-          <th scope="col" class="border border-slate-300 px-6 py-4">Ảnh</th>
+          <th scope="col" class="border border-slate-300 px-6 py-4">Image</th>
           <th scope="col" class="border border-slate-300 px-6 py-4">
-            Số học sinh
+            Num of students
           </th>
           <th scope="col" class="border border-slate-300 px-6 py-4">
-            Ngân hàng đề
+            Exam
           </th>
           <th scope="col" class="border border-slate-300 px-6 py-4">Action</th>
         </tr>
@@ -61,35 +61,35 @@
                 name: 'Dashboard.Question.Create',
                 params: { subject: String(course.subject) },
               }"
-              class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-2 rounded-xl bg-lightblue"
+              class="flex flex-col space-y-2 justify-center items-center hover:bg-slate-200 py-2 px-2 rounded-xl bg-lightblue"
             >
-              Thêm CH
+              Add Question
             </router-link>
             <router-link
               :to="{
                 name: 'Dashboard.Question.Index',
                 params: { subject: String(course.subject) },
               }"
-              class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl bg-lightblue"
+              class="flex flex-col space-y-2 justify-center items-center hover:bg-slate-200 py-2 px-6 rounded-xl bg-lightblue"
             >
-              DSCH
+              Questions
             </router-link>
             <router-link
               :to="{
                 name: 'Dashboard.Exam.Create',
                 params: { idcourse: String(course.courseId) },
               }"
-              class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-2 rounded-xl bg-lightblue"
+              class="flex flex-col space-y-2 justify-center items-center hover:bg-slate-200 py-2 px-2 rounded-xl bg-lightblue"
             >
-              Tạo đề thi
+              Create Exam
             </router-link>
             <router-link
               :to="{
                 name: 'Dashboard.Exam.List',
               }"
-              class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-2 rounded-xl bg-lightblue"
+              class="flex flex-col space-y-2 justify-center items-center hover:bg-slate-200 py-2 px-2 rounded-xl bg-lightblue"
             >
-              Danh sách đề thi
+              Exams
             </router-link>
           </td>
           <td class="px-6 py-4">

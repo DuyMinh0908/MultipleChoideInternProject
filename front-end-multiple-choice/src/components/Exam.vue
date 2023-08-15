@@ -17,7 +17,7 @@ const getInComingExam = async () => {
     );
     listExamInComing.value = data.content;
   } else {
-    notificationStore.openError("Bạn phải đăng nhập ");
+    notificationStore.openError("You are not sign in!");
   }
 };
 const getFinishExam = async () => {
@@ -27,7 +27,7 @@ const getFinishExam = async () => {
     );
     listExamFinish.value = data.content;
   } else {
-    notificationStore.openError("Bạn phải đăng nhập ");
+    notificationStore.openError("You are not sign in!");
   }
 };
 
@@ -40,8 +40,8 @@ onBeforeMount(() => {
 <template>
   <Navigation />
   <SideBar />
-  <div class="flex flex-col w-5/6 mx-auto">
-    <h3 class="inline font-bold text-2xl">Exam is Coming</h3>
+  <div class="flex flex-col w-3/4 mx-auto">
+    <h3 class="inline font-bold text-3xl">Exams</h3>
     <div class="pt-10 container space-y-4 text-start">
       <div class="grid grid-cols-3 gap-6">
         <div
@@ -66,14 +66,14 @@ onBeforeMount(() => {
             }"
             class="bg-lightblue text-white font-see.mibold px-3 py-2 w-32 rounded-xl text-center"
           >
-            Exam Now</router-link
+            Start</router-link
           >
         </div>
       </div>
     </div>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
       <p
-        class="font-semibold text-xl relative w-52 h-10 flex flex-col justify-end"
+        class="font-semibold text-3xl relative w-52 h-10 flex flex-col justify-end"
       >
         Fininsh Exam
       </p>
@@ -92,26 +92,16 @@ onBeforeMount(() => {
               examFinish.duration
             }}</span>
           </p>
-          <div class="flex flex-row justify-center space-x-6 w-full">
-            <router-link
-              :to="{
-                name: 'Exam.TakeExam',
-                params: { id: examFinish.examId },
-              }"
-              class="bg-lightblue text-white font-semibold py-2 w-32 rounded-xl text-center"
-            >
-              Retest</router-link
-            >
-            <router-link
-              :to="{
-                name: 'Exam.TakeExam',
-                params: { id: examFinish.examId },
-              }"
-              class="bg-lightblue text-white font-semibold py-2 w-32 rounded-xl text-center"
-            >
-              View Result</router-link
-            >
-          </div>
+
+          <router-link
+            :to="{
+              name: 'Exam.TakeExam',
+              params: { id: examFinish.examId },
+            }"
+            class="bg-lightblue text-white font-see.mibold px-3 py-2 w-32 rounded-xl text-center"
+          >
+            Start</router-link
+          >
         </div>
       </div>
     </div>

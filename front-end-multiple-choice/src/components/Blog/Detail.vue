@@ -1,11 +1,11 @@
 <template>
   <Navigation />
   <SideBar />
-  <div class="flex flex-col w-5/6 pt-10 container space-y-4 text-start">
+  <div class="flex flex-col w-3/4 pt-10 mx-auto container space-y-4 text-start">
     <h1 class="font-semibold text-3xl">{{ blog.titleBlog }}</h1>
     <div class="flex flex-row items-center space-x-4">
       <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmBjkH1mY9ZkjRNE8WqgATE9VFKoPDO2dNEA&usqp=CAU"
+        :src="'http://localhost:8080/api/v1/file/upload/'+blog.imageUser"
         class="w-16 h-16 rounded-full"
       />
       <p class="font-semibold">{{ blog.fullName }}</p>

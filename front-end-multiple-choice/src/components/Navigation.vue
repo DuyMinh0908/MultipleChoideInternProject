@@ -16,7 +16,7 @@
         </router-link>
       </a>
 
-      <form class="rounded-xl w-1/4">
+      <!-- <form class="rounded-xl w-1/4">
         <label
           for="default-search"
           class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -51,26 +51,31 @@
           />
           <button
             type="submit"
-            class="text-white absolute right-2.5 bottom-2.5 bg-lightblue hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2"
+            class="text-white absolute right-2.5 bottom-2.5 bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2"
           >
             Search
           </button>
         </div>
-      </form>
+      </form> -->
       <div v-if="!authStore.isAuthorized">
         <router-link
           :to="{ name: 'Login' }"
-          class="text-white bg-lightblue hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2"
+          class="text-white bg-gradient-to-r from-sky-800 from-10% to-purple-700 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-10 py-3"
         >
           Login
         </router-link>
       </div>
-      <div v-else class="flex flex-row items-center space-x-2">
-        <img
-          :src="'http://localhost:8080/api/v1/file/upload/' + authStore.image"
-          class="w-10 h-10 rounded-full"
-        />
-        <p class="text-xl">{{ authStore.fullName }}</p>
+      <div v-else class="flex flex-row cursor-pointer items-center space-x-2">
+        <router-link
+          :to="{ name: 'Profile' }"
+          class="flex flex-row items-center space-x-2"
+        >
+          <img
+            :src="'http://localhost:8080/api/v1/file/upload/' + authStore.image"
+            class="w-10 h-10 rounded-full"
+          />
+          <p class="text-xl">{{ authStore.fullName }}</p>
+        </router-link>
       </div>
     </div>
   </section>
@@ -78,4 +83,7 @@
 <script lang="ts" setup>
 import { useAuthStore } from "../store/authStore";
 const authStore = useAuthStore();
+// const goToProfilePage = () => {
+//   this.$router.push({ name: 'profile' }); // N?u b?n �ang s? d?ng Vue Router
+// };
 </script>

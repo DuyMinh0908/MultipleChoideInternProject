@@ -14,7 +14,7 @@
             <div
               class="flex flex-row hover:bg-slate-200 py-2 px-6 border-b space-x-4 items-center"
             >
-              <p>Khóa học</p>
+              <p>Courses</p>
               <Icon name="down" class="w-4 h-4" />
             </div>
           </template>
@@ -27,7 +27,7 @@
                 route.name === 'Dashboard.Course.Index' ? 'bg-slate-400' : ''
               "
             >
-              Danh sách khóa học
+              All Course
             </router-link>
             <router-link
               :to="{ name: 'Dashboard.Course.Index' }"
@@ -36,7 +36,7 @@
                 route.name === 'Dashboard.Course.Index' ? 'bg-slate-400' : ''
               "
             >
-              Danh sách khóa học
+              Danh sách khóa hỞc
             </router-link>
             <router-link
               :to="{ name: 'Dashboard.Course.Index' }"
@@ -45,7 +45,7 @@
                 route.name === 'Dashboard.Course.Index' ? 'bg-slate-400' : ''
               "
             >
-              Danh sách khóa học
+              Danh sách khóa hỞc
             </router-link>
           </template>
         </dropdown-menu>
@@ -54,7 +54,7 @@
             <div
               class="flex flex-row hover:bg-slate-200 py-2 px-6 border-b space-x-4 items-center"
             >
-              <p>Đề thi</p>
+              <p>Exam</p>
               <Icon class="w-4 h-4" name="down" />
             </div>
           </template>
@@ -65,14 +65,14 @@
               class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-6"
               :class="route.name === 'Exam' ? 'bg-slate-400' : ''"
             >
-              <p>Đề thi</p>
+              <p>ĞỞ thi</p>
             </router-link>
             <router-link
               :to="{ name: 'Exam' }"
               class="flex flex-col space-y-2 hover:bg-slate-200 py-2 px-6"
               :class="route.name === 'Exam' ? 'bg-slate-400' : ''"
             >
-              <p>Tạo đề thi</p>
+              <p>Tạo đỞ thi</p>
             </router-link>
           </template>
         </dropdown-menu>

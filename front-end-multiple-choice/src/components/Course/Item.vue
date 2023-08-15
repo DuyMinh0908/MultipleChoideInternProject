@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Course } from "../../model/course";
+import Icon from "../../icons/ClientDashboard.vue";
 interface Props {
   course: Course;
 }
@@ -22,11 +23,14 @@ const prop = defineProps<Props>();
           }"
           class="bg-white rounded-xl absolute hidden group-hover:block py-2 px-4 cursor-pointer"
         >
-          Xem khóa học
+          Watch more
         </router-link>
       </div>
     </div>
-    <p class="text-xl font-semibold">{{ course.courseName }}</p>
-    <p class="text-gray-500">{{ course.numberStudent }}</p>
+    <p class="text-xl font-semibold capitalize">{{ course.courseName }}</p>
+    <p class="text-gray-500 flex flex-row items-center font-semibold space-x-2">
+      <Icon name="groupuser" class="w-8 h-8" />
+      {{ course.numberStudent }}
+    </p>
   </div>
 </template>

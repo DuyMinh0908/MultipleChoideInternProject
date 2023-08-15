@@ -152,6 +152,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../components/Dashboard/exam/takingexam.vue"),
   },
   {
+    path: "/result-exam",
+    name: "Exam.ReultExam",
+    component: () => import("../components/Exam/ResultExam.vue"),
+  },
+  {
     path: "/course",
     name: "Courses",
     meta: {
@@ -179,6 +184,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/regiter",
     component: () => import("../components/Register.vue"),
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../components/Profile.vue"),
   },
 ];
 const router = createRouter({
