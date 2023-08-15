@@ -14,7 +14,7 @@
             <div
               class="flex flex-row hover:bg-slate-200 py-2 px-6 border-b space-x-4 items-center"
             >
-              <p>Courses</p>
+              <p>Courses Managerment</p>
               <Icon name="down" class="w-4 h-4" />
             </div>
           </template>
@@ -54,7 +54,7 @@
             <div
               class="flex flex-row hover:bg-slate-200 py-2 px-6 border-b space-x-4 items-center"
             >
-              <p>Exam</p>
+              <p>Exam Managerment</p>
               <Icon class="w-4 h-4" name="down" />
             </div>
           </template>
