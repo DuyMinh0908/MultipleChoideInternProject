@@ -2,6 +2,7 @@ package com.fpt.onlineTest.service.impl;
 
 import com.fpt.onlineTest.dto.CourseDto;
 import com.fpt.onlineTest.dto.UserDto;
+import com.fpt.onlineTest.model.Blog;
 import com.fpt.onlineTest.model.Course;
 import com.fpt.onlineTest.model.ResultExam;
 import com.fpt.onlineTest.model.User;
@@ -211,6 +212,39 @@ public class UserServiceImpl implements UserService {
     public Page<ResultExam> getUserFinishedExam(Integer userId, Pageable pageable) {
 //        return examRepository.findFinishedExamOfUser(userId);
         return null;
+    }
+
+    @Override
+    public User updateUser(Integer userId, User user) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Not found blog with id: " + userId));
+        // Cập nhật các thuộc tính của đối tượng Blog từ đối tượng blog được truyền vào
+        if (user.getFullName() != null) {
+            existingUser.setFullName(user.getFullName());
+        }
+        if (user.getAddress() != null) {
+            existingUser.setAddress(user.getAddress());
+        }
+        if (user.getPhone() != null) {
+            existingUser.setPhone(user.getPhone());
+        }
+        if (user.getEmail() != null) {
+            existingUser.setEmail(user.getEmail());
+        }
+        if (user.getUserPass() != null) {
+            existingUser.setUserPass(user.getUserPass());
+        }
+        return userRepository.save(existingUser);
+    }
+
+    @Override
+    public User updateUserImg(Integer userId, User user) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Not found blog with id: " + userId));
+        if (user.getImageUser() != null) {
+            existingUser.setImageUser(user.getImageUser());
+        }
+        return userRepository.save(existingUser);
     }
 
 

@@ -41,6 +41,10 @@ public class ExamServiceImpl implements ExamService {
         if (exitingExam.getNumQuestion() != null)
             exitingExam.setNumQuestion(exam.getNumQuestion());
 
+        if(exitingExam.getExamName()!=null){
+            exitingExam.setExamName(exam.getExamName());
+        }
+
         if (exitingExam.getDuration() != null)
             exitingExam.setDuration(exam.getDuration());
 

@@ -43,7 +43,7 @@ const validateFormBlog = () => {
   validate.value.$clearExternalResults();
   validate.value.$touch();
   if (validate.value.$invalid) {
-    notificationStore.openError("Kiểm tra lại thông tin trong các trường.");
+    notificationStore.openError("Kiểm tra lại thông tin trong các trưỞng.");
     return;
   }
 };
@@ -53,7 +53,7 @@ const getblogById = async () => {
   try {
     const data = await api.get(`/blogs/${route.params.id}`);
     form.value = data.data;
-    console.log(form.value);
+    // console.log(form.value);
   } catch (e) {
     console.error(e);
   }
@@ -64,7 +64,7 @@ const updateBlog = async () => {
       `/blogs/user-blog/update/blogId=${form.value.blogId}`,
       form.value
     );
-    notificationStore.openSuccess("Cập nhật thành công.");
+    notificationStore.openSuccess("Update success.");
     await router.push("/blog/index");
   } catch (e) {
     console.error(e);
@@ -86,7 +86,7 @@ onBeforeMount(() => {
     >
       <p class="uppercase text-2xl font-bold">Cập nhật bài viết</p>
       <div class="flex flex-col items-start">
-        <label class="text-lg font-semibold">Tiêu đề khóa học</label>
+        <label class="text-lg font-semibold">Tiêu đỞ khóa hỞc</label>
         <input
           v-model="form.titleBlog"
           class="w-1/2 h-10 rounded-xl border-2 px-2 border-black"
@@ -98,7 +98,7 @@ onBeforeMount(() => {
             :key="index"
             class="text-red-500 mt-2 italic text-sm"
           >
-            {{ validationMessage(error.$message, "Tên môn học") }}
+            {{ validationMessage(error.$message, "Tên môn hỞc") }}
           </div>
         </template>
       </div>

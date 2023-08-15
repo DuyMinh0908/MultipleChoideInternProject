@@ -86,10 +86,13 @@ public interface UserService {
     <S extends User> boolean exists(Example<S> example);
 
     <S extends User, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction);
-
+//------------------------
     // get userDto by id
     Optional<UserDto> getUserDtoById(Integer userId);
 
 //    get finished exam of user
     Page<ResultExam> getUserFinishedExam(Integer userId,Pageable pageable);
+//    update user
+    User updateUser(Integer userId,User user);
+    User updateUserImg(Integer userId,User user);
 }
