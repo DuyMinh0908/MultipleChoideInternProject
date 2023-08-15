@@ -59,7 +59,7 @@ public class ExamQuestionController {
     }
 
     @PostMapping("/exam/question/add-multiple")
-    public ResponseEntity<List<ExamQuestion>> addMultipleQuestionsToExam(@RequestBody List<ExamQuestion> examQuestions) {
+    public ResponseEntity<Object> addMultipleQuestionsToExam(@RequestBody List<ExamQuestion> examQuestions) {
         List<ExamQuestion> addedQuestions = new ArrayList<>();
 
         for (ExamQuestion examQuestion : examQuestions) {
@@ -74,15 +74,19 @@ public class ExamQuestionController {
         if (addedQuestions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
+        try{
+            List<ExamQuestion> savedQuestions = examQuestionService.addMultipleQuestions(addedQuestions);
+            return new ResponseEntity<>(savedQuestions, HttpStatus.ACCEPTED);
+        } catch (Exception e){
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.ACCEPTED);
+        }
 
-        List<ExamQuestion> savedQuestions = examQuestionService.addMultipleQuestions(addedQuestions);
 
-        return new ResponseEntity<>(savedQuestions, HttpStatus.ACCEPTED);
     }
 
 
     @GetMapping("/exam/questions/exam-id={id}")
-    public ResponseEntity<Page<ExamQuestion>> getExamTestQuestions(
+    public ResponseEntity<Object> getExamTestQuestions(
             @PathVariable Integer id,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {
@@ -90,7 +94,7 @@ public class ExamQuestionController {
             Pageable pageable = PageRequest.of(page, size);
             return new ResponseEntity<>(examQuestionService.getExamTestQuestions(id, pageable), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred: "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -125,15 +125,12 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     @Override
     public Page<ExamQuestion> getExamTestQuestions(Integer examId, Pageable pageable) {
         Page<ExamQuestion> examQuestionsPage = examQuestionRepository.findExamQuestionByExamId(examId, pageable);
-        Set<ExamQuestion> uniqueExamQuestions = new HashSet<>(examQuestionsPage.getContent());
-        List<ExamQuestion> sortedUniqueExamQuestions = new ArrayList<>(uniqueExamQuestions);
-        sortedUniqueExamQuestions.sort(Comparator.comparing(ExamQuestion::getId));
-
 
         // Xáo trộn thứ tự câu trả lời cho mỗi câu hỏi
         examQuestionsPage.getContent().forEach(examQuestion -> {
             examQuestion.getQuestion().setAnswer(shuffleAnswers(examQuestion.getQuestion().getAnswer()));
         });
+
         return examQuestionsPage;
     }
 
