@@ -43,7 +43,7 @@ onBeforeMount(() => {
   <SideBar />
   <Carousel />
   <div class="flex flex-col w-3/4 pt-10 mx-auto space-y-4">
-    <p class="font-semibold text-xl">Popular courses</p>
+    <p class="font-semibold text-3xl">Popular courses</p>
     <div class="grid grid-cols-3 gap-4">
       <Item
         v-for="course in popularCourses"
@@ -52,11 +52,13 @@ onBeforeMount(() => {
       />
     </div>
     <div class="flex flex-row-reverse justify-items-end">
-      <p class="hover:font-semibold cursor-pointer text-lightblue">More >></p>
+      <p class="hover:font-semibold cursor-pointer text-red-500 font-semibold">
+        More >>
+      </p>
     </div>
   </div>
   <div class="flex flex-col w-3/4 py-10 mx-auto space-y-4">
-    <p class="font-semibold text-xl">Free courses</p>
+    <p class="font-semibold text-3xl">Free courses</p>
     <div class="grid grid-cols-3 gap-6">
       <Item
         v-for="course in allCourses"
@@ -65,16 +67,20 @@ onBeforeMount(() => {
       />
     </div>
     <div class="flex flex-row-reverse justify-items-end">
-      <p class="hover:font-semibold cursor-pointer text-lightblue">More >></p>
+      <p class="hover:font-semibold cursor-pointer text-red-500 font-semibold">
+        More >>
+      </p>
     </div>
   </div>
   <div class="flex flex-col w-3/4 pb-10 mx-auto space-y-4">
-    <p class="font-semibold text-xl">Blogs</p>
+    <p class="font-semibold text-3xl">Blogs</p>
     <div class="grid grid-cols-3 gap-6">
       <Item v-for="course in courses" :key="course.id" :course="course" />
     </div>
     <div class="flex flex-row-reverse justify-items-end">
-      <p class="hover:font-semibold cursor-pointer text-lightblue">More >></p>
+      <p class="hover:font-semibold cursor-pointer text-red-500 font-semibold">
+        More >>
+      </p>
     </div>
   </div>
 </template>

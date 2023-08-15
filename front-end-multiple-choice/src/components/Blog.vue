@@ -3,7 +3,7 @@
   <SideBar />
   <div class="flex flex-col w-3/4 mx-auto">
     <div class="flex flex-row justify-between">
-      <h3 class="inline font-bold text-2xl">Blogs</h3>
+      <h3 class="inline font-bold text-3xl">Blogs</h3>
       <router-link
         v-if="authStore.isAuthorized"
         :to="{ name: 'Blogs.Create' }"
@@ -14,7 +14,8 @@
       </router-link>
     </div>
     <p>
-      Compilation of articles sharing experiences in self-learning programming online and programming techniques.
+      Compilation of articles sharing experiences in self-learning programming
+      online and programming techniques.
     </p>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
       <Item v-for="blog in allBlogs" :key="Number(blog.blogId)" :blog="blog" />

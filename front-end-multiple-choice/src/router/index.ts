@@ -42,9 +42,7 @@ const routes: Array<RouteRecordRaw> = [
       if (authStore.isAuthorized) {
         if (authStore.isUser) {
           console.log(authStore.isUser);
-          notificationStore.openError(
-            "Bạn không thể truy cập trang này"
-          );
+          notificationStore.openError("Bạn không thể truy cập trang này");
           window.location.assign(from.path);
         }
         return next();
@@ -152,6 +150,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/exam/:id/taking-exam",
     name: "Exam.TakeExam",
     component: () => import("../components/Dashboard/exam/takingexam.vue"),
+  },
+  {
+    path: "/result-exam",
+    name: "Exam.ReultExam",
+    component: () => import("../components/Exam/ResultExam.vue"),
   },
   {
     path: "/course",

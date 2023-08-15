@@ -1,17 +1,19 @@
 <template>
-  <section class="items-center justify-center p-10 md:py-44">
+  <section
+    class="items-center justify-center p-32 bg-gradient-to-r from-sky-800 from-10% to-purple-700 h-screen"
+  >
     <form
       @keydown="validateFormRegister()"
-      class="w-80 pb-10 md:pb-16 md:w-1/2 bg-white mx-auto rounded-lg h-full flex flex-col items-center"
+      class="w-fit py-10 md:w-1/2 bg-white mx-auto rounded-lg h-fit flex flex-col items-center"
     >
-      <Icon name="logo" class="w-24 md:w-32 h-20 md:h-28" />
-      <p class="font-bold text-sm md:text-xl mt-2 text-center">
+      <!-- <Icon name="logo" class="w-24 md:w-32 h-20 md:h-28" /> -->
+      <p
+        class="font-bold text-3xl mt-2 text-center from-sky-800 from-10% to-purple-700 bg-gradient-to-r bg-clip-text text-transparent"
+      >
         Register Account
       </p>
 
-      <div
-        class="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-6 place-items-center mt-6"
-      >
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-6 mt-6">
         <div class="flex flex-col">
           <label class="font-bold text-zinc-600 px-2">
             Full Name<span class="text-red-600 font-bold">*</span>
@@ -171,7 +173,7 @@
         </div>
       </div>
       <button
-        class="rounded-xl text-white bg-lightblue w-36 h-10 md:h-12 mt-7 md:mt-10 text-sm md:text-lg"
+        class="rounded-xl text-white bg-gradient-to-r from-sky-800 from-10% to-purple-700 w-36 h-10 md:h-12 mt-7 md:mt-10 text-sm md:text-lg"
         @click.prevent="onRegister()"
       >
         Register

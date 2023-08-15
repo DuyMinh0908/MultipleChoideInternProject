@@ -1,11 +1,13 @@
 <template>
   <Navigation />
   <div class="container flex flex-col">
-    <table class="w-full text border-collapse border border-slate-400">
+    <table class="w-full border-slate-400">
       <caption class="caption-top uppercase text-3xl font-bold">
         Danh sách bài viêt
       </caption>
-      <thead class="bg-lightblue h-12">
+      <thead
+        class="bg-gradient-to-r from-sky-800 from-10% to-purple-700 text-white h-12 rounded-xl border-t-2"
+      >
         <tr class="uppercase">
           <th scope="col" class="border border-slate-300 col-span-1">ID</th>
           <th scope="col" class="border border-slate-300">Tiêu đề</th>
@@ -14,7 +16,7 @@
           <th scope="col" class="border border-slate-300">Action</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="boder-2 border-gray-300 overflow-hidden">
         <tr
           v-for="blog in allBlogs"
           :key="Number(blog.blogId)"

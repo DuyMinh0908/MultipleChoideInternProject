@@ -11,7 +11,7 @@ const emit = defineEmits(["getList"]);
   <!-- BEGIN: Pagination -->
   <div
     v-if="lastPage > 0"
-    class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center"
+    class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center py-10"
   >
     <nav class="w-full">
       <ul
@@ -19,7 +19,7 @@ const emit = defineEmits(["getList"]);
       >
         <li v-if="currentPage > 0" class="page-item">
           <button
-            class="items-center rounded-full bg-blue-700 px-1 flex"
+            class="items-center rounded-full border-blue-600 border-2 px-1 flex"
             @click.prevent="emit('getList', 0)"
           >
             <Icon name="left" class="w-4 h-6" />
@@ -27,7 +27,7 @@ const emit = defineEmits(["getList"]);
         </li>
         <li v-if="currentPage > 0" class="page-item">
           <button
-            class="items-center rounded-full bg-blue-700 px-1"
+            class="items-center rounded-full border-blue-600 border-2 px-1 flex"
             @click.prevent="emit('getList', currentPage - 1)"
           >
             <Icon name="left" class="w-4 h-6" />
@@ -44,7 +44,11 @@ const emit = defineEmits(["getList"]);
               page === currentPage + 1 ||
               page === currentPage + 2
             "
-            :class="page === currentPage ? 'bg-red-600' : 'bg-blue-700'"
+            :class="
+              page === currentPage
+                ? 'border-2 border-red-600'
+                : 'border-blue-700 border-2'
+            "
           >
             <button @click.prevent="emit('getList', page)" class="page-link">
               {{ page }}
@@ -53,7 +57,7 @@ const emit = defineEmits(["getList"]);
         </template>
         <li v-if="currentPage < lastPage" class="page-item">
           <button
-            class="items-center rounded-full bg-blue-700 px-1"
+            class="items-center rounded-full border-blue-600 border-2 px-1 flex"
             @click.prevent="emit('getList', currentPage + 1)"
           >
             <Icon name="right" class="w-4 h-6" />
@@ -61,10 +65,11 @@ const emit = defineEmits(["getList"]);
         </li>
         <li v-if="currentPage < lastPage" class="page-item">
           <button
-            class="items-center rounded-full bg-blue-700 px-1 flex flex-row"
+            class="items-center rounded-full border-blue-600 border-2 px-1 flex"
             @click.prevent="emit('getList', lastPage)"
           >
-            >>
+            <Icon name="right" class="w-4 h-6" />
+            <Icon name="right" class="w-4 h-6" />
           </button>
         </li>
       </ul>

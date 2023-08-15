@@ -26,12 +26,13 @@ onBeforeMount(() => {
     <Carousel :transition="500">
       <Slide v-for="course in popularCourses" :key="course.courseId">
         <div
-          class="w-3/4 mx-auto rounded-xl overflow-hidden flex flex-row h-60 justify-between bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%"
+          class="w-3/4 mx-auto rounded-xl overflow-hidden flex flex-row h-60 justify-between bg-gradient-to-r from-sky-800 from-10% to-purple-700"
         >
           <div class="flex flex-col space-y-4 p-10 text-start text-white">
             <p class="text-3xl font-bold">{{ course.subject }}</p>
             <p class="text-md font-semibold line-clamp-2">
-              To achieve good results in everything, we need to set clear goals for that task. Learning programming is also no exception.
+              To achieve good results in everything, we need to set clear goals
+              for that task. Learning programming is also no exception.
             </p>
             <button
               class="border-collapse border-white rounded-2xl border-2 w-40 text-md font-semibold hover:font-bold hover:bg-slate-500"
@@ -39,8 +40,12 @@ onBeforeMount(() => {
               Read more ...
             </button>
           </div>
-          <div class="opacity-100">
-            <img :src="course.imageCourse" alt="img-banner" />
+          <div class="w-1/2">
+            <img
+              class="opacity-80 h-full w-full"
+              :src="course.imageCourse"
+              alt="img-banner"
+            />
           </div>
         </div>
       </Slide>

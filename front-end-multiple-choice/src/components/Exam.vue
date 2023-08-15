@@ -41,7 +41,7 @@ onBeforeMount(() => {
   <Navigation />
   <SideBar />
   <div class="flex flex-col w-3/4 mx-auto">
-    <h3 class="inline font-bold text-2xl">Exams</h3>
+    <h3 class="inline font-bold text-3xl">Exams</h3>
     <div class="pt-10 container space-y-4 text-start">
       <div class="grid grid-cols-3 gap-6">
         <div
@@ -73,14 +73,14 @@ onBeforeMount(() => {
     </div>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
       <p
-        class="font-semibold text-xl relative w-52 h-10 flex flex-col justify-end"
+        class="font-semibold text-3xl relative w-52 h-10 flex flex-col justify-end"
       >
         Fininsh Exam
       </p>
       <div class="grid grid-cols-3 gap-6">
         <div
           v-for="examFinish in listExamFinish"
-          class="flex flex-col rounded-xl shadow-xl items-center space-y-4 py-5 bg-slate-200"
+          class="flex flex-col rounded-xl shadow-xl items-center space-y-4 bg-slate-200 py-10"
         >
           <p class="text-xl font-normal">
             Number of Question:<span class="text-xl ml-2 font-semibold">{{
