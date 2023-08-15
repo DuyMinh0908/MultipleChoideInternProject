@@ -38,7 +38,7 @@ public class User implements Serializable {
     @Column(columnDefinition = "nvarchar(100) not null")
     private String address;
 
-    @Column(columnDefinition = "varchar(255)not null")
+    @Column(columnDefinition = "varchar(255) not null")
     private String imageUser;
 
     @ManyToOne
