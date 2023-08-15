@@ -8,12 +8,19 @@
       cost, quality, easy to understand content.
     </p>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4" v-if="authStore.isAuthorized">
-      <p class="font-semibold text-xl relative w-52 h-10 flex flex-col justify-end">My Course 
+      <p  class="font-semibold text-3xl relative w-52 h-10 flex flex-col justify-end">My Course 
       </p>
+      <template v-if="myCourses.length >0">
+       
       <div class="grid grid-cols-3 gap-6">
         <Item v-for="course in myCourses " :key="course.id" :course="course" />
       </div>
-     
+     </template>
+
+     <template v-else>
+      <p class="text-red-600 text-lg">You are not taking any courses</p>
+     </template>
+    
     </div>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
     

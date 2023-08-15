@@ -47,7 +47,7 @@ const response: Ref<ResponseData> = ref({
 });
 const searchForm: Ref<SearchForm> = ref({
   page: 0,
-  size: 40,
+  size: 10,
 });
 const coundownInterval = setInterval(() => {
   if (second.value > 0) {
@@ -95,7 +95,9 @@ const getExamByIdofCourse = async () => {
 
 const getAllQuestions = async () => {
   try {
-    const data = await api.get(`/exam/questions/exam-id=${route.params.id}`);
+    const data = await api.get(
+      `/exam/questions/exam-id=${route.params.id}?page=0&size=50`
+    );
     allQuestions.value = data.data.content;
     console.log(allQuestions.value);
     allQuestions.value.forEach(() => {
@@ -111,20 +113,20 @@ const getAllQuestions = async () => {
     console.error(e);
   }
 };
-const getList = async (page: number = 0) => {
-  try {
-    searchForm.value.page = page;
-    // @ts-ignore
-    const params = new URLSearchParams(searchForm.value).toString();
-    let data = await api.get(
-      `/exam/questions/exam-id=${route.params.id}?${params}`
-    );
+// const getList = async (page: number = 0) => {
+//   try {
+//     searchForm.value.page = page;
+//     // @ts-ignore
+//     const params = new URLSearchParams(searchForm.value).toString();
+//     let data = await api.get(
+//       `/exam/questions/exam-id=${route.params.id}?${params}`
+//     );
 
-    allQuestions.value = data.data.content;
-    response.value.current_page = data.data.number;
-    response.value.last_page = data.data.totalPages - 1;
-  } catch (e) {}
-};
+//     allQuestions.value = data.data.content;
+//     response.value.current_page = data.data.number;
+//     response.value.last_page = data.data.totalPages - 1;
+//   } catch (e) {}
+// };
 const { open, close } = useModal({
   component: ModalConfirm,
   attrs: {
@@ -169,7 +171,7 @@ window.onpopstate = function (event) {
   }
 };
 onMounted(async () => {
-  await getList();
+  await getAllQuestions();
 });
 </script>
 <template>

@@ -6,24 +6,27 @@
       @keydown="validate.$clearExternalResults()"
       class="w-3/6 rounded-md border-2 border-zinc-800 h-3/4 my-14 mb-32"
     >
-      <h1 class="flex uppercase justify-center font-medium text-2xl my-10">
-        Tạo đề thi cho <span class="text-red-600">{{ course.courseName }}</span>
+      <h1 class="flex uppercase justify-center font-medium text-3xl my-10">
+        Create exam for
+        <span class="text-red-600">{{ course.courseName }}</span>
       </h1>
       <div class="grid grid-cols-2 gap-2 md:gap-6 place-items-center mt-4">
         <div class="flex flex-col items-start">
-          <label class="text-lg font-semibold">Tên khóa học: </label>
+          <label class="text-lg font-semibold">Name of Course: </label>
           <p>{{ course.courseName }}</p>
         </div>
         <div class="flex flex-col items-start">
-          <label class="text-lg font-semibold">Tên môn học: </label>
+          <label class="text-lg font-semibold">Name of Subject: </label>
           <p>{{ course.subject }}</p>
         </div>
-        <div class="flex flex-col col-span-2 w-full ml-60">
-          <label class="text-lg font-semibold">Tên giáo viên : </label>
-          <p>{{ authStore.fullName }}</p>
+        <div class="flex flex-row col-span-2 w-full ml-60">
+          <label class="text-lg font-semibold"
+            >Name Teacher :
+            <p class="font-semibold">{{ authStore.fullName }}</p>
+          </label>
         </div>
         <div>
-          <p class="font-bold px-2">Số lượng câu hỏi</p>
+          <p class="font-bold px-2">Num of question</p>
           <input
             v-model="form.numQuestion"
             class="rounded-md h-8 w-64 pl-2 border-2"
@@ -31,32 +34,32 @@
             min="1"
             max="1000"
             required
-            placeholder="Số lượng câu hỏi"
+            placeholder="Enter num of questions"
           />
         </div>
         <div>
-          <p class="font-bold px-2">Thời lượng</p>
+          <p class="font-bold px-2">Time</p>
           <input
             v-model="form.duration"
             class="rounded-md h-8 w-64 pl-2 border-2"
             min="1"
             max="1000"
             required
-            placeholder="Số lượng câu hỏi"
+            placeholder="Enter time"
           />
         </div>
       </div>
       <div class="flex-row gap-10 my-10 flex justify-center h-10">
         <button
           type="submit"
-          class="rounded-md bg-green-300 w-20 hover:bg-green-600 font-bold text-white"
+          class="rounded-xl bg-green-300 w-20 hover:bg-green-600 font-bold text-white uppercase"
         >
-          LƯU
+          Save
         </button>
         <button
-          class="rounded-md bg-zinc-400 w-20 hover:bg-red-600 font-bold text-white"
+          class="rounded-xl bg-zinc-400 w-20 hover:bg-red-600 font-bold text-white uppercase"
         >
-          HỦY
+          cancel
         </button>
       </div>
     </form>
@@ -80,7 +83,7 @@ const rules = {
   },
   numQuestion: {
     required,
-    minLength: minLength(1),
+    minLength: minLength(5),
     maxLength: maxLength(50),
   },
 };

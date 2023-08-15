@@ -118,19 +118,19 @@ export const useAuthStore = defineStore("auth", {
       localStorage.setItem("role", role);
     },
 
-    // async refreshProfile() {
-    //   try {
-    //     const { data } = await api.get(`/auth/profile`);
-    //     this.setCurrentUser(data.data.user);
-    //     if (data.data.banned_readers) {
-    //       const bannedReaders: Array<User> = [];
-    //       data.data.banned_readers.forEach((bannedReader: any) => {
-    //         bannedReaders.push(bannedReader.user);
-    //       });
-    //       this.setBannedReaders(bannedReaders);
-    //     }
-    //   } catch (error) {}
-    // },
+    async refreshProfile() {
+      try {
+        const { data } = await api.get(`/auth/profile`);
+        this.setCurrentUser(data.data.user);
+        if (data.data.banned_readers) {
+          const bannedReaders: Array<User> = [];
+          data.data.banned_readers.forEach((bannedReader: any) => {
+            bannedReaders.push(bannedReader.user);
+          });
+          this.setBannedReaders(bannedReaders);
+        }
+      } catch (error) {}
+    },
     async logOut() {
       this.id = undefined;
       localStorage.removeItem("id");
@@ -141,7 +141,7 @@ export const useAuthStore = defineStore("auth", {
       localStorage.removeItem("phone");
       localStorage.removeItem("username");
       localStorage.removeItem("role");
-       router.push({name: "Home"})
+      router.push({ name: "Home" });
     },
   },
 });

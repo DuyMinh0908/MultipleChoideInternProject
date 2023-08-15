@@ -7,7 +7,7 @@
       class="w-3/5 px-20 rounded-md border-2 border-zinc-800 h-fit my-14"
     >
       <h1 class="flex uppercase justify-center font-medium text-2xl my-10">
-        Tạo ngân hàng đề
+        Create Bank Exam
       </h1>
 
       <div
@@ -15,17 +15,21 @@
         v-for="(formQuestion, index) in formQuestions"
         :key="formQuestion"
       >
-        <Icon @click="removeQuestion(index)" name="delete" class="w-5 h-5" />
+        <Icon
+          @click="removeQuestion(index)"
+          name="delete"
+          class="w-5 h-5 ml-5"
+        />
 
         <div class="grid grid-cols-2 gap-6 px-5 mt-4">
           <div class="flex flex-col w-full">
             <p class="font-bold text-zinc-600 px-2">
-              Nhâp câu hỏi<span class="text-red-600 font-bold">*</span>
+              Question<span class="text-red-600 font-bold">*</span>
             </p>
             <textarea
               class="rounded-xl pl-2 border-2"
               v-model="formQuestion.contentQuestion"
-              placeholder="Nhập câu hỏi"
+              placeholder="Enter question"
               rows="4"
             />
 
@@ -38,7 +42,7 @@
                 :key="i"
                 class="text-red-500 mt-2 italic text-sm"
               >
-                {{ validationMessage(error.$message, "Câu hỏi") }}
+                {{ validationMessage(error.$message, "Question") }}
               </div>
             </template>
           </div>
@@ -60,7 +64,7 @@
               <label
                 for="default-radio-1"
                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Dễ
+                >Easy
               </label>
             </div>
             <div class="flex items-center">
@@ -75,7 +79,7 @@
               <label
                 for="default-radio-2"
                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Vừa</label
+                >Medium</label
               >
             </div>
             <div class="flex items-center">
@@ -89,18 +93,18 @@
               <label
                 for="default-radio-2"
                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Khó</label
+                >Hard</label
               >
             </div>
           </div>
           <div class="flex flex-col space-y-2">
             <p class="font-bold text-zinc-600 px-2">
-              Đáp án 1 <span class="text-red-600 font-bold">*</span>
+              Result 1 <span class="text-red-600 font-bold">*</span>
             </p>
             <input
               class="h-12 rounded-xl w-full pl-2 border-2"
               v-model="formQuestion.answer[0].contentAnswer"
-              placeholder="Nhập mã khóa học"
+              placeholder="Enter result 1"
             />
 
             <template
@@ -112,14 +116,14 @@
                 :key="i"
                 class="text-red-500 mt-2 italic text-sm"
               >
-                {{ validationMessage(error, "Câu hỏi") }}
+                {{ validationMessage(error, "Question") }}
               </div>
             </template>
             <div class="flex flex-row space-x-4 items-center">
               <label
                 for="default-radio-1"
                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Đúng
+                >True
               </label>
               <input
                 checked
@@ -134,7 +138,7 @@
               <label
                 for="default-radio-1"
                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Sai
+                >False
               </label>
               <input
                 checked
@@ -150,14 +154,14 @@
 
           <div class="flex flex-col">
             <p class="font-bold text-zinc-600 px-2">
-              Đáp án 2 <span class="text-red-600 font-bold">*</span>
+              Result 2 <span class="text-red-600 font-bold">*</span>
             </p>
             <input
               class="h-12 rounded-xl w-full pl-2 border-2"
               name=""
               v-model="formQuestion.answer[1].contentAnswer"
               id=""
-              placeholder="Nhập mã khóa học"
+              placeholder="Enter result"
             />
             <template
               v-if="validate.$each.$response.$errors[index].answer[index]"
@@ -168,14 +172,14 @@
                 :key="i"
                 class="text-red-500 mt-2 italic text-sm"
               >
-                {{ validationMessage(error, "Câu hỏi") }}
+                {{ validationMessage(error, "Question") }}
               </div>
             </template>
             <div class="flex flex-row space-x-4 items-center">
               <label
                 for="default-radio-1"
                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Đúng
+                >True
               </label>
               <input
                 checked
@@ -189,7 +193,7 @@
               <label
                 for="default-radio-1"
                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Sai
+                >False
               </label>
               <input
                 checked
@@ -204,13 +208,13 @@
           </div>
           <div class="flex flex-col">
             <p class="font-bold text-zinc-600 px-2">
-              Đáp án 3 <span class="text-red-600 font-bold">*</span>
+              Result 3 <span class="text-red-600 font-bold">*</span>
             </p>
             <input
               class="h-12 rounded-xl w-full pl-2 border-2"
               name=""
               id=""
-              placeholder="Nhập mã khóa học"
+              placeholder="Enter result"
               v-model="formQuestion.answer[2].contentAnswer"
             />
             <template
@@ -222,14 +226,14 @@
                 :key="i"
                 class="text-red-500 mt-2 italic text-sm"
               >
-                {{ validationMessage(error, "Câu hỏi") }}
+                {{ validationMessage(error, "Question") }}
               </div>
             </template>
             <div class="flex flex-row space-x-4 items-center">
               <label
                 for="default-radio-1"
                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Đúng
+                >True
               </label>
               <input
                 checked
@@ -243,7 +247,7 @@
               <label
                 for="default-radio-1"
                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Sai
+                >False
               </label>
               <input
                 checked
@@ -258,14 +262,14 @@
           </div>
           <div class="flex flex-col">
             <p class="font-bold text-zinc-600 px-2">
-              Đáp án 4 <span class="text-red-600 font-bold">*</span>
+              Result 4 <span class="text-red-600 font-bold">*</span>
             </p>
             <input
               class="h-12 rounded-xl w-full pl-2 border-2"
               name=""
               id=""
               v-model="formQuestion.answer[3].contentAnswer"
-              placeholder="Nhập mã khóa học"
+              placeholder="Enter result"
             />
             <template
               v-if="validate.$each.$response.$errors[index].answer[index]"
@@ -276,14 +280,14 @@
                 :key="i"
                 class="text-red-500 mt-2 italic text-sm"
               >
-                {{ validationMessage(error, "Câu hỏi") }}
+                {{ validationMessage(error, "Question") }}
               </div>
             </template>
             <div class="flex flex-row space-x-4 items-center">
               <label
                 for="default-radio-1"
                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Đúng
+                >True
               </label>
               <input
                 checked
@@ -297,7 +301,7 @@
               <label
                 for="default-radio-1"
                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Sai
+                >False
               </label>
               <input
                 checked
@@ -316,19 +320,19 @@
         @click="addQuestion"
         class="rounded-xl px-3 mt-4 py-2 text-white bg-lightblue hover:bg-blue-600 w-40"
       >
-        Thêm câu hỏi
+        Add Question
       </div>
       <div class="flex-row gap-10 my-10 flex justify-center h-10">
         <button
           type="submit"
-          class="rounded-md bg-green-300 w-20 hover:bg-green-600 font-bold text-white"
+          class="rounded-md bg-green-300 w-20 hover:bg-green-600 font-bold text-white uppercase"
         >
-          LƯU
+          save
         </button>
         <button
-          class="rounded-md bg-zinc-400 w-20 hover:bg-red-600 font-bold text-white"
+          class="rounded-md bg-zinc-400 w-20 hover:bg-red-600 font-bold text-white uppercase"
         >
-          HỦY
+          cancel
         </button>
       </div>
     </form>
@@ -403,7 +407,7 @@ const formQuestions = ref([
   },
 ]);
 
-const validate = useVuelidate(rules, formQuestions, {
+let validate = useVuelidate(rules, formQuestions, {
   $externalResults,
 });
 
@@ -418,8 +422,7 @@ const validateFormQuestion = () => {
   validate.value.$touch();
   console.log(validate.value);
   if (validate.value.$invalid) {
-    notificationStore.openError("Hãy kiểm tra lại các trường thông tin.");
-    console.log("sdasdasdas");
+    notificationStore.openError("Check information fields.");
     return true;
   }
 
@@ -430,6 +433,9 @@ const removeQuestion = (index: Number) => {
   formQuestions.value.splice(Number(index), 1);
 };
 const addQuestion = () => {
+  validate = useVuelidate(rules, formQuestions, {
+    $externalResults,
+  });
   formQuestions.value.push({
     contentQuestion: "",
     level: "",
@@ -458,10 +464,10 @@ const saveQuestions = async () => {
   if (validateFormQuestion())
     try {
       await api.post("/questions/create", formQuestions.value);
-      notificationStore.openSuccess("Tạo câu hỏi thành công");
+      notificationStore.openSuccess("Tạo Question thành công");
       await router.push(`/dashboard/subject/${subject.value}`);
     } catch (e) {
-      console.error("Tạo câu hỏi thất bại");
+      console.error("Tạo Question thất bại");
     }
 };
 </script>
