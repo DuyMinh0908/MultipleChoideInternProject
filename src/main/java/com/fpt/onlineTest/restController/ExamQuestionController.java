@@ -43,18 +43,18 @@ public class ExamQuestionController {
     }
 
     @PostMapping("/exam/create-test/num={nums}/subject={subject}/exam-id={examId}")
-    public ResponseEntity<List<ExamQuestion>> createExamWithRandomQuestions(@PathVariable Integer nums, @PathVariable Integer examId, @PathVariable String subject) {
+    public ResponseEntity<Object> createExamWithRandomQuestions(@PathVariable Integer nums, @PathVariable Integer examId, @PathVariable String subject) {
         try {
 //            exam.setExamId(examId);
             Integer qAmount = examRepository.getExamQuestionAmount(examId);
             if (Objects.equals(nums, qAmount)) {
                 return new ResponseEntity<>(examQuestionService.createExamTestWithRandomQuestion(nums, examId, subject), HttpStatus.ACCEPTED);
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+                return new ResponseEntity<>("Nums of question not fit with exam",HttpStatus.NOT_ACCEPTABLE);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

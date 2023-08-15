@@ -18,9 +18,9 @@ public interface ExamQuestionRepository extends JpaRepository<ExamQuestion,Integ
 //            "join ExamQuestion eq on eq.question.questionId = q.questionId " +
 ////            "join Answer a on a.question.questionId = q.questionId " +
 //            "where eq.exam.examId=:id")
-@Query("SELECT eq FROM ExamQuestion eq " +
-        "JOIN eq.question q " +
-        "JOIN q.answer a " +
+    @Query("SELECT eq FROM ExamQuestion eq " +
+        "left join eq.question q " +
+        "left join q.answer a " +
         "WHERE eq.exam.examId = :id")
     Page<ExamQuestion> findExamQuestionByExamId(@Param("id") Integer id, Pageable pageable);
 

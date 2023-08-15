@@ -26,17 +26,18 @@ public class BlogController {
 
     //    create blog
     @PostMapping("/blogs/add")
-    public ResponseEntity<Blog> createBlog(@RequestBody Blog newBlog) {
+    public ResponseEntity<Object> createBlog(@RequestBody Blog newBlog) {
         try {
-            return new ResponseEntity<>(blogService.newBLog(newBlog), HttpStatus.CREATED);
+            blogService.newBLog(newBlog);
+            return new ResponseEntity<>("Create success!", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     //    get all blogs
     @GetMapping("/blogs")
-    public ResponseEntity<Page<BlogDto>> getAllBlogs(
+    public ResponseEntity<Object> getAllBlogs(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "5") Integer size
     ) {
@@ -45,67 +46,77 @@ public class BlogController {
             return new ResponseEntity<>(blogService.getAll(pageable), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     //    get blog by id
     @GetMapping("/blogs/{id}")
-    public ResponseEntity<BlogDto> getBlogById(@PathVariable Integer id) {
+    public ResponseEntity<Object> getBlogById(@PathVariable Integer id) {
         try {
             return new ResponseEntity<>(blogService.getBlogById(id), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     //    get all blog by userId
     @GetMapping("/blogs/user-blogs/{userId}")
-    public ResponseEntity<UserDto> getAllBlogsByUserId(
+    public ResponseEntity<Object> getAllBlogsByUserId(
             @PathVariable Integer userId,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
             Optional<User> user) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            UserDto blogDtoPage = blogService.getBlogDtoByUserId(userId, pageable,user);
+            UserDto blogDtoPage = blogService.getBlogDtoByUserId(userId, pageable, user);
 
             return new ResponseEntity<>(blogDtoPage, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     //    update blog
     @PutMapping("/blogs/user-blog/update/blogId={blogId}")
-    public ResponseEntity<Blog> updateBlog(@PathVariable Integer blogId,@RequestBody Blog newBlog) {
+    public ResponseEntity<Object> updateBlog(@PathVariable Integer blogId, @RequestBody Blog newBlog) {
         try {
-            return new ResponseEntity<>(blogService.updateBlog(blogId, newBlog), HttpStatus.OK);
+            blogService.updateBlog(blogId, newBlog);
+            return new ResponseEntity<>("Success!", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     //    delete blog by blog id
     @DeleteMapping("/blogs/user-blogs/delete/{blogId}")
-    public ResponseEntity<HttpStatus> deleteBlogById(@PathVariable Integer blogId) {
-        blogService.deleteBlogById(blogId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Object> deleteBlogById(@PathVariable Integer blogId) {
+        try {
+            blogService.deleteBlogById(blogId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //    delete all blogs by userId
     @DeleteMapping("/blogs/user-blogs/delete-by/userId:{userId}")
-    public ResponseEntity<HttpStatus> deleteBlogsByUserId(@PathVariable Integer userId) {
-        blogService.deleteAllBlogsByUserId(userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Object> deleteBlogsByUserId(@PathVariable Integer userId) {
+        try{
+            blogService.deleteAllBlogsByUserId(userId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-//    get top blogs have most visitors
+
+    //    get top blogs have most visitors
     @GetMapping("/blogs/popular-blogs")
-    public ResponseEntity<List<BlogDto>> getPopularBlogs(){
+    public ResponseEntity<Object> getPopularBlogs() {
         try {
             return new ResponseEntity<>(blogService.getTopBlogs(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

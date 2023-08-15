@@ -1,5 +1,6 @@
 package com.fpt.onlineTest.service.impl;
 
+import com.fpt.onlineTest.model.Answer;
 import com.fpt.onlineTest.model.Exam;
 import com.fpt.onlineTest.model.ExamQuestion;
 import com.fpt.onlineTest.model.Questions;
@@ -14,8 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ExamQuestionServiceImpl implements ExamQuestionService {
@@ -124,7 +124,17 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
 
     @Override
     public Page<ExamQuestion> getExamTestQuestions(Integer examId, Pageable pageable) {
-        return examQuestionRepository.findExamQuestionByExamId(examId, pageable);
+        Page<ExamQuestion> examQuestionsPage = examQuestionRepository.findExamQuestionByExamId(examId, pageable);
+        Set<ExamQuestion> uniqueExamQuestions = new HashSet<>(examQuestionsPage.getContent());
+        List<ExamQuestion> sortedUniqueExamQuestions = new ArrayList<>(uniqueExamQuestions);
+        sortedUniqueExamQuestions.sort(Comparator.comparing(ExamQuestion::getId));
+
+
+        // Xáo trộn thứ tự câu trả lời cho mỗi câu hỏi
+        examQuestionsPage.getContent().forEach(examQuestion -> {
+            examQuestion.getQuestion().setAnswer(shuffleAnswers(examQuestion.getQuestion().getAnswer()));
+        });
+        return examQuestionsPage;
     }
 
     //delete 1 question
@@ -143,5 +153,11 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     @Override
     public void deleteListOfQuestion(List<Integer> listId) {
         examQuestionRepository.deleteAllByIdInBatch(listId);
+    }
+
+    // Hàm xáo trộn danh sách câu trả lời
+    private List<Answer> shuffleAnswers(List<Answer> answers) {
+        Collections.shuffle(answers);
+        return answers;
     }
 }
