@@ -186,7 +186,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../components/Register.vue"),
   },
   {
-    path: "/profile",
+    path: "/profile/user/:id",
+    name: "Profile",
+    component: () => import("../components/Profile.vue"),
+  },
+  {
+    path: "/profile/user/",
     name: "Profile",
     component: () => import("../components/Profile.vue"),
   },

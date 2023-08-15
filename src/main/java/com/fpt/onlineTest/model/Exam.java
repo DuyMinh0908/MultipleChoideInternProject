@@ -28,6 +28,10 @@ public class Exam {
     private Integer examId;
 
     @NotNull
+    @Column(columnDefinition = "nvarchar(255)")
+    private String examName;
+
+    @NotNull
     private Integer numQuestion;
 
     //    @Column(columnDefinition = "time")

@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 
 import { api } from "../services/http-common";
-
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
 type AuthState = {
   id: Number | undefined;
   address: String;
@@ -140,6 +141,7 @@ export const useAuthStore = defineStore("auth", {
       localStorage.removeItem("phone");
       localStorage.removeItem("username");
       localStorage.removeItem("role");
+       router.push({name: "Home"})
     },
   },
 });

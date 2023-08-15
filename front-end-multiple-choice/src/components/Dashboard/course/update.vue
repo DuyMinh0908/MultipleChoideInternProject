@@ -6,25 +6,25 @@
       class="w-3/6 rounded-md border-2 border-zinc-800 h-3/4 my-14 mb-32"
     >
       <h1 class="flex justify-center font-medium text-2xl my-10">
-        SỬA KHÓA HỌC
+        Update course
       </h1>
       <div class="grid grid-cols-2 gap-2 md:gap-6 place-items-center mt-4">
         <div>
           <p class="font-bold text-zinc-600 px-2">
-            Tên khóa học<span class="text-red-600 font-bold">*</span>
+            Course name<span class="text-red-600 font-bold">*</span>
           </p>
           <input
             class="rounded-md h-8 w-64 pl-2 border-2"
             name=""
             v-model="form.courseName"
             id=""
-            placeholder="Nhập mã khóa học"
+            placeholder="Nhập mã khóa hỞc"
           />
         </div>
 
         <div>
           <p class="font-bold text-zinc-600 px-2">
-            Tên môn học <span class="text-red-600 font-bold">*</span>
+            Subject <span class="text-red-600 font-bold">*</span>
           </p>
           <input
             v-model="form.subject"
@@ -35,19 +35,19 @@
           />
         </div>
         <div>
-          <p class="font-bold text-zinc-600 px-2">Số lượng học sinh</p>
+          <p class="font-bold text-zinc-600 px-2">Num of students</p>
           <input
             v-model="form.numberStudent"
             class="rounded-md h-8 w-64 pl-2 border-2"
             name=""
             id=""
-            placeholder="Nhập mã khóa học"
+            placeholder="Nhập mã khóa hỞc"
           />
         </div>
 
         <div class="flex flex-row items-center justify-items-center space-x-2">
           <p class="font-bold text-zinc-600 px-2">
-            Trạng thái <span class="text-red-600 font-bold">*</span>
+            Status <span class="text-red-600 font-bold">*</span>
           </p>
           <div class="flex items-center">
             <input
@@ -61,7 +61,7 @@
             <label
               for="default-radio-1"
               class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >Hoạt động
+              >Active
             </label>
           </div>
           <div class="flex items-center">
@@ -77,7 +77,7 @@
             <label
               for="default-radio-2"
               class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >Đang đóng</label
+              >Disable</label
             >
           </div>
         </div>
@@ -113,12 +113,12 @@
           type="submit"
           class="rounded-md bg-green-300 w-20 hover:bg-green-600 font-bold text-white"
         >
-          LƯU
+          Save
         </button>
         <button
           class="rounded-md bg-zinc-400 w-20 hover:bg-red-600 font-bold text-white"
         >
-          HỦY
+          Cancel
         </button>
       </div>
     </form>
@@ -161,10 +161,10 @@ const updateCourse = async () => {
         "Content-Type": "multipart/form-data",
       },
     });
-    notificationStore.openSuccess("Tạo khóa học thành công.");
+    notificationStore.openSuccess("Update succes!");
     await router.push("/course/index");
   } catch (e) {
-    notificationStore.openError("Đã xảy ra lỗi");
+    notificationStore.openError("Update success!");
   }
 };
 const getCourse = async () => {
