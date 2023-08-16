@@ -8,8 +8,8 @@ import { useAuthStore } from "../store/authStore";
 import { useNotificationStore } from "../store/notificationStore";
 const authStore = useAuthStore();
 const notificationStore = useNotificationStore();
-const listExamInComing = ref();
-const listExamFinish = ref();
+const listExamInComing = ref([]);
+const listExamFinish = ref([]);
 const getInComingExam = async () => {
   if (authStore.isAuthorized) {
     const { data } = await api.get(
@@ -26,6 +26,7 @@ const getFinishExam = async () => {
       `user/${authStore.id}/finished-exams?page=0&size=5`
     );
     listExamFinish.value = data.content;
+    console.log(listExamFinish.value[0]);
   } else {
     notificationStore.openError("You are not sign in!");
   }
@@ -42,12 +43,21 @@ onBeforeMount(() => {
   <SideBar />
   <div class="flex flex-col w-3/4 mx-auto">
     <h3 class="inline font-bold text-3xl">Exams</h3>
-    <div class="pt-10 container space-y-4 text-start">
-      <div class="grid grid-cols-3 gap-6">
+    <div class="pt-10 space-y-4 text-start">
+      <p v-if="listExamInComing.length == 0" class="text-red-500 text-xl">
+        There are no upcoming exams
+      </p>
+      <div v-else class="grid grid-cols-3 gap-6">
         <div
           v-for="examInComing in listExamInComing"
           class="flex flex-col rounded-xl shadow-xl items-center space-y-4 py-5 bg-slate-200"
         >
+          <p class="text-xl font-normal">
+            Name Exam:<span class="text-xl ml-2 text-red-500 font-semibold">{{
+              examInComing.examName
+            }}</span>
+          </p>
+
           <p class="text-xl font-normal">
             Number of Question:<span class="text-xl ml-2 font-semibold">{{
               examInComing.numQuestion
@@ -64,7 +74,7 @@ onBeforeMount(() => {
               name: 'Exam.TakeExam',
               params: { id: examInComing.examId },
             }"
-            class="bg-lightblue text-white font-see.mibold px-3 py-2 w-32 rounded-xl text-center"
+            class="bg-gradient-to-r from-sky-800 from-10% to-purple-700 text-white font-see.mibold px-3 py-2 w-32 rounded-xl text-center"
           >
             Start</router-link
           >
@@ -77,11 +87,19 @@ onBeforeMount(() => {
       >
         Fininsh Exam
       </p>
-      <div class="grid grid-cols-3 gap-6">
+      <p v-if="listExamFinish.length == 0" class="text-red-500 text-xl">
+        You have not completed any test yet
+      </p>
+      <div v-else class="grid grid-cols-3 gap-6">
         <div
           v-for="examFinish in listExamFinish"
           class="flex flex-col rounded-xl shadow-xl items-center space-y-4 bg-slate-200 py-10"
         >
+          <p class="text-xl font-normal">
+            Name Exam:<span class="text-xl ml-2 text-red-500 font-semibold">{{
+              examFinish.examName
+            }}</span>
+          </p>
           <p class="text-xl font-normal">
             Number of Question:<span class="text-xl ml-2 font-semibold">{{
               examFinish.numQuestion
@@ -93,15 +111,26 @@ onBeforeMount(() => {
             }}</span>
           </p>
 
-          <router-link
-            :to="{
-              name: 'Exam.TakeExam',
-              params: { id: examFinish.examId },
-            }"
-            class="bg-lightblue text-white font-see.mibold px-3 py-2 w-32 rounded-xl text-center"
-          >
-            Start</router-link
-          >
+          <div class="flex flex-row space-x-6">
+            <router-link
+              :to="{
+                name: 'Exam.TakeExam',
+                params: { id: examFinish.examId },
+              }"
+              class="bg-gradient-to-r from-sky-800 from-10% to-purple-700 text-white font-semibold px-3 py-2 w-32 rounded-xl text-center"
+            >
+              ReTest</router-link
+            >
+            <router-link
+              :to="{
+                name: 'Exam.ReultExam',
+                params: { id: examFinish.examId },
+              }"
+              class="bg-gradient-to-r from-sky-800 from-10% to-purple-700 text-white font-semibold px-3 py-2 w-32 rounded-xl text-center"
+            >
+              View Result</router-link
+            >
+          </div>
         </div>
       </div>
     </div>

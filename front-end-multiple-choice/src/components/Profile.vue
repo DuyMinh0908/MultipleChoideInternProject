@@ -7,7 +7,7 @@
     >
       <div class="flex flex-col justify-center items-center">
         <div
-          class="flex flex-col justify-center items-center border-solid border-2 rounded-md  border-gray-300 p-3 mb-7"
+          class="flex flex-col justify-center items-center border-solid border-2 rounded-md border-gray-300 p-3 mb-7"
         >
           <img
             :src="'http://localhost:8080/api/v1/file/upload/' + authStore.image"
@@ -146,24 +146,24 @@ const onFileSelect = (e: any): void => {
   // console.log("onFileSelect" + currentFile);
 };
 
-// Hàm ki?m tra ð?nh d?ng email
+// Hï¿½m ki?m tra ï¿½?nh d?ng email
 const isEmailValid = (email) => {
-  // S? d?ng bi?u th?c chính quy ð? ki?m tra ð?nh d?ng email
+  // S? d?ng bi?u th?c chï¿½nh quy ï¿½? ki?m tra ï¿½?nh d?ng email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
-// Hàm ki?m tra ð?nh d?ng s? ði?n tho?i
+// Hï¿½m ki?m tra ï¿½?nh d?ng s? ï¿½i?n tho?i
 const isPhoneValid = (phone) => {
-  // S? d?ng bi?u th?c chính quy ð? ki?m tra ð?nh d?ng s? ði?n tho?i
-  const phoneRegex = /^[0-9]{10,}$/; // Ð?nh d?ng có ít nh?t 10 ch? s?
+  // S? d?ng bi?u th?c chï¿½nh quy ï¿½? ki?m tra ï¿½?nh d?ng s? ï¿½i?n tho?i
+  const phoneRegex = /^[0-9]{10,}$/; // ï¿½?nh d?ng cï¿½ ï¿½t nh?t 10 ch? s?
   return phoneRegex.test(phone);
 };
-// Hàm ki?m tra ð? dài t?i thi?u c?a m?t kh?u
+// Hï¿½m ki?m tra ï¿½? dï¿½i t?i thi?u c?a m?t kh?u
 const isPasswordValid = (password) => {
-  return password.length >= 6; // Yêu c?u ít nh?t 8 k? t?
+  return password.length >= 6; // Yï¿½u c?u ï¿½t nh?t 8 k? t?
 };
 
-let userData = ref(form); // S? d?ng ref ð? gi? giá tr? c?a userData
+let userData = ref(form); // S? d?ng ref ï¿½? gi? giï¿½ tr? c?a userData
 
 const responseUserInfo = api.get(`/user-connect/user/${authStore.id}`);
 
@@ -176,7 +176,6 @@ const onEditClick = async () => {
   form.value.email = response.data.data.email;
   form.value.phone = response.data.data.phone;
   form.value.address = response.data.data.address;
-
   form.value.imageUser = response.data.data.imageUser;
 };
 
@@ -200,7 +199,8 @@ const updateUserImage = async () => {
     );
     if (response.status === 200) {
       notificationStore.openSuccess("Update User Image Success.");
-      await router.push("/");
+      authStore.logOut;
+      router.push("/login");
     } else {
       notificationStore.openError("Error updating user image.");
     }
@@ -241,7 +241,8 @@ const updateUser = async () => {
     );
     if (response.status === 200) {
       notificationStore.openSuccess("Update User Success.");
-      await router.push("/");
+      authStore.logOut;
+      router.push("/login");
     } else {
       notificationStore.openError("Error updating user.");
     }

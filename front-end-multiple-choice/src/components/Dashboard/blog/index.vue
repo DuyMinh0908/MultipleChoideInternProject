@@ -3,16 +3,16 @@
   <div class="container flex flex-col">
     <table class="w-full border-slate-400">
       <caption class="caption-top uppercase text-3xl font-bold">
-        Danh sách bài viêt
+        List Blog
       </caption>
       <thead
         class="bg-gradient-to-r from-sky-800 from-10% to-purple-700 text-white h-12 rounded-xl border-t-2"
       >
         <tr class="uppercase">
           <th scope="col" class="border border-slate-300 col-span-1">ID</th>
-          <th scope="col" class="border border-slate-300">Tiêu đề</th>
-          <th scope="col" class="border border-slate-300">Nội dung</th>
-          <th scope="col" class="border border-slate-300">Lượt xem</th>
+          <th scope="col" class="border border-slate-300">Title</th>
+          <th scope="col" class="border border-slate-300">Content</th>
+          <th scope="col" class="border border-slate-300">Views</th>
           <th scope="col" class="border border-slate-300">Action</th>
         </tr>
       </thead>

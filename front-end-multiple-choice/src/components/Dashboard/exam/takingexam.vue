@@ -88,6 +88,7 @@ const submitExam = async () => {
 // console.log(resultAnswer.value !== "" ? "true" : "false");
 const getExamByIdofCourse = async () => {
   const { data } = await api.get(`/course/exam/${route.params.id}`);
+  console.log();
   exam.value = data;
   console.log(exam.value);
   second.value = timeToSeconds(exam.value.duration);
@@ -170,9 +171,9 @@ window.onpopstate = function (event) {
     notificationStore.openSuccess("Submited exam");
   }
 };
-onMounted(async () => {
-  await getAllQuestions();
-});
+// onMounted(async () => {
+//   await getAllQuestions();
+// });
 </script>
 <template>
   <Navigation />

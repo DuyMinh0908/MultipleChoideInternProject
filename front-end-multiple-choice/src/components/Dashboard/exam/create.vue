@@ -3,7 +3,7 @@
   <div class="flex justify-center">
     <form
       @submit.prevent="saveExam()"
-      @keydown="validate.$clearExternalResults()"
+      @keydown="validateFormExam"
       class="w-3/6 rounded-md border-2 border-zinc-800 h-3/4 my-14 mb-32"
     >
       <h1 class="flex uppercase justify-center font-medium text-3xl my-10">
@@ -19,34 +19,74 @@
           <label class="text-lg font-semibold">Name of Subject: </label>
           <p>{{ course.subject }}</p>
         </div>
-        <div class="flex flex-row col-span-2 w-full ml-60">
+        <div class="flex flex-row">
           <label class="text-lg font-semibold"
             >Name Teacher :
             <p class="font-semibold">{{ authStore.fullName }}</p>
           </label>
         </div>
         <div>
-          <p class="font-bold px-2">Num of question</p>
+          <p class="font-bold px-2">Name</p>
+          <input
+            v-model="form.examName"
+            class="rounded-md h-8 w-64 pl-2 border-2"
+            min="1"
+            max="1000"
+            required
+            placeholder="Enter Name Exam"
+          />
+          <template v-if="validate.examName.$error">
+            <div
+              v-for="(error, index) in validate.examName.$errors"
+              :key="index"
+              class="text-red-500 mt-2 italic text-sm"
+            >
+              {{ validationMessage(error.$message, "Exam name") }}
+            </div>
+          </template>
+        </div>
+        <div>
+          <p class="font-bold px-2">
+            Num of question <span class="text-red-600">*</span>
+          </p>
           <input
             v-model="form.numQuestion"
-            class="rounded-md h-8 w-64 pl-2 border-2"
+            class="rounded-md h-8 pl-2 border-2"
             type="number"
             min="1"
             max="1000"
             required
             placeholder="Enter num of questions"
           />
+          <template v-if="validate.numQuestion.$error">
+            <div
+              v-for="(error, index) in validate.numQuestion.$errors"
+              :key="index"
+              class="text-red-500 mt-2 italic text-sm"
+            >
+              {{ validationMessage(error.$message, "Num of question") }}
+            </div>
+          </template>
         </div>
         <div>
           <p class="font-bold px-2">Time</p>
           <input
             v-model="form.duration"
-            class="rounded-md h-8 w-64 pl-2 border-2"
+            class="rounded-md h-8 pl-2 border-2"
             min="1"
             max="1000"
             required
             placeholder="Enter time"
           />
+          <template v-if="validate.numQuestion.$error">
+            <div
+              v-for="(error, index) in validate.numQuestion.$errors"
+              :key="index"
+              class="text-red-500 mt-2 italic text-sm"
+            >
+              {{ validationMessage(error.$message, "Num of question") }}
+            </div>
+          </template>
         </div>
       </div>
       <div class="flex-row gap-10 my-10 flex justify-center h-10">
@@ -72,19 +112,35 @@ import { api } from "../../../services/http-common";
 import { useNotificationStore } from "../../../store/notificationStore";
 import { useVuelidate } from "@vuelidate/core";
 import { useRoute, useRouter } from "vue-router";
-import { required, minLength, maxLength } from "@vuelidate/validators";
+import {
+  required,
+  minLength,
+  maxLength,
+  numeric,
+  minValue,
+  maxValue,
+} from "@vuelidate/validators";
 import { useAuthStore } from "../../../store/authStore";
 const authStore = useAuthStore();
 const notificationStore = useNotificationStore();
 const $externalResults = ref({});
 const rules = {
+  examName: {
+    required,
+    minLength: minLength(6),
+    maxLength: maxLength(100),
+  },
   duration: {
     required,
+    numeric,
+    minValue: minValue(1),
+    maxValue: maxValue(50),
   },
   numQuestion: {
+    numeric,
     required,
-    minLength: minLength(5),
-    maxLength: maxLength(50),
+    minValue: minValue(5),
+    maxValue: maxValue(50),
   },
 };
 const course = ref({});
@@ -114,6 +170,7 @@ const form = ref({
 
   duration: "",
   examId: 0,
+  examName: "",
   numQuestion: 0,
 });
 console.log(form.value.duration.toString());
@@ -126,11 +183,11 @@ const validationMessage = (error: any, text: string) => {
   return error;
 };
 
-const validateFormCourse = () => {
+const validateFormExam = () => {
   validate.value.$clearExternalResults();
   validate.value.$touch();
   if (validate.value.$invalid) {
-    notificationStore.openError("Hãy kiểm tra lại các trường thông tin.");
+    notificationStore.openError("Check information fields.");
     return;
   }
 };

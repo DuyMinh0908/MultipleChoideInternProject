@@ -110,6 +110,16 @@ const routes: Array<RouteRecordRaw> = [
         name: "Dashboard.Exam.List",
         component: () => import("../components/Dashboard/exam/list.vue"),
       },
+      {
+        path: "teacher",
+        name: "Dashboard.Teacher.Index",
+        component: () => import("../components/Dashboard/teacher/index.vue"),
+      },
+      {
+        path: "teacher/add",
+        name: "Dashboard.Teacher.Create",
+        component: () => import("../components/Dashboard/teacher/add.vue"),
+      },
     ],
   },
   {
@@ -137,7 +147,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: ":id/update",
         name: "Blogs.Update",
-        component: () => import("../components/Blog/Update.vue"),
+        component: () => import("../components/Dashboard/blog/update.vue"),
       },
     ],
   },
@@ -152,7 +162,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../components/Dashboard/exam/takingexam.vue"),
   },
   {
-    path: "/result-exam",
+    path: "/:id/result-exam",
     name: "Exam.ReultExam",
     component: () => import("../components/Exam/ResultExam.vue"),
   },

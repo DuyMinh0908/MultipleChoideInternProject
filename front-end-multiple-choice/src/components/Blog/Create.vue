@@ -66,11 +66,9 @@ const createBlog = async () => {
       @keydown="validateFormBlog"
       class="px-10 mt-20 py-10 border flex flex-col justify-center space-y-4 text-center rounded-xl"
     >
-      <p class="uppercase text-2xl font-bold">Tạo bài viết</p>
+      <p class="uppercase text-2xl font-bold">Create blog</p>
       <div class="flex flex-col items-start">
-        <label
-          >Tiêu đề khóa học <span class="text-red-600 font-bold">*</span></label
-        >
+        <label>Title <span class="text-red-600 font-bold">*</span></label>
         <input
           v-model="form.titleBlog"
           class="w-1/2 rounded-xl border border-black h-12 px-4"
@@ -89,7 +87,7 @@ const createBlog = async () => {
       </div>
       <div class="flex flex-col items-start">
         <label
-          >Nội dungkhóa học
+          >Content
           <span class="text-red-600 font-bold items-start">*</span></label
         >
         <template v-if="validate.contentBlog.$error">
@@ -103,8 +101,10 @@ const createBlog = async () => {
         </template>
       </div>
       <ckeditor v-model="form.contentBlog" :editor="ClassicEditor"></ckeditor>
-      <button class="text-white bg-lightblue px-5 py-2 w-32 rounded-xl">
-        Tạo
+      <button
+        class="text-white bg-gradient-to-r from-sky-800 from-10% to-purple-700 px-5 py-2 w-32 rounded-xl"
+      >
+        Create
       </button>
     </form>
   </div>

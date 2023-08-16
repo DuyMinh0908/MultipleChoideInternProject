@@ -21,40 +21,40 @@ public class ExamController {
     private ExamService examService;
 
     @PostMapping("/course/exam/add")
-    public ResponseEntity<Exam> createExam(@RequestBody Exam newExam){
+    public ResponseEntity<Object> createExam(@RequestBody Exam newExam){
         try {
             return new ResponseEntity<>(examService.createExam(newExam), HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/course/exam/update/{id}")
-    public ResponseEntity<Exam> updateExam(@PathVariable Integer id,@RequestBody Exam exam){
+    public ResponseEntity<Object> updateExam(@PathVariable Integer id,@RequestBody Exam exam){
         try {
             return new ResponseEntity<>(examService.updateExam(id,exam), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/course/exam/{id}")
-    public ResponseEntity<Optional<Exam>> getExamById(@PathVariable Integer id){
+    public ResponseEntity<Object> getExamById(@PathVariable Integer id){
         try {
             return new ResponseEntity<>(examService.getExamById(id),HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/course={courseId}/exams")
-    public ResponseEntity<List<Exam>> getExamByCourseId(@PathVariable Integer courseId){
+    public ResponseEntity<Object> getExamByCourseId(@PathVariable Integer courseId){
         try {
 
             return new ResponseEntity<>(examService.getExamsByCourseId(courseId),HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
 

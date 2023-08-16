@@ -176,7 +176,7 @@
         class="rounded-xl text-white bg-gradient-to-r from-sky-800 from-10% to-purple-700 w-36 h-10 md:h-12 mt-7 md:mt-10 text-sm md:text-lg"
         @click.prevent="onRegister()"
       >
-        Register
+        Create
       </button>
     </form>
 
@@ -185,10 +185,10 @@
 </template>
 <script lang="ts" setup>
 import Icon from "../icons/ClientDashboard.vue";
-import { api } from "../services/http-common";
+import { api } from "../../../services/http-common";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { useNotificationStore } from "../store/notificationStore";
+import { useNotificationStore } from "../../../store/notificationStore";
 import { useVuelidate } from "@vuelidate/core";
 import {
   required,
@@ -207,7 +207,7 @@ const form = ref({
   email: "",
   phone: "",
   address: "",
-  imageUser: "",
+  imageTeacher: "",
   roleId: 2,
   comfirmPass: "",
 });
@@ -260,7 +260,7 @@ const validateFormRegister = () => {
 const router = useRouter();
 const onRegister = async () => {
   const data = await api.post(
-    "/user-connect/user/check-email",
+    "/user-connect/teacher/check-email",
     {},
     { params: { email: form.value.email } }
   );
@@ -269,7 +269,7 @@ const onRegister = async () => {
     return;
   }
   const data2 = await api.post(
-    "/user-connect/user/check-username",
+    "/user-connect/teacher/check-username",
     {},
     { params: { username: form.value.username } }
   );
@@ -287,15 +287,15 @@ const onRegister = async () => {
     formData.append("address", form.value.address);
     //@ts-ignore
     formData.append("roleId", form.value.roleId);
-    formData.append("imageUser", currentFile.value, currentFile.value.name);
-    await api.post("/user-connect/user/create", formData, {
+    formData.append("imageTeacher", currentFile.value, currentFile.value.name);
+    await api.post("/user-connect/teacher/create", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
     notificationStore.openSuccess("Register Success.");
 
-    await router.push("/login");
+    await router.push({ name: "Dashboard.Teacher.Index" });
   } catch (e) {
     notificationStore.openError("Error has an error");
   }

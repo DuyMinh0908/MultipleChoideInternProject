@@ -34,11 +34,15 @@ onBeforeMount(() => {
               To achieve good results in everything, we need to set clear goals
               for that task. Learning programming is also no exception.
             </p>
-            <button
+            <router-link
+              :to="{
+                name: 'Courses.Detail',
+                params: { id: Number(course.courseId) },
+              }"
               class="border-collapse border-white rounded-2xl border-2 w-40 text-md font-semibold hover:font-bold hover:bg-slate-500"
             >
               Read more ...
-            </button>
+            </router-link>
           </div>
           <div class="w-1/2">
             <img

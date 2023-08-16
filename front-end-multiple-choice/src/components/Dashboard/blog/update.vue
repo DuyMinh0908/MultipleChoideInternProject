@@ -43,7 +43,7 @@ const validateFormBlog = () => {
   validate.value.$clearExternalResults();
   validate.value.$touch();
   if (validate.value.$invalid) {
-    notificationStore.openError("Kiểm tra lại thông tin trong các trưỞng.");
+    notificationStore.openError("Check information field.");
     return;
   }
 };
@@ -84,9 +84,9 @@ onBeforeMount(() => {
       @keydown="validateFormBlog"
       class="px-10 mt-20 py-10 border flex flex-col justify-center space-y-4 text-center rounded-xl"
     >
-      <p class="uppercase text-2xl font-bold">Cập nhật bài viết</p>
+      <p class="uppercase text-2xl font-bold">Blog</p>
       <div class="flex flex-col items-start">
-        <label class="text-lg font-semibold">Tiêu đỞ khóa hỞc</label>
+        <label class="text-lg font-semibold">Title</label>
         <input
           v-model="form.titleBlog"
           class="w-1/2 h-10 rounded-xl border-2 px-2 border-black"
@@ -98,13 +98,13 @@ onBeforeMount(() => {
             :key="index"
             class="text-red-500 mt-2 italic text-sm"
           >
-            {{ validationMessage(error.$message, "Tên môn hỞc") }}
+            {{ validationMessage(error.$message, "Title blog") }}
           </div>
         </template>
       </div>
       <ckeditor v-model="form.contentBlog" :editor="ClassicEditor"></ckeditor>
       <button class="text-white bg-lightblue px-5 py-2 w-32 rounded-xl">
-        Sửa
+        Update
       </button>
     </form>
   </div>
