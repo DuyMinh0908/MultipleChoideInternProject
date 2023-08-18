@@ -4,6 +4,7 @@ import com.fpt.onlineTest.model.Exam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,4 +25,5 @@ public interface ExamService {
     Page<Exam> getIncomingExamByUserId(Integer userId, Pageable pageable);
     Page<Exam> getFinishedExamByUserId(Integer userId, Pageable pageable);
     Page<Exam> getBandedExamByUserId(Integer userId, Pageable pageable);
+    ByteArrayInputStream exportFileToExcel(Integer id);
 }

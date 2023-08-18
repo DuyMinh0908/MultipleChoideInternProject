@@ -3,10 +3,13 @@ package com.fpt.onlineTest.restController;
 import com.fpt.onlineTest.model.Exam;
 import com.fpt.onlineTest.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -144,5 +147,14 @@ public class ExamController {
             // Xử lý ngoại lệ và trả về thông báo lỗi
             return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping("/export-file-excel/{id}")
+    public ResponseEntity<InputStreamResource> exportFileToExcel(@PathVariable Integer id)  {
+        String filename = "question.xlsx";
+        InputStreamResource file = new InputStreamResource(examService.exportFileToExcel(id));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
     }
 }

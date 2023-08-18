@@ -127,9 +127,9 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
         Page<ExamQuestion> examQuestionsPage = examQuestionRepository.findExamQuestionByExamId(examId, pageable);
 
         // Xáo trộn thứ tự câu trả lời cho mỗi câu hỏi
-        examQuestionsPage.getContent().forEach(examQuestion -> {
-            examQuestion.getQuestion().setAnswer(shuffleAnswers(examQuestion.getQuestion().getAnswer()));
-        });
+//        examQuestionsPage.getContent().forEach(examQuestion -> {
+//            examQuestion.getQuestion().setAnswer(shuffleAnswers(examQuestion.getQuestion().getAnswer()));
+//        });
 
         return examQuestionsPage;
     }

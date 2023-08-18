@@ -51,7 +51,6 @@ const searchForm: Ref<SearchForm> = ref({
 });
 const coundownInterval = setInterval(() => {
   if (second.value > 0) {
-    console.log(second.value);
     second.value--;
   }
 }, 1000);
@@ -88,12 +87,11 @@ const submitExam = async () => {
 // console.log(resultAnswer.value !== "" ? "true" : "false");
 const getExamByIdofCourse = async () => {
   const { data } = await api.get(`/course/exam/${route.params.id}`);
-  console.log();
   exam.value = data;
-  console.log(exam.value);
   second.value = timeToSeconds(exam.value.duration);
+  examName.value = exam.value.examName;
 };
-
+const examName = ref();
 const getAllQuestions = async () => {
   try {
     const data = await api.get(
@@ -177,12 +175,12 @@ window.onpopstate = function (event) {
 </script>
 <template>
   <Navigation />
-  <div class="flex flex-row w-full">
+  <div class="flex flex-col w-full">
+    <p class="text-3xl font-semibold text-center">Exam{{ examName }}</p>
     <template v-if="Object.keys(resultAnswer).length !== 0">
       <div
         class="w-1/2 flex flex-col mx-auto p-5 rounded-xl border border-gray-400"
       >
-        <p class="text-3xl font-semibold text-center">Exam</p>
         <div
           v-for="(question, index) in allQuestions"
           :key="question.question.questionId"
@@ -290,6 +288,15 @@ window.onpopstate = function (event) {
         <p v-else class="text-red-600 text-4xl font-bold">
           {{ resultAnswer.resultExam.point }}
         </p>
+        <router-link
+          :to="{
+            name: 'Exam.ReultExam',
+            params: { id: exam.examId },
+          }"
+          class="bg-gradient-to-r from-sky-800 from-10% to-purple-700 text-white font-semibold px-3 py-2 w-32 rounded-xl text-center"
+        >
+          View Result</router-link
+        >
       </div>
     </template>
     <template v-else>
@@ -297,7 +304,6 @@ window.onpopstate = function (event) {
         @submit.prevent="submitExam()"
         class="w-1/2 flex flex-col mx-auto p-5 rounded-xl border border-gray-400"
       >
-        <p class="text-3xl font-semibold text-center">Exam</p>
         <div
           v-for="(question, index) in allQuestions"
           :key="question.question.questionId"

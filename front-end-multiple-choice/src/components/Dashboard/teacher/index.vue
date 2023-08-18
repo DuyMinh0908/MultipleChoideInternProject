@@ -42,7 +42,13 @@
             {{ teacher.address }}
           </td>
           <td class="w-52 px-5">
-            <img :src="teacher.imageTeacher" />
+            <img
+              :src="
+                'http://localhost:8080/api/v1/file/upload/' +
+                teacher.imageTeacher
+              "
+              alt="imgae-user"
+            />
           </td>
           <td class="w-52 px-5">
             {{ teacher.username }}

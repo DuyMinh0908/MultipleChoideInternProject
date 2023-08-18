@@ -1,7 +1,10 @@
 package com.fpt.onlineTest.service.impl;
 
+import com.fpt.onlineTest.helper.QuestionExcelHelper;
 import com.fpt.onlineTest.model.Course;
 import com.fpt.onlineTest.model.Exam;
+import com.fpt.onlineTest.model.ExamQuestion;
+import com.fpt.onlineTest.model.Questions;
 import com.fpt.onlineTest.reponsitory.CourseRepository;
 import com.fpt.onlineTest.reponsitory.ExamRepository;
 import com.fpt.onlineTest.reponsitory.UserRepository;
@@ -12,6 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -105,5 +109,17 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Page<Exam> getBandedExamByUserId(Integer userId, Pageable pageable){
         return examRepository.findBandedExamOfUser(userId,pageable);
+    }
+    @Override
+    public ByteArrayInputStream exportFileToExcel(Integer id) {
+        Exam exam = examRepository.findById(id).orElseGet(null);
+        List<ExamQuestion> EQuestions = exam.getExamQuestions();
+        List<Questions> questions = new ArrayList<>();
+
+        for (ExamQuestion examQuestion: EQuestions) {
+            questions.add(examQuestion.getQuestion());
+        }
+        ByteArrayInputStream in = QuestionExcelHelper.QuestionToExcel(questions);
+        return in;
     }
 }

@@ -197,6 +197,7 @@ import {
   email,
   numeric,
   sameAs,
+  alpha,
 } from "@vuelidate/validators";
 const notificationStore = useNotificationStore();
 const $externalResults = ref({});
@@ -225,6 +226,7 @@ const rules = {
   },
   fullName: {
     required,
+    alpha,
     minLength: minLength(6),
     maxLength: maxLength(50),
   },

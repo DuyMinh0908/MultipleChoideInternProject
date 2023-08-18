@@ -13,10 +13,10 @@
       </select>
 
       <button
-        class="text-white bg-gradient-to-r from-sky-800 from-10% to-purple-700 rounded-xl px-5 py-2 text-center text-lg font-semibold"
+        class="text-white bg-gradient-to-r from-sky-800 from-10% to-purple-700 rounded-xl px-4 py-1 text-center text-lg font-semibold"
         @click="downloadExecl"
       >
-        Export Excelfile
+        Export All Result
       </button>
     </div>
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -45,7 +45,7 @@
           <td class="px-6 py-4">{{ exam.numQuestion }}</td>
           <td class="px-6 py-4">{{ exam.duration }}</td>
 
-          <td class="px-6 py-4">
+          <td class="px-6 py-4 space-x-2">
             <button
               @click="deleteExamById(exam.examId)"
               href="#"
@@ -53,7 +53,9 @@
             >
               Delete
             </button>
-            <route-link> Edit </route-link>
+            <button @click="downloadExam(exam.examId)" class="text-green-500">
+              Export Exam
+            </button>
           </td>
         </tr>
       </tbody>
@@ -67,7 +69,7 @@ import SideBarDashboard from "../SideBarDashboard.vue";
 import Navigation from "../../Navigation.vue";
 const listExams = ref();
 const allCourse = ref();
-const courseId = ref(1);
+const courseId = ref(4);
 
 const downloadExecl = async () => {
   await api
@@ -88,6 +90,24 @@ const downloadExecl = async () => {
       // Make the magic happen!
       link.click();
     });
+};
+const downloadExam = async (examId) => {
+  await api.get(`/export-file-excel/${examId}`).then((response) => {
+    const link = document.createElement("a");
+
+    // Tell the browser to associate the response data to
+    // the URL of the link we created above.
+    link.href = window.URL.createObjectURL(new Blob([response.data]));
+
+    // Tell the browser to download, not render, the file.
+    link.setAttribute("download", "exam.xlsx");
+
+    // Place the link in the DOM.
+    document.body.appendChild(link);
+
+    // Make the magic happen!
+    link.click();
+  });
 };
 const getListExams = async () => {
   const { data } = await api.get(`/course=${courseId.value}/exams`);

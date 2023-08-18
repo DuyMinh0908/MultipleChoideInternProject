@@ -42,12 +42,20 @@
           <p>Blog</p>
         </router-link>
         <router-link
+          v-if="authStore.isAuthorized && authStore.isTeacher"
           :to="{ name: 'Dashboard.Index' }"
           class="flex flex-col text-[12px] space-y-2 hover:bg-slate-200 py-2 px-6 rounded-xl"
           :class="route.name === 'Dashboard' ? 'bg-slate-400' : ''"
         >
           <Icon name="management" class="w-8 h-8 mx-auto" />
           <p>Management</p>
+        </router-link>
+        <router-link
+          v-else
+          :to="{ name: 'Dashboard.Index' }"
+          class="hidden"
+          :class="route.name === 'Dashboard' ? 'bg-slate-400' : ''"
+        >
         </router-link>
 
         <li

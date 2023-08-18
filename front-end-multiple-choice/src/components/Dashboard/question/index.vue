@@ -46,9 +46,9 @@ const { open, close } = useModal({
       try {
         await api.delete(`/questions/delete/${currentIdQuestion.value}`);
         await getAllQuestions();
-        notificationStore.openSuccess("Xóa thành công");
+        notificationStore.openSuccess("Delete success");
       } catch (e) {
-        notificationStore.openError("Xóa không thành công");
+        notificationStore.openError("Delete failed");
         console.error(e);
       }
       close();
@@ -60,7 +60,7 @@ const { open, close } = useModal({
     },
   },
   slots: {
-    default: `<p class="text-center font-semibold text-xl">Bạn có chắc chắn muốn xóa</p>`,
+    default: `<p class="text-center font-semibold text-xl">Are you sure delete ?</p>`,
   },
 });
 const getAllQuestions = async () => {

@@ -64,15 +64,4 @@ onBeforeMount(() => {
       />
     </div>
   </div>
-  <div class="flex flex-col w-3/4 pb-10 mx-auto space-y-4">
-    <p class="font-semibold text-3xl">Blogs</p>
-    <div class="grid grid-cols-3 gap-6">
-      <Item v-for="course in courses" :key="course.id" :course="course" />
-    </div>
-    <div class="flex flex-row-reverse justify-items-end">
-      <p class="hover:font-semibold cursor-pointer text-red-500 font-semibold">
-        More >>
-      </p>
-    </div>
-  </div>
 </template>

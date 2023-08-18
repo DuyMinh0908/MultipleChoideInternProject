@@ -39,7 +39,7 @@ onBeforeMount(() => {
                 name: 'Courses.Detail',
                 params: { id: Number(course.courseId) },
               }"
-              class="border-collapse border-white rounded-2xl border-2 w-40 text-md font-semibold hover:font-bold hover:bg-slate-500"
+              class="border-collapse border-white rounded-2xl border-2 w-40 pl-2 text-md font-semibold hover:font-bold hover:bg-slate-500"
             >
               Read more ...
             </router-link>

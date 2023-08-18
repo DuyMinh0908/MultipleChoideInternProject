@@ -23,16 +23,12 @@
           <th scope="col" class="border border-slate-300 px-6 py-4">
             Course name
           </th>
-          <th scope="col" class="border border-slate-300 px-6 py-4">
-            Teacher
-          </th>
+          <th scope="col" class="border border-slate-300 px-6 py-4">Teacher</th>
           <th scope="col" class="border border-slate-300 px-6 py-4">Image</th>
           <th scope="col" class="border border-slate-300 px-6 py-4">
             Num of students
           </th>
-          <th scope="col" class="border border-slate-300 px-6 py-4">
-            Exam
-          </th>
+          <th scope="col" class="border border-slate-300 px-6 py-4">Exam</th>
           <th scope="col" class="border border-slate-300 px-6 py-4">Action</th>
         </tr>
       </thead>

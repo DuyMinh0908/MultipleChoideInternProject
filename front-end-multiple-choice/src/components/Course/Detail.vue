@@ -57,7 +57,7 @@
           @click="registerCourse()"
           class="uppercase rounded-xl bg-lightblue px-6 py-2 hover:bg-blue-500"
         >
-         Subscribe
+          Subscribe
         </button>
       </template>
       <template v-else>
@@ -72,16 +72,18 @@
       <div class="flex flex-col space-y-2">
         <span
           class="flex flex-row first-letter: justify-items-center text-center"
-          ><Icon class="w-6 h-6 items-center mr-2" name="dashboard" /> Basic</span
+          ><Icon class="w-6 h-6 items-center mr-2" name="dashboard" />
+          Basic</span
         >
 
         <span class="flex flex-row text-start"
-          ><Icon class="w-5 h-5 items-center mr-2" name="film" /> Tổng số
+          ><Icon class="w-5 h-5 items-center mr-2" name="film" /> Total
           {{}}</span
         >
 
         <span class="flex flex-row items-center space-x-2 text-start"
-          ><Icon class="w-5 h-5 items-center mr-2" name="battery" /> Learn any where, any time</span
+          ><Icon class="w-5 h-5 items-center mr-2" name="battery" /> Learn any
+          where, any time</span
         >
       </div>
     </div>
