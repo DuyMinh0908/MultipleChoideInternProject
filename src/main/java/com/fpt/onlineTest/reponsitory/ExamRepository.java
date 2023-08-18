@@ -46,5 +46,4 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
             "join User u on cr.user.userId = u.userId " +
             "where u.userId=:userId")
     Page<Exam> findIncomingExamOfUser(@Param("userId") Integer userId, Pageable pageable);
-
 }

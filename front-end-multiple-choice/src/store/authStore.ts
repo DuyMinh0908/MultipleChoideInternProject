@@ -141,7 +141,7 @@ export const useAuthStore = defineStore("auth", {
       localStorage.removeItem("phone");
       localStorage.removeItem("username");
       localStorage.removeItem("role");
-      router.push({ name: "Home" });
+      router.push("/home");
     },
   },
 });

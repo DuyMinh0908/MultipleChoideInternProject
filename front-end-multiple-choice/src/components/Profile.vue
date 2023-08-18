@@ -121,6 +121,7 @@ import {
   sameAs,
 } from "@vuelidate/validators";
 import { useRouter } from "vue-router";
+
 import { onMounted } from "vue";
 
 const authStore = useAuthStore();
@@ -209,8 +210,6 @@ const updateUserImage = async () => {
   }
 };
 const updateUser = async () => {
-  console.log("email: " + authStore.email);
-  console.log(authStore.image);
 
   try {
     const formData = new FormData();

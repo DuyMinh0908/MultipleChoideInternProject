@@ -67,6 +67,12 @@
 import Icon from "../icons/ClientDashboard.vue";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "../store/authStore";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const authStore = useAuthStore();
 const route = useRoute();
+const logOut = async () => {
+  authStore.logOut;
+  // router.push("/");
+}
 </script>

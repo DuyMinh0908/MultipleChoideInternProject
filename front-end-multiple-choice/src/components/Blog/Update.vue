@@ -27,7 +27,7 @@ const createBlog = async () => {
     >
       <p class="uppercase text-2xl font-bold">Tạo bài viết</p>
       <div class="flex flex-col">
-        <label>Tiêu đề khóa học</label>
+        <label>Tiêu đỞ khóa hỞc</label>
         <input
           v-model="form.titleBlog"
           class="w-40 border border-black"
