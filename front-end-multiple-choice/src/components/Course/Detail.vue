@@ -68,7 +68,7 @@
           Unsubscribe
         </button>
       </template>
-
+      <router-link :to="{ name: 'Room' }">Join room</router-link>
       <div class="flex flex-col space-y-2">
         <span
           class="flex flex-row first-letter: justify-items-center text-center"
@@ -100,10 +100,12 @@ import Icon from "../../icons/ClientDashboard.vue";
 import { User } from "../../model/user";
 import { useAuthStore } from "../../store/authStore";
 import { useRouter } from "vue-router";
+
 const authStore = useAuthStore();
 const router = useRouter();
 const isRegstered: Ref<boolean> = ref(false);
 const route = useRoute();
+
 const courseRegistration = ref({
   course: {
     courseId: 0,
@@ -174,6 +176,7 @@ const getUserInCourse = async () => {
     isRegstered.value = false;
   }
 };
+
 onMounted(() => {
   getDetailCourse();
   getUserInCourse();

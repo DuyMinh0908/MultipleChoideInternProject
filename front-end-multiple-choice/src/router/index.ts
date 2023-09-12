@@ -189,6 +189,11 @@ const routes: Array<RouteRecordRaw> = [
           title: "Courses",
         },
       },
+      {
+        path: "/room",
+        name: "Room",
+        component: () => import("../components/Course/Room.vue"),
+      },
     ],
   },
   {
