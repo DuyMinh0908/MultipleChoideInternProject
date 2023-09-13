@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full" id="meetingSDKElement">
+  <div class="h-screen w-full" id="meetingSDKElement">
     <!-- Zoom Meeting SDK Rendered Here -->
   </div>
 </template>

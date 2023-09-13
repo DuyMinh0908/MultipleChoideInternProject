@@ -8,7 +8,7 @@
       cost, quality, easy to understand content.
     </p>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4" v-if="authStore.isAuthorized">
-      <p  class="font-semibold text-3xl relative w-52 h-10 flex flex-col justify-end">My Course 
+      <p  class="font-semibold text-3xl relative w-fit h-10 flex flex-col justify-end">My Course 
       </p>
       <template v-if="myCourses.length >0">
        
@@ -18,13 +18,13 @@
      </template>
 
      <template v-else>
-      <p class="text-red-600 text-lg">You are not taking any courses</p>
+      <p class="text-red-600">You are not taking any courses</p>
      </template>
     
     </div>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
     
-      <p class="font-semibold text-3xl relative w-fit h-10 flex flex-col justify-end pr-16">Popular Course
+      <p class="font-semibold text-3xl relative w-fit h-16 flex flex-col justify-end ">Popular Course
         <div class="absolute top-0 right-0  text-sm text-white font-semibold bg-blue-500 px-2 rounded-md">
           New
         </div>
@@ -35,7 +35,7 @@
      
     </div>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
-      <p class="font-semibold text-3xl relative w-52 h-10 flex flex-col justify-end">Free Course
+      <p class="font-semibold text-3xl relative w-fit h-10 flex flex-col justify-end">Free Course
       </p>
       <div class="grid grid-cols-3 gap-6">
         <Item v-for="course in allCourses " :key="course.id" :course="course" />

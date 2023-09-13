@@ -2,3 +2,7 @@
 .toastify-content {
   @apply py-5 pl-5 pr-14 bg-white border border-slate-200/60 rounded-lg shadow-xl;
 }
+
+.react-draggable {
+  height: max-content;
+}

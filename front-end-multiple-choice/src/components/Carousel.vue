@@ -26,11 +26,11 @@ onBeforeMount(() => {
     <Carousel :transition="500">
       <Slide v-for="course in popularCourses" :key="course.courseId">
         <div
-          class="w-3/4 mx-auto rounded-xl overflow-hidden flex flex-row h-60 justify-between bg-gradient-to-r from-sky-800 from-10% to-purple-700"
+          class="w-3/4 mx-auto rounded-xl overflow-hidden flex flex-row h-80 justify-between bg-gradient-to-r from-sky-800 from-10% to-purple-700"
         >
           <div class="flex flex-col space-y-4 p-10 text-start text-white">
             <p class="text-3xl font-bold">{{ course.subject }}</p>
-            <p class="text-md font-semibold line-clamp-2">
+            <p class="text-md font-semibold">
               To achieve good results in everything, we need to set clear goals
               for that task. Learning programming is also no exception.
             </p>

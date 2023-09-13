@@ -83,7 +83,7 @@ onBeforeMount(() => {
     </div>
     <div class="flex flex-col w-full mt-10 mx-auto space-y-4">
       <p
-        class="font-semibold text-3xl relative w-52 h-10 flex flex-col justify-end"
+        class="font-semibold text-3xl relative w-fit h-10 flex flex-col justify-end"
       >
         Fininsh Exam
       </p>

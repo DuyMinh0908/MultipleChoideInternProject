@@ -10,24 +10,35 @@ const prop = defineProps<Props>();
   <div class="flex flex-col space-y-2 rounded-xl shadow-xl">
     <div class="group">
       <div
-        class="bg-cover overflow-hidden bg-center bg-no-repeat h-60 rounded-xl relative flex items-center justify-center"
+        class="bg-cover overflow-hidden bg-center bg-no-repeat h-80 rounded-xl relative flex items-center justify-center"
         :style="`background-image: url('${prop.course.imageCourse}');`"
       >
         <div
-          class="group-hover:block hidden absolute bg-gray-500 opacity-50 w-full h-full"
-        ></div>
-        <router-link
-          :to="{
-            name: 'Courses.Detail',
-            params: { id: `${prop.course.courseId}` },
-          }"
-          class="bg-white rounded-xl absolute hidden group-hover:block py-2 px-4 cursor-pointer"
+          class="group-hover:block hidden absolute bg-black opacity-50 w-full h-full"
         >
-          Watch more
-        </router-link>
+          <router-link
+            :to="{
+              name: 'Courses.Detail',
+              params: { id: `${prop.course.courseId}` },
+            }"
+            class="bg-white rounded-xl absolute hidden group-hover:block py-2 px-4 cursor-pointer"
+          >
+            Watch more
+          </router-link>
+        </div>
       </div>
     </div>
-    <p class="text-xl font-semibold capitalize">{{ course.courseName }}</p>
+
+    <router-link
+      class="text-2xl font-bold f capitalize hover:underline"
+      :to="{
+        name: 'Courses.Detail',
+        params: { id: `${prop.course.courseId}` },
+      }"
+    >
+      {{ course.courseName }}</router-link
+    >
+
     <p class="text-gray-500 flex flex-row items-center font-semibold space-x-2">
       <Icon name="groupuser" class="w-8 h-8" />
       {{ course.numberStudent }}
